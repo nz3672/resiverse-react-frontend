@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import SearchBar from "./SearchBar";
-import Widget from "../widget/Widget";
+import Widget from "../search/Widget";
 
 const Search = () => {
   const { isLoaded, loadError } = useLoadScript({
