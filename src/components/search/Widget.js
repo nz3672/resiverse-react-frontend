@@ -42,11 +42,31 @@ const Widget = () => {
           <div className="has-tooltip mr-1">
             <img
               alt="verify-badge"
-              src={require("../../img/icon/buff/pet-buff.png")}
+              src={require("../../img/icon/buff/bus-buff.png")}
               className=" object-contain rounded-xl w-9 pr-1 self-center"
             ></img>
             <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
-              Pet unfriendly
+              Bus stop
+            </span>
+          </div>
+          <div className="has-tooltip mr-1">
+            <img
+              alt="verify-badge"
+              src={require("../../img/icon/buff/bts-buff.png")}
+              className=" object-contain rounded-xl w-9 pr-1 self-center"
+            ></img>
+            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
+              Sky train
+            </span>
+          </div>
+          <div className="has-tooltip mr-1">
+            <img
+              alt="verify-badge"
+              src={require("../../img/icon/buff/shop-buff.png")}
+              className=" object-contain rounded-xl w-9 pr-1 self-center"
+            ></img>
+            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
+              Shoping mall
             </span>
           </div>
         </div>
