@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import Search from "./components/search/Search";
+import Home from "./page/Home";
 function App() {
   return (
     <div>
-      <Search />
+      <Home />
     </div>
   );
 }
