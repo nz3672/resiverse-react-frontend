@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import usePlacesAutocomplete, {
+  getDetails,
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import { getPlaceDetails } from "../../utils/GoogleMap";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
   const [select, setSelect] = useState();
+  const { setPlaceId, setPlaceDetails, setShowWidget } = props;
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -44,26 +47,22 @@ const SearchBar = () => {
       radius: 100 * 1000,
     },
   });
+
   // get Latitude Longitude of the selected place
-  const onClickChoice = (description) => {
-    console.log(description);
+  const onClickChoice = async (description) => {
     setSelect(description.structured_formatting.main_text);
+    setShowWidget(true);
 
     // get lat lng uses place_id
     let parameter = {
       placeId: description.place_id,
     };
 
-    getGeocode(parameter)
-      .then((results) => getLatLng(results[0]))
-      .then((latLng) => {
-        const { lat, lng } = latLng;
+    //Get selected place details
+    const results = await getPlaceDetails(parameter);
+    setPlaceDetails(results);
 
-        console.log("Coordinates: ", { lat, lng });
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
+    setPlaceId(description.place_id);
   };
 
   const onInputChange = (event) => {
@@ -99,8 +98,7 @@ const SearchBar = () => {
                   onClickChoice(description);
                 }}
                 key={key}
-                className="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900"
-              >
+                className="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
                 {description.description}
               </li>
             ))}
