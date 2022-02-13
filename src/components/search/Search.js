@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import SearchBar from "./SearchBar";
 import Widget from "../search/Widget";
+import { getDetails } from "use-places-autocomplete";
 
 const Search = () => {
   const [libraries] = useState(["places"]);
@@ -11,13 +12,22 @@ const Search = () => {
     libraries,
   });
 
+  const [placeId, setPlaceId] = useState();
+  const [placeDetails, setPlaceDetails] = useState();
+  const [showWidget, setShowWidget] = useState(false);
+
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
   return (
     <div className="bg-blue-800 w-screen h-screen">
-      <SearchBar isLoaded={isLoaded} />
-      <Widget />
+      <SearchBar
+        setPlaceDetails={setPlaceDetails}
+        setPlaceId={setPlaceId}
+        setShowWidget={setShowWidget}
+        isLoaded={isLoaded}
+      />
+      {showWidget && <Widget placeDetails={placeDetails} />}
     </div>
   );
 };
