@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { PointsMaterial } from "three";
 import star from "./../img/three-asset/star1.png";
+import Search from "../components/search/Search";
 import { useMousePosition } from "../utils/MouseEvent";
 import { useElapsedTimeByRenderer } from "../utils/ThreeUtils";
 
@@ -16,16 +17,13 @@ const Home = () => {
   const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
 
   useEffect(() => {
-    // init particleMesh
-    let particleMesh;
-
     // loader texture
     const loader = new THREE.TextureLoader();
     const circleParticle = loader.load(
       star,
       (e) => {
         // console.log(e);
-        particleScene(circleParticle);
+        // particleScene(circleParticle);
       },
       (e) => {
         // console.log(e);
@@ -85,6 +83,8 @@ const Home = () => {
     setRenderer(renderer);
   };
 
+  const backgroundColor = () => {};
+
   const mousemove = () => {
     if (getParticleMesh && renderer) {
       getParticleMesh.rotation.y =
@@ -95,10 +95,11 @@ const Home = () => {
 
   return (
     <div
-      ref={backgroundGalaxy}
+      // ref={backgroundGalaxy}
       className="bg-black h-screen w-screen text-white"
     >
-      {mousemove()}
+      {/* {mousemove()} */}
+      <Search />
     </div>
   );
 };

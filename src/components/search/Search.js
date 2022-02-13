@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import SearchBar from "./SearchBar";
 import Widget from "../search/Widget";
 
 const Search = () => {
+  const [libraries] = useState(["places"]);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
+    libraries,
   });
 
   if (loadError) return "Error";
@@ -14,7 +16,7 @@ const Search = () => {
 
   return (
     <div className="bg-blue-800 w-screen h-screen">
-      <SearchBar />
+      <SearchBar isLoaded={isLoaded} />
       <Widget />
     </div>
   );
