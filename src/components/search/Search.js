@@ -6,8 +6,7 @@ import { getDetails } from "use-places-autocomplete";
 
 const Search = () => {
   const { isLoaded, loadError } = useLoadScript({
-    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    googleMapsApiKey: "AIzaSyDKU_ytHe5l8QMy7WlW-RkAMYTxPjw_wtQ",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
 

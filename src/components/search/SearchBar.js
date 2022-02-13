@@ -15,7 +15,6 @@ const SearchBar = (props) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setCurrentCoord(position);
-        // console.log(currentCoord.coords.latitude);
       },
       () => null
     );
@@ -83,13 +82,11 @@ const SearchBar = (props) => {
           }}
           onKeyUp={(e) => {
             if (e.keyCode === 13) {
-              console.log(e.target.value);
             }
           }}
           disabled={!ready}
           value={select ? select : value}
         />
-        {console.log(value)}
         <ul className="bg-white border border-gray-100 w-full mt-2">
           {status === "OK" &&
             data.map((description, key) => (
