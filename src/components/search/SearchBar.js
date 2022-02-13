@@ -4,18 +4,29 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  const { isLoaded } = props;
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
   const [select, setSelect] = useState();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCurrentCoord(position);
-        // console.log(currentCoord.coords.latitude);
-      },
-      () => null
-    );
+    if (isLoaded) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCurrentCoord(position);
+          // console.log(position, "tong");
+        },
+        () => null
+      );
+    }
+
+    // const n = navigator.geolocation.watchPosition(
+    //   (success) => {
+    //     setCurrentCoord(success);
+    //     console.log(success, "tong");
+    //   },
+    //   () => null
+    // );
 
     // return currentPos.coords.latitude;
     return () => {};
@@ -46,7 +57,7 @@ const SearchBar = () => {
   });
   // get Latitude Longitude of the selected place
   const onClickChoice = (description) => {
-    console.log(description);
+    // console.log(description);
     setSelect(description.structured_formatting.main_text);
 
     // get lat lng uses place_id
@@ -59,10 +70,10 @@ const SearchBar = () => {
       .then((latLng) => {
         const { lat, lng } = latLng;
 
-        console.log("Coordinates: ", { lat, lng });
+        // console.log("Coordinates: ", { lat, lng });
       })
       .catch((error) => {
-        console.log("Error: ", error);
+        // console.log("Error: ", error);
       });
   };
 
@@ -90,7 +101,7 @@ const SearchBar = () => {
           disabled={!ready}
           value={select ? select : value}
         />
-        {console.log(value)}
+        {/* {console.log(value)} */}
         <ul className="bg-white border border-gray-100 w-full mt-2">
           {status === "OK" &&
             data.map((description, key) => (
