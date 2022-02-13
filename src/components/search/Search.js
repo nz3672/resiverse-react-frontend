@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import SearchBar from "./SearchBar";
 import Widget from "../search/Widget";
 import { getDetails } from "use-places-autocomplete";
 
 const Search = () => {
+  const [libraries] = useState(["places"]);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
+    libraries,
   });
 
   const [placeId, setPlaceId] = useState();
@@ -23,8 +25,8 @@ const Search = () => {
         setPlaceDetails={setPlaceDetails}
         setPlaceId={setPlaceId}
         setShowWidget={setShowWidget}
+        isLoaded={isLoaded}
       />
-
       {showWidget && <Widget placeDetails={placeDetails} />}
     </div>
   );

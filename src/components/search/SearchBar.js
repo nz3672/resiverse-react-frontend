@@ -9,16 +9,18 @@ import { getPlaceDetails } from "../../utils/GoogleMap";
 const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
   const [select, setSelect] = useState();
-  const { setPlaceId, setPlaceDetails, setShowWidget } = props;
+  const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCurrentCoord(position);
-      },
-      () => null
-    );
-
+    if (isLoaded) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCurrentCoord(position);
+          // console.log(position, "tong");
+        },
+        () => null
+      );
+    }
     // return currentPos.coords.latitude;
     return () => {};
   }, []);
@@ -49,6 +51,7 @@ const SearchBar = (props) => {
 
   // get Latitude Longitude of the selected place
   const onClickChoice = async (description) => {
+
     setSelect(description.structured_formatting.main_text);
     setShowWidget(true);
 
@@ -60,7 +63,6 @@ const SearchBar = (props) => {
     //Get selected place details
     const results = await getPlaceDetails(parameter);
     setPlaceDetails(results);
-
     setPlaceId(description.place_id);
   };
 
