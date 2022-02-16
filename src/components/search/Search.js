@@ -20,7 +20,7 @@ const Search = () => {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div className="bg-blue-800 w-screen h-screen">
+    <div className="absolute top-20 left-20 z-50">
       <SearchBar
         setPlaceDetails={setPlaceDetails}
         setPlaceId={setPlaceId}
