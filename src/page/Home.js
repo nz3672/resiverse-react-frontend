@@ -23,7 +23,7 @@ const Home = () => {
       star,
       (e) => {
         // console.log(e);
-        // particleScene(circleParticle);
+        particleScene(circleParticle);
       },
       (e) => {
         // console.log(e);
@@ -95,7 +95,7 @@ const Home = () => {
 
   return (
     <div
-      // ref={backgroundGalaxy}
+      ref={backgroundGalaxy}
       className="bg-black h-screen w-screen text-white"
     >
       {/* {mousemove()} */}

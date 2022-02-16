@@ -5,6 +5,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import { getPlaceDetails } from "../../utils/GoogleMap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
@@ -51,7 +52,6 @@ const SearchBar = (props) => {
 
   // get Latitude Longitude of the selected place
   const onClickChoice = async (description) => {
-
     setSelect(description.structured_formatting.main_text);
     setShowWidget(true);
 
@@ -73,35 +73,63 @@ const SearchBar = (props) => {
     }
   };
 
+  const clearInput = () => {
+    setSelect("");
+    setValue("");
+  };
+
   return (
     <>
-      <div className="relative ...">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={(e) => {
-            onInputChange(e);
-          }}
-          onKeyUp={(e) => {
-            if (e.keyCode === 13) {
-            }
-          }}
-          disabled={!ready}
-          value={select ? select : value}
-        />
-        <ul className="bg-white border border-gray-100 w-full mt-2">
-          {status === "OK" &&
-            data.map((description, key) => (
-              <li
-                onClick={() => {
-                  onClickChoice(description);
-                }}
-                key={key}
-                className="pl-8 pr-2 py-1 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
-                {description.description}
-              </li>
-            ))}
-        </ul>
+      <div className="">
+        <div className="h-[6vh] hover-input-home focus-input-home">
+          <div className="w-[20vw] h-[6vh] relative flex">
+            <input
+              className="rounded-3xl w-[20vw] p-4  outline-0 text-black"
+              type="text"
+              placeholder="Search"
+              onChange={(e) => {
+                onInputChange(e);
+              }}
+              onKeyUp={(e) => {
+                if (e.keyCode === 13) {
+                }
+              }}
+              disabled={!ready}
+              value={select ? select : value}
+            />
+            <FontAwesomeIcon
+              icon="fa-solid fa-circle-xmark"
+              className={`${
+                value
+                  ? "absolute self-center w-[2vw] h-auto right-3 text-black cursor-pointer opacity-30 hover:opacity-50"
+                  : "hidden"
+              }`}
+              onClick={() => clearInput()}
+            />
+          </div>
+        </div>
+        <div>
+          <ul
+            className={`${
+              status === "OK"
+                ? "bg-white rounded-xl text-black mt-2 divide-y "
+                : "hidden"
+            }`}
+          >
+            {status === "OK" &&
+              data.map((description, key) => (
+                <li
+                  onClick={() => {
+                    onClickChoice(description);
+                  }}
+                  key={key}
+                  className="p-2 rounded-xl hover:bg-purple-200 relative cursor-pointer"
+                >
+                  {description.description}
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
     </>
   );
