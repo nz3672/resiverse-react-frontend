@@ -117,25 +117,6 @@ const SearchBar = (props) => {
                 : "hidden"
             }`}
           >
-            {/* {status === "OK" &&
-              data.map((description, key) => (
-                <li
-                  onClick={() => {
-                    if (
-                      description.types.length == 2 &&
-                      description.types.includes("establishment") &&
-                      description.types.includes("point_of_interest")
-                    ) {
-                      console.log(description.types);
-                      onClickChoice(description);
-                    }
-                  }}
-                  key={key}
-                  className="p-2 rounded-xl hover:bg-purple-200 relative cursor-pointer"
-                >
-                  {description.description}
-                </li>
-              ))} */}
             {status === "OK" &&
               data.map((description, key) => {
                 return (
