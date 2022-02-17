@@ -91,6 +91,7 @@ const SearchBar = (props) => {
                 onInputChange(e);
               }}
               onKeyUp={(e) => {
+                // search by area
                 if (e.keyCode === 13) {
                 }
               }}
@@ -117,17 +118,23 @@ const SearchBar = (props) => {
             }`}
           >
             {status === "OK" &&
-              data.map((description, key) => (
-                <li
-                  onClick={() => {
-                    onClickChoice(description);
-                  }}
-                  key={key}
-                  className="p-2 rounded-xl hover:bg-purple-200 relative cursor-pointer"
-                >
-                  {description.description}
-                </li>
-              ))}
+              data.map((description, key) => {
+                return (
+                  description.types.length == 2 &&
+                  description.types.includes("establishment") &&
+                  description.types.includes("point_of_interest") && (
+                    <li
+                      onClick={() => {
+                        onClickChoice(description);
+                      }}
+                      key={key}
+                      className="p-2 rounded-xl hover:bg-purple-200 relative cursor-pointer"
+                    >
+                      {description.description}
+                    </li>
+                  )
+                );
+              })}
           </ul>
         </div>
       </div>
