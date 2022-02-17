@@ -27,7 +27,9 @@ const Search = () => {
         setShowWidget={setShowWidget}
         isLoaded={isLoaded}
       />
-      {showWidget && <Widget placeDetails={placeDetails} />}
+      <div className="mt-4">
+        {showWidget && <Widget placeDetails={placeDetails} />}
+      </div>
     </div>
   );
 };
