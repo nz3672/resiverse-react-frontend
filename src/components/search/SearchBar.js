@@ -131,14 +131,15 @@ const SearchBar = (props) => {
           <ul
             className={`${
               dropdown
-                ? "origin-top-left py-1 absolute left-0 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-show"
-                : "origin-top-left py-1 absolute left-0 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-hidden"
+                ? "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-show"
+                : "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-hidden"
             }`}
           >
             <li
               className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
               onClick={() => {
                 setSearchTitle("Name");
+                setDropdown(false);
               }}
             >
               Name
@@ -147,6 +148,7 @@ const SearchBar = (props) => {
               className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
               onClick={() => {
                 setSearchTitle("City");
+                setDropdown(false);
               }}
             >
               City

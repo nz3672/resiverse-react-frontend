@@ -94,13 +94,18 @@ const Home = () => {
   };
 
   return (
-    <div
-      ref={backgroundGalaxy}
-      className="bg-black h-screen w-screen text-white"
-    >
-      {/* {mousemove()} */}
-      <Search />
-    </div>
+    <>
+      {/* <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-pink-500 mb-3">
+        Navbar
+      </nav> */}
+      <div
+        ref={backgroundGalaxy}
+        className="bg-black h-screen w-screen text-white"
+      >
+        {/* {mousemove()} */}
+        <Search />
+      </div>
+    </>
   );
 };
 
