@@ -17,10 +17,8 @@ import {
   fragmentShader,
   vertexShader,
 } from "../utils/ThreeUtils";
-import { useElapsedTimeByRenderer } from "../utils/ThreeUtils";
 import { useDispatch, useSelector } from "react-redux";
 import { closePopup, clickPopup } from "../components/features/popUpSlice";
-
 
 const Home = () => {
   const backgroundGalaxy = useRef(null);
@@ -203,7 +201,7 @@ const Home = () => {
         ref={backgroundGalaxy}
         className="bg-black h-screen w-screen text-white"
       >
-        {/* {mousemove()} */}
+        {mousemove()}
         <Search />
         {status == "SignIn" ? (
           <SignIn />
