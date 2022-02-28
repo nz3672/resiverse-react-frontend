@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { PointsMaterial } from "three";
 import star from "./../img/three-asset/star1.png";
+import SignIn from "../components/SignInUp/SignIn";
+import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
 import { useMousePosition } from "../utils/MouseEvent";
 import {
@@ -15,6 +17,10 @@ import {
   fragmentShader,
   vertexShader,
 } from "../utils/ThreeUtils";
+import { useElapsedTimeByRenderer } from "../utils/ThreeUtils";
+import { useDispatch, useSelector } from "react-redux";
+import { closePopup, clickPopup } from "../components/features/popUpSlice";
+
 
 const Home = () => {
   const backgroundGalaxy = useRef(null);
@@ -28,6 +34,8 @@ const Home = () => {
   const [getGradientBgMesh, setGradientBgMesh] = useState(null);
   const clock = new THREE.Clock();
   const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
+  const [getPopUpPage, setPopUpPage] = useState(null);
+  const { status } = useSelector((state) => state.popupSignInOut);
 
   let t = 0;
   let j = 0;
@@ -40,9 +48,9 @@ const Home = () => {
     const loader = new THREE.TextureLoader();
     const circleParticle = loader.load(
       star,
-      (e) => {
+      async (e) => {
         // console.log(e);
-        particleScene(circleParticle);
+        await particleScene(circleParticle);
       },
       (e) => {
         // console.log(e);
@@ -190,12 +198,20 @@ const Home = () => {
   };
 
   return (
-    <div
-      ref={backgroundGalaxy}
-      className="bg-black h-screen w-screen text-white">
-      {mousemove()}
-      <Search />
-    </div>
+    <>
+      <div
+        ref={backgroundGalaxy}
+        className="bg-black h-screen w-screen text-white"
+      >
+        {/* {mousemove()} */}
+        <Search />
+        {status == "SignIn" ? (
+          <SignIn />
+        ) : status == "SignUp" ? (
+          <SignUp />
+        ) : null}
+      </div>
+    </>
   );
 };
 

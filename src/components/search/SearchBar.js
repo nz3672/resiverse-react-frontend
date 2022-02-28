@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import usePlacesAutocomplete, {
-  getDetails,
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import usePlacesAutocomplete from "use-places-autocomplete";
 import { getPlaceDetails } from "../../utils/GoogleMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
   const [select, setSelect] = useState();
+  const [dropdown, setDropdown] = useState(false);
+  const [searchTitle, setSearchTitle] = useState("Search By");
   const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
 
   useEffect(() => {
@@ -78,42 +76,90 @@ const SearchBar = (props) => {
     setValue("");
   };
 
+  const dropdownEvent = () => {
+    if (dropdown) {
+      setDropdown(false);
+    } else {
+      setDropdown(true);
+    }
+  };
+
   return (
     <>
       <div className="">
-        <div className="h-[6vh] hover-input-home focus-input-home">
-          <div className="w-[20vw] h-[6vh] relative flex">
-            <input
-              className="rounded-3xl w-[20vw] p-4  outline-0 text-black"
-              type="text"
-              placeholder="Search"
-              onChange={(e) => {
-                onInputChange(e);
+        <div className="h-[6vh]">
+          <div className="w-[30vw] h-[6vh] flex">
+            <button
+              type="button"
+              className="hover-input-home inline-flex justify-center font-medium outline-0 w-[8vw] rounded-xl px-4 py-2 bg-white text-lg text-gray-700 focus:outline-0"
+              onClick={() => {
+                dropdownEvent();
               }}
-              onKeyUp={(e) => {
-                // search by area
-                if (e.keyCode === 13) {
-                }
-              }}
-              disabled={!ready}
-              value={select ? select : value}
-            />
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle-xmark"
-              className={`${
-                value
-                  ? "absolute self-center w-[2vw] h-auto right-3 text-black cursor-pointer opacity-30 hover:opacity-50"
-                  : "hidden"
-              }`}
-              onClick={() => clearInput()}
-            />
+            >
+              <h2 className="self-center">{searchTitle}</h2>
+            </button>
+
+            <div className="hover-input-home relative flex">
+              <input
+                className="rounded-xl w-[22vw] p-4 ml-2 outline-0 text-black"
+                type="text"
+                placeholder="Search"
+                onChange={(e) => {
+                  onInputChange(e);
+                }}
+                onKeyUp={(e) => {
+                  // search by area
+                  if (e.keyCode === 13) {
+                  }
+                }}
+                disabled={!ready}
+                value={select ? select : value}
+              />
+              <FontAwesomeIcon
+                icon="fa-regular fa-circle-xmark"
+                className={`${
+                  value
+                    ? "absolute self-center w-[2vw] h-auto right-3 text-black cursor-pointer opacity-30 hover:opacity-50"
+                    : "hidden"
+                }`}
+                onClick={() => clearInput()}
+              />
+            </div>
           </div>
+
+          {/* dropdown menu */}
+          <ul
+            className={`${
+              dropdown
+                ? "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-show"
+                : "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-hidden"
+            }`}
+          >
+            <li
+              className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+              onClick={() => {
+                setSearchTitle("Name");
+                setDropdown(false);
+              }}
+            >
+              Name
+            </li>
+            <li
+              className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
+              onClick={() => {
+                setSearchTitle("City");
+                setDropdown(false);
+              }}
+            >
+              City
+            </li>
+          </ul>
         </div>
         <div>
           <ul
             className={`${
               status === "OK"
-                ? "bg-white rounded-xl text-black mt-2 divide-y "
+                ? "bg-white fixed rounded-xl text-black mt-2 divide-y "
                 : "hidden"
             }`}
           >
