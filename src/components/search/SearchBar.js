@@ -116,7 +116,7 @@ const SearchBar = (props) => {
                 value={select ? select : value}
               />
               <FontAwesomeIcon
-                icon="fa-solid fa-circle-xmark"
+                icon="fa-regular fa-circle-xmark"
                 className={`${
                   value
                     ? "absolute self-center w-[2vw] h-auto right-3 text-black cursor-pointer opacity-30 hover:opacity-50"

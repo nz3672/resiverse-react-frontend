@@ -2,9 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { PointsMaterial } from "three";
 import star from "./../img/three-asset/star1.png";
+import SignIn from "../components/SignInUp/SignIn";
+import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
 import { useMousePosition } from "../utils/MouseEvent";
 import { useElapsedTimeByRenderer } from "../utils/ThreeUtils";
+import { useDispatch, useSelector } from "react-redux";
+import { closePopup, clickPopup } from "../components/features/popUpSlice";
 
 const Home = () => {
   const backgroundGalaxy = useRef(null);
@@ -15,15 +19,17 @@ const Home = () => {
   const [getParticleMesh, setParticleMesh] = useState(null);
   const clock = new THREE.Clock();
   const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
+  const [getPopUpPage, setPopUpPage] = useState(null);
+  const { status } = useSelector((state) => state.popupSignInOut);
 
   useEffect(() => {
     // loader texture
     const loader = new THREE.TextureLoader();
     const circleParticle = loader.load(
       star,
-      (e) => {
+      async (e) => {
         // console.log(e);
-        particleScene(circleParticle);
+        await particleScene(circleParticle);
       },
       (e) => {
         // console.log(e);
@@ -95,15 +101,17 @@ const Home = () => {
 
   return (
     <>
-      {/* <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-pink-500 mb-3">
-        Navbar
-      </nav> */}
       <div
         ref={backgroundGalaxy}
         className="bg-black h-screen w-screen text-white"
       >
         {/* {mousemove()} */}
         <Search />
+        {status == "SignIn" ? (
+          <SignIn />
+        ) : status == "SignUp" ? (
+          <SignUp />
+        ) : null}
       </div>
     </>
   );
