@@ -1,17 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
-import Search from "./components/search/Search";
-import SearchBar from "./components/search/SearchBar";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 library.add(faCircleXmark);
 function App() {
   return (
-    <div>
-      <Home />
-      {/* <Search /> */}
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/signup" element={<SignUp />} /> */}
+          {/* <Route path="/signin" element={<SignIn />} /> */}
+        </Routes>
+      </Router>
+    </>
   );
 }
 

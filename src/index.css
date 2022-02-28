@@ -28,9 +28,13 @@
 }
 
 .hover-input-home {
-  @apply transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300;
+  @apply transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300;
 }
 
-.focus-input-home {
-  /* @apply focus:shadow-lg focus:shadow-indigo-500/50; */
+.dropdow-menu-anim-show {
+  @apply transition ease-in-out delay-150 duration-300 group-focus:scale-100;
+}
+
+.dropdow-menu-anim-hidden {
+  @apply transition ease-in-out delay-150 duration-300 scale-0 origin-top-left;
 }
