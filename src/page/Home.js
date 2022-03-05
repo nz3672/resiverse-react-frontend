@@ -203,6 +203,7 @@ const Home = () => {
       >
         {mousemove()}
         <Search />
+        {/* {console.log(status)} */}
         {status == "SignIn" ? (
           <SignIn />
         ) : status == "SignUp" ? (

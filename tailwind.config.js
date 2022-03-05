@@ -8,6 +8,9 @@ module.exports = {
       height: {
         84: "336px",
       },
+      minWidth: {
+        "320px": "320px",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],
