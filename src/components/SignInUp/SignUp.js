@@ -33,14 +33,28 @@ const SignUp = () => {
     bankName,
     bankId,
   } = form;
-
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.authStore
   );
   const { status } = useSelector((state) => state.popupSignInOut);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("dsds");
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+      dispatch(closePopup());
+    }
+
+    dispatch(reset());
+
+    return () => {};
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -87,27 +101,13 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
-    if (isSuccess || user) {
-      navigate("/");
-      dispatch(closePopup());
-    }
-
-    dispatch(reset());
-
-    return () => {};
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
-
-  if (isLoading) {
-    return <img src={spinner1}></img>;
-  }
+  // if (isLoading) {
+  //   return <img src={spinner1}></img>;
+  // }
 
   return (
     <>
+      {console.log("tt")}
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="bg-white text-black rounded-xl px-10 py-8 min-w-[320px] rounded-xl w-[20vw]">
           {/* header */}
