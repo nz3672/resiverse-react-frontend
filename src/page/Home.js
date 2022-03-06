@@ -199,8 +199,7 @@ const Home = () => {
     <>
       <div
         ref={backgroundGalaxy}
-        className="bg-black h-screen w-screen text-white"
-      >
+        className="bg-black h-screen w-screen text-white">
         {mousemove()}
         <Search />
         {/* {console.log(status)} */}

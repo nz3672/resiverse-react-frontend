@@ -107,7 +107,6 @@ const SignUp = () => {
 
   return (
     <>
-      {console.log("tt")}
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
         <div className="bg-white text-black rounded-xl px-10 py-8 min-w-[320px] rounded-xl w-[20vw]">
           {/* header */}
@@ -116,8 +115,7 @@ const SignUp = () => {
             <button
               onClick={() => {
                 dispatch(closePopup());
-              }}
-            >
+              }}>
               <FontAwesomeIcon
                 icon="fa-regular fa-circle-xmark"
                 className="text-black"
@@ -220,15 +218,13 @@ const SignUp = () => {
                   (isError && message) || msgErrToast
                     ? "font-['SarabunBold'] text-red-500 mb-2 justify-self-center"
                     : "hidden"
-                }`}
-              >
+                }`}>
                 {message ? message : msgErrToast}
               </h1>
 
               <button
                 className="bg-fuchsia-600 text-white rounded-lg w-full py-1 font-['SarabunBold']"
-                type="submit"
-              >
+                type="submit">
                 Sign In
               </button>
             </form>
