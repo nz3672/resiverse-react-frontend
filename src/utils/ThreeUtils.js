@@ -21,7 +21,6 @@ export const useElapsedTimeByRenderer = (clock) => {
   // console.log(elapsed);
   return elapsed;
 };
-
 export const randomInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };

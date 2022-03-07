@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { PointsMaterial } from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
 import star from "./../img/three-asset/star1.png";
+import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
 import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
@@ -62,8 +65,20 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    // loader model
+    if (getScene) {
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load(globe, (gltf) => {
+        const root = gltf.scene;
+        root.position.set(4, 0, -15);
+        root.scale.multiplyScalar(2);
+        getScene.add(root);
+      });
+    }
     if (getGradientBgMesh && getRenderer) {
       requestRef.current = requestAnimationFrame(animate);
+
+      window.addEventListener("resize", handleResize);
       return () => cancelAnimationFrame(requestRef.current);
     }
     return;
@@ -99,7 +114,7 @@ const Home = () => {
   const particleScene = (circleParticle) => {
     // declare basic scene, camera, renderer threejs
     const camera = new THREE.PerspectiveCamera(
-      75,
+      20,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
@@ -108,7 +123,7 @@ const Home = () => {
     camera.position.y = 0;
     camera.position.z = 0;
     const scene = new THREE.Scene();
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     setScene(scene);
     setCamera(camera);
 
@@ -130,15 +145,24 @@ const Home = () => {
       new THREE.BufferAttribute(posArray, 3)
     );
     const particleMaterial = new PointsMaterial({
-      size: 0.005,
+      size: 0.01,
       map: circleParticle,
       transparent: true,
     });
     const particleMesh = new THREE.Points(particlesGeometry, particleMaterial);
     const gradientBg = gradientBgMesh();
+    particleMesh.position.set(0, 0, -3);
+
+    //TBD
+    const environment = new RoomEnvironment();
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmremGenerator.fromScene(environment).texture;
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(new THREE.Color("#023d9c", "#bc42f5"));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.6;
+    renderer.outputEncoding = THREE.sRGBEncoding;
     scene.add(particleMesh);
     scene.add(gradientBg);
     renderer.render(scene, camera);
@@ -183,7 +207,14 @@ const Home = () => {
     }
   };
 
-  const backgroundColor = () => {};
+  const handleResize = () => {
+    if (getCamera && getRenderer) {
+      getCamera.aspect = window.innerWidth / window.innerHeight;
+      getCamera.updateProjectionMatrix();
+
+      getRenderer.setSize(window.innerWidth, window.innerHeight);
+    }
+  };
 
   const mousemove = () => {
     if (getParticleMesh && getRenderer) {
