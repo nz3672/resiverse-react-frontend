@@ -1,9 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closePopup } from "../features/popUpSlice";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../features/auth/authSlice";
 const SignIn = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
   const { status } = useSelector((state) => state.popupSignInOut);
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.authStore
+  );
+  const { email, password } = form;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess || user) {
+      navigate("/");
+      dispatch(closePopup());
+    }
+
+    return;
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const userData = {
+      u_email: email,
+      u_password: password,
+    };
+    dispatch(login(userData));
+  };
 
   return (
     <>
@@ -15,8 +52,7 @@ const SignIn = () => {
             <button
               onClick={() => {
                 dispatch(closePopup());
-              }}
-            >
+              }}>
               <FontAwesomeIcon
                 icon="fa-regular fa-circle-xmark"
                 className="text-black"
@@ -31,22 +67,33 @@ const SignIn = () => {
                 className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
                 name="email"
                 type="email"
+                value={email}
                 placeholder="Email"
+                onChange={onChange}
               />
               <input
                 className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
                 name="password"
                 type="password"
+                value={password}
                 placeholder="Password"
+                onChange={onChange}
               />
             </div>
 
             {/* error */}
-            <h1 className="hidden font-['SarabunBold'] text-red-500 mb-2 justify-self-center">
-              wrong
+            <h1
+              className={`${
+                isError && message
+                  ? "font-['SarabunBold'] text-red-500 mb-2 justify-self-center"
+                  : "hidden"
+              }`}>
+              Your email or password wrong.
             </h1>
 
-            <button className="bg-fuchsia-600 text-white rounded-lg py-1 font-['SarabunBold'] mb-2">
+            <button
+              className="bg-fuchsia-600 text-white rounded-lg py-1 font-['SarabunBold'] mb-2"
+              onClick={onSubmit}>
               Sign In
             </button>
 
