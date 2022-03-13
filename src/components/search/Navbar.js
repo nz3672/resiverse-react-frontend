@@ -36,9 +36,14 @@ const Navbar = (props) => {
         <div>
           <button>{user.u_username}</button>
           <button
+            className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
+            onClick={() => {}}>
+            Add Resident
+          </button>
+          <button
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
             onClick={onLogout}>
-            SignOut
+            Sign Out
           </button>
         </div>
       ) : (
