@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // In package.json, set proxy
-const API_URL = "api/users/";
+const API_URL = "account/api/users/";
 
 // Register user
 const register = async (userData) => {

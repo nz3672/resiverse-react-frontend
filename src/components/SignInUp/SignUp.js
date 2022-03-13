@@ -115,7 +115,8 @@ const SignUp = () => {
             <button
               onClick={() => {
                 dispatch(closePopup());
-              }}>
+              }}
+            >
               <FontAwesomeIcon
                 icon="fa-regular fa-circle-xmark"
                 className="text-black"
@@ -218,14 +219,16 @@ const SignUp = () => {
                   (isError && message) || msgErrToast
                     ? "font-['SarabunBold'] text-red-500 mb-2 justify-self-center"
                     : "hidden"
-                }`}>
+                }`}
+              >
                 {message ? message : msgErrToast}
               </h1>
 
               <button
                 className="bg-fuchsia-600 text-white rounded-lg w-full py-1 font-['SarabunBold']"
-                type="submit">
-                Sign In
+                type="submit"
+              >
+                Sign Up
               </button>
             </form>
 

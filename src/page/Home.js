@@ -249,10 +249,11 @@ const Home = () => {
     <>
       <div
         ref={backgroundGalaxy}
-        className="bg-black h-screen w-screen text-white">
+        className="bg-black h-screen w-screen text-white"
+      >
         {mousemove()}
-        {/* <Search /> */}
-        <AddResident />
+        <Search />
+        {/* <AddResident /> */}
         {/* <button
           type="button"
           className="z-50"
