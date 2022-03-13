@@ -3,11 +3,13 @@ import * as THREE from "three";
 import { PointsMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
+import { gsap, Power3 } from "gsap";
 import star from "./../img/three-asset/star1.png";
 import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
 import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
+import AddResident from "../components/search/sidebars/AddResident";
 import { useMousePosition } from "../utils/MouseEvent";
 import {
   useElapsedTimeByRenderer,
@@ -22,17 +24,20 @@ import {
 } from "../utils/ThreeUtils";
 import { useDispatch, useSelector } from "react-redux";
 import { closePopup, clickPopup } from "../components/features/popUpSlice";
+import { Vector3 } from "three";
 
 const Home = () => {
   const backgroundGalaxy = useRef(null);
   const requestRef = useRef();
   const previousTimeRef = useRef();
+  const [fulldetails, setFullDetails] = useState(true);
   const [getRenderer, setRenderer] = useState(null);
   const [getScene, setScene] = useState(null);
   const [getCamera, setCamera] = useState(null);
   const mousePosition = useMousePosition();
   const [getParticleMesh, setParticleMesh] = useState(null);
   const [getGradientBgMesh, setGradientBgMesh] = useState(null);
+  const [getGlobeMesh, setGlobeMesh] = useState(null);
   const clock = new THREE.Clock();
   const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
   const [getPopUpPage, setPopUpPage] = useState(null);
@@ -72,6 +77,7 @@ const Home = () => {
         const root = gltf.scene;
         root.position.set(4, 0, -15);
         root.scale.multiplyScalar(2);
+        setGlobeMesh(root);
         getScene.add(root);
       });
     }
@@ -216,6 +222,19 @@ const Home = () => {
     }
   };
 
+  const handleOnClick = () => {
+    if (!gsap.isTweening(getGlobeMesh.position)) {
+      gsap.to(getGlobeMesh.position, {
+        duration: 1.22,
+        x: fulldetails ? -6 : 4,
+        y: fulldetails ? -3 : 0,
+        z: fulldetails ? -19 : -15,
+        ease: Power3.easeInOut,
+      });
+      setFullDetails(!fulldetails);
+    }
+  };
+
   const mousemove = () => {
     if (getParticleMesh && getRenderer) {
       getParticleMesh.rotation.y =
@@ -232,7 +251,15 @@ const Home = () => {
         ref={backgroundGalaxy}
         className="bg-black h-screen w-screen text-white">
         {mousemove()}
-        <Search />
+        {/* <Search /> */}
+        <AddResident />
+        {/* <button
+          type="button"
+          className="z-50"
+          style={{ position: "absolute" }}
+          onClick={handleOnClick}>
+          Click Me!
+        </button> */}
         {/* {console.log(status)} */}
         {status == "SignIn" ? (
           <SignIn />
