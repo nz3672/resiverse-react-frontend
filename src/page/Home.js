@@ -251,14 +251,15 @@ const Home = () => {
         ref={backgroundGalaxy}
         className="bg-black h-screen w-screen text-white"
       >
-        {mousemove()}
+        {/* {mousemove()} */}
         <Search />
         {/* <AddResident /> */}
         {/* <button
           type="button"
           className="z-50"
           style={{ position: "absolute" }}
-          onClick={handleOnClick}>
+          onClick={handleOnClick}
+        >
           Click Me!
         </button> */}
         {/* {console.log(status)} */}
