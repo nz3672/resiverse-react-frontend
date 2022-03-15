@@ -47,7 +47,7 @@ const Navbar = (props) => {
           <button
             onClick={() => {
               chooseSidebarPage("Profile");
-              sidebarPage("Opened");
+              sidebarPage(true);
             }}>
             {user.u_username}
           </button>
@@ -55,7 +55,7 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               chooseSidebarPage("AddResidence");
-              sidebarPage("Opened");
+              sidebarPage(true);
             }}>
             Add Resident
           </button>

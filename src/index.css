@@ -38,3 +38,28 @@
 .dropdow-menu-anim-hidden {
   @apply transition ease-in-out delay-150 duration-300 scale-0 origin-top-left;
 }
+
+.fade-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms, transform 1000ms 0.5s;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms, transform 1000ms;
+}

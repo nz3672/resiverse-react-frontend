@@ -4,6 +4,11 @@ import { PointsMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
 import { gsap, Power3 } from "gsap";
+import {
+  CSSTransition,
+  TransitionGroup,
+  SwitchTransition,
+} from "react-transition-group";
 import star from "./../img/three-asset/star1.png";
 import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
@@ -229,7 +234,7 @@ const Home = () => {
 
   const handleGlobe = () => {
     if (getGlobeMesh) {
-      if (sidebarstatus == "Opened") {
+      if (sidebarstatus) {
         gsap.to(getGlobeMesh.position, {
           duration: 1.22,
           x: -6,
@@ -237,7 +242,7 @@ const Home = () => {
           z: -19,
           ease: Power3.easeInOut,
         });
-      } else if (sidebarstatus == "Closed") {
+      } else {
         gsap.to(getGlobeMesh.position, {
           duration: 1.22,
           delay: 0.2,
@@ -265,14 +270,21 @@ const Home = () => {
       <div
         ref={backgroundGalaxy}
         className="relative overflow-hidden bg-black h-screen w-screen text-white">
-        <div className={sidebarstatus != "Opened" ? "" : "hidden"}>
-          <Search />
-          {status == "SignIn" ? (
-            <SignIn />
-          ) : status == "SignUp" ? (
-            <SignUp />
-          ) : null}
-        </div>
+        <CSSTransition
+          in={!sidebarstatus}
+          timeout={{ enter: 4000, exit: 1000 }}
+          classNames="fade"
+          unmountOnExit
+          appear>
+          <div>
+            <Search />
+            {status == "SignIn" ? (
+              <SignIn />
+            ) : status == "SignUp" ? (
+              <SignUp />
+            ) : null}
+          </div>
+        </CSSTransition>
         <SideBar />
       </div>
     </>

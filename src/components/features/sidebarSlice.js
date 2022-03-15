@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 export const sidebarSlice = createSlice({
   name: "sidebarSlice",
   initialState: {
-    sidebarstatus: "Closed",
+    sidebarstatus: false,
   },
   reducers: {
     closeSidebar: (state) => {
       if (state) {
-        state.sidebarstatus = "Closed";
+        state.sidebarstatus = false;
       }
     },
     openSidebar: (state, action) => {
