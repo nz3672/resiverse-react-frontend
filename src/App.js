@@ -6,8 +6,9 @@ import Home from "./page/Home";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 library.add(faCircleXmark);
+library.add(faAngleLeft);
 function App() {
   return (
     <>
