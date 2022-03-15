@@ -1,11 +1,10 @@
 import React from "react";
-import Profile from "../../../page/Profile";
-import AddResidence from "../../../page/AddResidence";
-import ShowResidence from "../../../page/ShowResidence";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
+import Profile from "../../page/Profile";
+import AddResidence from "../../page/AddResidence";
+import ShowResidence from "../../page/ShowResidence";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { closeSidebar } from "../../features/sidebarSlice";
+import { closeSidebar } from "../features/sidebarSlice";
 
 const SideBar = () => {
   const dispatch = useDispatch();
