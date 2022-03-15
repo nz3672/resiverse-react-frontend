@@ -1,9 +1,11 @@
 import React from "react";
 
 const Widget = (props) => {
-  const { placeDetails } = props;
+  const { placeDetails, i } = props;
   return (
-    <div className="cursor-pointer hover-widget hover:bg-pink-500 rounded-3xl shadow-xl w-[190px] h-[270px] desktop:w-[280px] desktop:h-[370px] bg-white bg-opacity-50 laptop:pb-4 laptop:px-4 laptop:pt-5 pb-2 px-2 pt-2">
+    <div
+      key={i}
+      className="cursor-pointer hover-widget hover:bg-pink-500 rounded-3xl shadow-xl w-[190px] h-[270px] desktop:w-[280px] desktop:h-[370px] bg-white bg-opacity-50 laptop:pb-4 laptop:px-4 laptop:pt-5 pb-2 px-2 pt-2">
       <div className="w-full min-h-[50%] h-[55%] max-h-[60%]">
         <img
           alt="building-placeholder"
@@ -13,8 +15,7 @@ const Widget = (props) => {
               ? placeDetails.imageURL
               : require("../../img/placeholder/building-placeholder-4-3.png")
           }
-          className="object-contain rounded-xl w-full h-full"
-        ></img>
+          className="object-contain rounded-xl w-full h-full"></img>
       </div>
 
       <div className="mt-4 w-full h-auto">
@@ -22,8 +23,7 @@ const Widget = (props) => {
           <img
             alt="verify-badge"
             src={require("../../img/icon/verify-badge1.png")}
-            className="object-contain rounded-xl w-7 pr-1 self-center"
-          ></img>
+            className="object-contain rounded-xl w-7 pr-1 self-center"></img>
           <h2 className="font-['SarabunBold'] text-xl truncate w-full">
             {placeDetails ? placeDetails.name : ""}
           </h2>
@@ -50,14 +50,13 @@ const Widget = (props) => {
         </div>
 
         <div id="buff" className="mt-2 flex">
-          {placeDetails.facilities.map((facility) => {
+          {placeDetails.facilities.map((facility, i) => {
             return (
-              <div className="has-tooltip mr-1">
+              <div key={i} className="has-tooltip mr-1">
                 <img
                   alt="verify-badge"
                   src={require("../../img/icon/buff/pet-buff.png")}
-                  className=" object-contain rounded-xl w-9 pr-1 self-center"
-                ></img>
+                  className=" object-contain rounded-xl w-9 pr-1 self-center"></img>
                 <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 mb-10 text-sm">
                   {facility.faName}
                 </span>

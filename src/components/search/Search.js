@@ -46,9 +46,9 @@ const Search = () => {
           <div className="ml-5 grid-cols-1 desktop:ml-20 grid grid-cols-2 tablet:grid-cols-2 laptop:grid-cols-3 gap-4 place-content-center">
             {showWidget && <Widget placeDetails={placeDetails} />}
             {!showWidget &&
-              widgets.map((widget) => {
+              widgets.map((widget, i) => {
                 // console.log(widget);
-                return <Widget placeDetails={widget} />;
+                return <Widget key={i} placeDetails={widget} />;
               })}
           </div>
           <div className="w-0 h-0 desktop:w-96 desktop:h-96 phone:w-0 phone:h-0"></div>
