@@ -4,12 +4,13 @@ import { PointsMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
 import { gsap, Power3 } from "gsap";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 import star from "./../img/three-asset/star1.png";
 import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
 import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
-import AddResident from "../components/search/sidebars/AddResident";
+import SideBar from "../components/search/sidebars/SideBar";
 import { useMousePosition } from "../utils/MouseEvent";
 import {
   useElapsedTimeByRenderer,
@@ -42,6 +43,7 @@ const Home = () => {
   const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
   const [getPopUpPage, setPopUpPage] = useState(null);
   const { status } = useSelector((state) => state.popupSignInOut);
+  const { sidebarstatus } = useSelector((state) => state.sidebarHome);
 
   let t = 0;
   let j = 0;
@@ -89,6 +91,10 @@ const Home = () => {
     }
     return;
   }, [getGradientBgMesh]);
+
+  useEffect(() => {
+    handleGlobe();
+  }, [sidebarstatus]);
 
   const gradientBgMesh = () => {
     var randomisePosition = new THREE.Vector2(1, 2);
@@ -222,16 +228,26 @@ const Home = () => {
     }
   };
 
-  const handleOnClick = () => {
-    if (!gsap.isTweening(getGlobeMesh.position)) {
-      gsap.to(getGlobeMesh.position, {
-        duration: 1.22,
-        x: fulldetails ? -6 : 4,
-        y: fulldetails ? -3 : 0,
-        z: fulldetails ? -19 : -15,
-        ease: Power3.easeInOut,
-      });
-      setFullDetails(!fulldetails);
+  const handleGlobe = () => {
+    if (getGlobeMesh) {
+      if (sidebarstatus == "Opened") {
+        gsap.to(getGlobeMesh.position, {
+          duration: 1.22,
+          x: -6,
+          y: -3,
+          z: -19,
+          ease: Power3.easeInOut,
+        });
+      } else if (sidebarstatus == "Closed") {
+        gsap.to(getGlobeMesh.position, {
+          duration: 1.22,
+          delay: 0.2,
+          x: 4,
+          y: 0,
+          z: -15,
+          ease: Power3.easeInOut,
+        });
+      }
     }
   };
 
@@ -249,24 +265,16 @@ const Home = () => {
     <>
       <div
         ref={backgroundGalaxy}
-        className="bg-black h-screen w-screen text-white"
-      >
-        {mousemove()}
-        <Search />
-        {/* <AddResident /> */}
-        {/* <button
-          type="button"
-          className="z-50"
-          style={{ position: "absolute" }}
-          onClick={handleOnClick}>
-          Click Me!
-        </button> */}
-        {/* {console.log(status)} */}
-        {status == "SignIn" ? (
-          <SignIn />
-        ) : status == "SignUp" ? (
-          <SignUp />
-        ) : null}
+        className="relative overflow-hidden bg-black h-screen w-screen text-white">
+        <div className={sidebarstatus != "Opened" ? "" : "hidden"}>
+          <Search />
+          {status == "SignIn" ? (
+            <SignIn />
+          ) : status == "SignUp" ? (
+            <SignUp />
+          ) : null}
+        </div>
+        <SideBar />
       </div>
     </>
   );

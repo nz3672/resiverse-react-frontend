@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closePopup, clickPopup } from "../features/popUpSlice";
 import { logout, reset } from "../features/auth/authSlice";
+import { openSidebar } from "../features/sidebarSlice";
+import { chooseSidebar } from "../features/sidebarShowSlice";
 
 const Navbar = (props) => {
   const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
@@ -15,6 +17,14 @@ const Navbar = (props) => {
 
   const popupPage = (page) => {
     dispatch(clickPopup(page));
+  };
+
+  const sidebarPage = (page) => {
+    dispatch(openSidebar(page));
+  };
+
+  const chooseSidebarPage = (page) => {
+    dispatch(chooseSidebar(page));
   };
 
   // Logout
@@ -34,17 +44,24 @@ const Navbar = (props) => {
       />
       {user ? (
         <div>
-          <button>{user.u_username}</button>
+          <button
+            onClick={() => {
+              chooseSidebarPage("Profile");
+              sidebarPage("Opened");
+            }}>
+            {user.u_username}
+          </button>
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
-            onClick={() => {}}
-          >
+            onClick={() => {
+              chooseSidebarPage("AddResidence");
+              sidebarPage("Opened");
+            }}>
             Add Resident
           </button>
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
-            onClick={onLogout}
-          >
+            onClick={onLogout}>
             Sign Out
           </button>
         </div>
@@ -54,8 +71,7 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignIn");
-            }}
-          >
+            }}>
             SignIn
           </button>
 
@@ -63,8 +79,7 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignUp");
-            }}
-          >
+            }}>
             SignUp
           </button>
         </div>
