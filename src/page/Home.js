@@ -15,6 +15,7 @@ import SignIn from "../components/SignInUp/SignIn";
 import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
 import SideBar from "../components/sidebars/SideBar";
+import GlobeWidget from "../components/globe/GlobeWidget";
 import { useMousePosition } from "../utils/MouseEvent";
 import {
   useElapsedTimeByRenderer,
@@ -43,11 +44,16 @@ const Home = () => {
   const [getParticleMesh, setParticleMesh] = useState(null);
   const [getGradientBgMesh, setGradientBgMesh] = useState(null);
   const [getGlobeMesh, setGlobeMesh] = useState(null);
-  const clock = new THREE.Clock();
-  const elapsedTimeByRenderer = useElapsedTimeByRenderer(clock);
-  const [getPopUpPage, setPopUpPage] = useState(null);
+  const [getHousepos, setHousepos] = useState({ x: 0, y: 0 });
   const { status } = useSelector((state) => state.popupSignInOut);
-  const { sidebarstatus } = useSelector((state) => state.sidebarHome);
+  const { sidebarstatus, widgetstatus } = useSelector(
+    (state) => state.sidebarHome
+  );
+
+  const rotationArray = [
+    { x: 2.403, y: -0.84, z: -3.142, housename: "Plane067" },
+    { x: -0.324, y: 1.569, z: 0, housename: "Plane067" },
+  ];
 
   let t = 0;
   let j = 0;
@@ -77,7 +83,7 @@ const Home = () => {
 
   useEffect(() => {
     // loader model
-    if (getScene) {
+    if (getScene && !getGlobeMesh) {
       const gltfLoader = new GLTFLoader();
       gltfLoader.load(globe, (gltf) => {
         const root = gltf.scene;
@@ -87,18 +93,20 @@ const Home = () => {
         getScene.add(root);
       });
     }
-    if (getGradientBgMesh && getRenderer) {
+    if (getGradientBgMesh && getRenderer && getGlobeMesh) {
       requestRef.current = requestAnimationFrame(animate);
 
       window.addEventListener("resize", handleResize);
       return () => cancelAnimationFrame(requestRef.current);
     }
     return;
-  }, [getGradientBgMesh]);
+  }, [getGradientBgMesh, getGlobeMesh]);
 
   useEffect(() => {
     handleGlobe();
-  }, [sidebarstatus]);
+    requestRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [sidebarstatus, widgetstatus]);
 
   const gradientBgMesh = () => {
     var randomisePosition = new THREE.Vector2(1, 2);
@@ -217,6 +225,13 @@ const Home = () => {
         }
       }
 
+      if (getGlobeMesh && !widgetstatus) {
+        let globeMesh = getGlobeMesh;
+        globeMesh.rotation.y -= 0.001;
+        globeMesh.rotation.x += 0.001;
+        setGlobeMesh(globeMesh);
+      }
+
       // Increase t by a certain value every frame
       j = j + 0.01;
       t = t + 0.01;
@@ -252,17 +267,55 @@ const Home = () => {
           ease: Power3.easeInOut,
         });
       }
+
+      if (widgetstatus) {
+        let positionRotate = Math.round(Math.random(0, 1));
+        gsap.to(getGlobeMesh.rotation, {
+          duration: 1.22,
+          x: rotationArray[positionRotate].x,
+          y: rotationArray[positionRotate].y,
+          z: rotationArray[positionRotate].z,
+          ease: Power3.easeInOut,
+        });
+        setHousepos(
+          toScreenPosition(
+            getGlobeMesh.getObjectByName(
+              rotationArray[positionRotate].housename
+            ),
+            getCamera
+          )
+        );
+      }
     }
   };
 
+  const toScreenPosition = (obj, camera) => {
+    let vector = new THREE.Vector3();
+
+    let widthHalf = 0.5 * getRenderer.getContext().canvas.width;
+    let heightHalf = 0.5 * getRenderer.getContext().canvas.height;
+
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+
+    vector.x = vector.x * widthHalf + widthHalf;
+    vector.y = -(vector.y * heightHalf) + heightHalf;
+
+    return {
+      x: vector.x,
+      y: vector.y,
+    };
+  };
+
   const mousemove = () => {
-    if (getParticleMesh && getRenderer) {
-      getParticleMesh.rotation.y =
-        mousePosition.x * elapsedTimeByRenderer * 0.0000021;
-      getParticleMesh.rotation.x =
-        mousePosition.y * elapsedTimeByRenderer * 0.0000021;
-      getRenderer.render(getScene, getCamera);
-    }
+    // if (getParticleMesh && getRenderer) {
+    //   getParticleMesh.rotation.y =
+    //     mousePosition.x * elapsedTimeByRenderer * 0.0000021;
+    //   getParticleMesh.rotation.x =
+    //     mousePosition.y * elapsedTimeByRenderer * 0.0000021;
+    //   getRenderer.render(getScene, getCamera);
+    // // }
   };
 
   return (
@@ -277,6 +330,14 @@ const Home = () => {
           unmountOnExit
           appear>
           <div>
+            <CSSTransition
+              in={widgetstatus}
+              timeout={{ enter: 4000, exit: 1000 }}
+              classNames="fade"
+              unmountOnExit
+              appear>
+              <GlobeWidget housepos={getHousepos} />
+            </CSSTransition>
             <Search />
             {status == "SignIn" ? (
               <SignIn />
@@ -285,6 +346,7 @@ const Home = () => {
             ) : null}
           </div>
         </CSSTransition>
+
         <SideBar />
       </div>
     </>
