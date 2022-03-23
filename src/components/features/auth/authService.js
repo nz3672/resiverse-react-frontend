@@ -5,6 +5,11 @@ const API_URL = "account/api/users/";
 
 // Register user
 const register = async (userData) => {
+  const config = {
+    headers: {
+      Authorization: `Bear`,
+    },
+  };
   const response = await axios.post(API_URL + "register", userData);
 
   if (response.data) {

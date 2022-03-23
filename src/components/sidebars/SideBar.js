@@ -5,7 +5,6 @@ import ShowResidence from "../../page/ShowResidence";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { closeSidebar, resetWidgetInfo } from "../features/sidebarSlice";
-
 const SideBar = () => {
   const dispatch = useDispatch();
   const { sidebarstatus } = useSelector((state) => state.sidebarHome);
@@ -24,7 +23,8 @@ const SideBar = () => {
         }
         onClick={() => {
           sidebarPage();
-        }}>
+        }}
+      >
         <FontAwesomeIcon
           icon="fa-solid fa-angle-left"
           className="py-4 px-6 text-3xl"

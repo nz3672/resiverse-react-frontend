@@ -346,7 +346,6 @@ const Home = () => {
             ) : null}
           </div>
         </CSSTransition>
-
         <SideBar />
       </div>
     </>

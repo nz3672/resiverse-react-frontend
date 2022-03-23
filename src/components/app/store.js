@@ -4,7 +4,7 @@ import authReducer from "../features/auth/authSlice";
 import sidebarSlice from "../features/sidebarSlice";
 import sidebarShowSlice from "../features/sidebarShowSlice";
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     popupSignInOut: popUpSlice,
     sidebarHome: sidebarSlice,

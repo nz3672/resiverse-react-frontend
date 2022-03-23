@@ -65,7 +65,6 @@ const SignUp = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("1");
     if (password !== password) {
       toast.error("Password do not match.");
       setMsgErrToast("Password do not match.");
@@ -82,7 +81,6 @@ const SignUp = () => {
       !bankId
     ) {
       toast.error("Please complete the information.");
-      // console.log(toast);
       setMsgErrToast("Please complete the information.");
     } else {
       const userData = {
