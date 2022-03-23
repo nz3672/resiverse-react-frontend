@@ -1,7 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
-import { focusWidget, openSidebar } from "../features/sidebarSlice";
+import {
+  unfocusWidget,
+  openSidebar,
+  resetWidgetInfo,
+} from "../features/sidebarSlice";
 import { chooseSidebar } from "../features/sidebarShowSlice";
 
 const GlobeWidget = (props) => {
@@ -9,7 +13,11 @@ const GlobeWidget = (props) => {
   const dispatch = useDispatch();
 
   const handlewidgetOnClick = (page) => {
-    dispatch(focusWidget(page));
+    dispatch(unfocusWidget(page));
+  };
+
+  const handlecloseWidget = () => {
+    dispatch(resetWidgetInfo());
   };
 
   const sidebarPage = (page) => {
@@ -31,18 +39,19 @@ const GlobeWidget = (props) => {
       <div className="h-full grid grid-rows-4 items-center justify-items-center">
         <button
           onClick={() => {
-            handlewidgetOnClick(false);
+            handlewidgetOnClick(true);
+            handlecloseWidget(true);
           }}
-          className="my-2 mx-3 py-1 px-2 justify-self-end self-start text-pink-600  bg-white rounded-2xl">
+          className="my-2 mx-3 px-2 justify-self-end self-start text-pink-600  bg-white rounded-2xl">
           <FontAwesomeIcon icon="fa-solid fa-xmark" />
         </button>
 
         <button
           className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg row-start-2 row-end-4 grid-self-center text-white"
           onClick={() => {
-            handlewidgetOnClick(false);
+            handlewidgetOnClick(true);
             sidebarPage(true);
-            chooseSidebarPage("ShowResident");
+            chooseSidebarPage("ShowResidence");
           }}>
           More Details
         </button>

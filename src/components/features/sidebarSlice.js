@@ -5,6 +5,7 @@ export const sidebarSlice = createSlice({
   initialState: {
     sidebarstatus: false,
     widgetstatus: false,
+    widgetinfo: null,
   },
   reducers: {
     closeSidebar: (state) => {
@@ -23,9 +24,23 @@ export const sidebarSlice = createSlice({
         state.widgetstatus = false;
       }
     },
+    setWidgetInfo: (state, action) => {
+      state.widgetinfo = action.payload;
+    },
+    resetWidgetInfo: (state) => {
+      if (state) {
+        state.widgetinfo = null;
+      }
+    },
   },
 });
 
-export const { closeSidebar, openSidebar, focusWidget, unfocusWidget } =
-  sidebarSlice.actions;
+export const {
+  closeSidebar,
+  openSidebar,
+  focusWidget,
+  unfocusWidget,
+  setWidgetInfo,
+  resetWidgetInfo,
+} = sidebarSlice.actions;
 export default sidebarSlice.reducer;
