@@ -42,6 +42,7 @@ const Search = () => {
           setShowWidget={setShowWidget}
           isLoaded={isLoaded}
         />
+
         <div className="mt-4 flex">
           <div className="ml-5 grid-cols-1 desktop:ml-20 grid grid-cols-2 tablet:grid-cols-2 laptop:grid-cols-3 gap-4 place-content-center">
             {showWidget && <Widget placeDetails={placeDetails} />}
