@@ -4,7 +4,7 @@ import AddResidence from "../../page/AddResidence";
 import ShowResidence from "../../page/ShowResidence";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { closeSidebar } from "../features/sidebarSlice";
+import { closeSidebar, resetWidgetInfo } from "../features/sidebarSlice";
 
 const SideBar = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const SideBar = () => {
   const { showsidestatus } = useSelector((state) => state.sidebarShow);
   const sidebarPage = () => {
     dispatch(closeSidebar());
+    dispatch(resetWidgetInfo());
   };
   return (
     <>
@@ -30,7 +31,7 @@ const SideBar = () => {
         />
       </button>
       <div
-        className={`absolute z-52 bg-white text-blue-800 w-2/3 space-y-6 py-7 px-2 inset-y-0 right-0 ${
+        className={`absolute z-52 bg-white text-blue-800 w-2/3 sm:w-1/3 space-y-6 py-7 px-2 inset-y-0 right-0 ${
           sidebarstatus ? "translate-x-0 delay-1000" : "translate-x-full"
         } transition duration-300 ease-in-out`}>
         {showsidestatus == "Profile" ? (
