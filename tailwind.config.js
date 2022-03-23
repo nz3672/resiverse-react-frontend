@@ -10,12 +10,20 @@ module.exports = {
       },
       minWidth: {
         "320px": "320px",
+        "230px": "230px",
+      },
+      minHeight: {
+        "100px": "100px",
+        "150px": "150px",
       },
       width: {
         "280px": "280px",
         "370px": "370px",
         "145px": "145px",
         "185px": "185px",
+      },
+      boxShadow: {
+        "3xl": "0 0 4px 2px rgb(0 0 0 / 0)",
       },
     },
     screens: {
@@ -33,5 +41,5 @@ module.exports = {
       // => @media (min-width: 1280px) { ... }
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

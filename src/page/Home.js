@@ -264,7 +264,8 @@ const Home = () => {
     <>
       <div
         ref={backgroundGalaxy}
-        className="relative overflow-hidden bg-black h-screen w-screen text-white">
+        className="relative overflow-hidden bg-black h-screen w-screen text-white font-['SarabunBold']"
+      >
         <div className={sidebarstatus != "Opened" ? "" : "hidden"}>
           <Search />
           {status == "SignIn" ? (

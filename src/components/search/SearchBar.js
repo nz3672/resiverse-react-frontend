@@ -60,6 +60,7 @@ const SearchBar = (props) => {
 
     //Get selected place details
     const results = await getPlaceDetails(parameter);
+    // console.log(results);
     setPlaceDetails(results);
     setPlaceId(description.place_id);
   };

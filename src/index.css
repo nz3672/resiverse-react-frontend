@@ -38,3 +38,36 @@
 .dropdow-menu-anim-hidden {
   @apply transition ease-in-out delay-150 duration-300 scale-0 origin-top-left;
 }
+
+.curve {
+  /* position: absolute; */
+  height: 100px;
+  width: 100%;
+  bottom: 0;
+}
+
+.curve::before {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100% 50%;
+  width: 55%;
+  height: 100%;
+  background-color: #00c3ff;
+  transform: translate(85%, 60%);
+}
+.curve::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100% 50%;
+  width: 55%;
+  height: 100%;
+  background-color: #6a1fcc;
+  transform: translate(-4%, 40%);
+  z-index: -1;
+}
+
+input[type="file"] {
+  display: none;
+}
