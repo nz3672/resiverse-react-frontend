@@ -10,6 +10,7 @@ import {
   faAngleLeft,
   faPlus,
   faEllipsis,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,6 +19,7 @@ library.add(faAngleLeft);
 library.add(faChevronDown);
 library.add(faPlus);
 library.add(faEllipsis);
+library.add(faXmark);
 function App() {
   return (
     <>
