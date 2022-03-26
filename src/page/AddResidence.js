@@ -21,6 +21,7 @@ const allParams = {
   resPostNum: "",
   imageCover: {},
   imageCert: {},
+  placePosition: { lat: null, lng: null },
 };
 
 const isCheckArr = {
@@ -43,6 +44,12 @@ const AddResidence = () => {
   const [fileImg, setFileImg] = useState("");
   const [fileCert, setFileCert] = useState("");
   const [checkbox, setCheckbox] = useState(isCheckArr);
+  const [gmap, setGmap] = useState({
+    lat: "",
+    lng: "",
+    createdAt: "",
+    placeId: "",
+  });
 
   const dropdownEvent = () => {
     if (dropdown) {
@@ -69,7 +76,9 @@ const AddResidence = () => {
   };
 
   const onSubmit = async () => {
-    // const response = await createResidence(form);
+    console.log(form);
+    const response = await createResidence(form);
+    setGmap({ lat: "", lng: "", createdAt: "", placeId: "" });
     setRooms([]);
     setForm(allParams);
     setresidenceType("เลือกประเภทของที่พักอาศัย");
@@ -119,6 +128,8 @@ const AddResidence = () => {
             setFileImg={setFileImg}
             fileCert={fileCert}
             setFileCert={setFileCert}
+            gmap={gmap}
+            setGmap={setGmap}
           />
         </div>
         <button
