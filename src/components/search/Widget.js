@@ -16,7 +16,8 @@ const Widget = (props) => {
       className="cursor-pointer hover-widget hover:bg-pink-500 rounded-3xl shadow-xl w-[190px] h-[270px] desktop:w-[280px] desktop:h-[370px] bg-white bg-opacity-50 laptop:pb-4 laptop:px-4 laptop:pt-5 pb-2 px-2 pt-2"
       onClick={() => {
         handlewidgetOnClick(true, placeDetails);
-      }}>
+      }}
+    >
       <div className="w-full min-h-[50%] h-[55%] max-h-[60%]">
         <img
           alt="building-placeholder"
@@ -33,8 +34,12 @@ const Widget = (props) => {
         <div className="flex mb-2 w-full h-auto ">
           <img
             alt="verify-badge"
-            src={require("../../img/icon/verify-badge1.png")}
-            className="object-contain rounded-xl w-7 pr-1 self-center"
+            src={
+              placeDetails.facilities.length > 0
+                ? require("../../img/icon/verify-badge1.png")
+                : require("../../img/icon/no-verify-badge1.png")
+            }
+            className="object-contain rounded-xl w-7 pr-1 self-center "
           ></img>
           <h2 className="font-['SarabunBold'] text-xl truncate w-full">
             {placeDetails.hasOwnProperty("name") ? placeDetails.name : ""}
@@ -55,22 +60,26 @@ const Widget = (props) => {
           </h2>
           <p className="font-['SarabunLight'] text-sm">
             {placeDetails.hasOwnProperty("address")
-              ? placeDetails.address.addrSubDistrict +
-                " " +
-                placeDetails.address.addrProvince
+              ? placeDetails.address.hasOwnProperty("addrSubDistrict")
+                ? placeDetails.address.addrSubDistrict +
+                  " " +
+                  placeDetails.address.addrProvince
+                : placeDetails.address
               : ""}
           </p>
         </div>
-        {/* {console.log(placeDetails)}
-        {console.log(placeDetails.hasOwnProperty("facilities"))} */}
         <div id="buff" className="mt-2 flex">
           {placeDetails.hasOwnProperty("facilities") &&
+            placeDetails.facilities.length !== 0 &&
             placeDetails.facilities.map((facility, i) => {
               return (
                 <div key={i} className="has-tooltip mr-1">
                   <img
                     alt="verify-badge"
-                    src={require("../../img/icon/buff/pet-buff.png")}
+                    src={require(`../../img/icon/buff/${facility.faName.replace(
+                      /\s/g,
+                      ""
+                    )}.png`)}
                     className=" object-contain rounded-xl w-9 pr-1 self-center"
                   ></img>
                   <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 mb-10 text-sm">
@@ -79,46 +88,6 @@ const Widget = (props) => {
                 </div>
               );
             })}
-          {/* <div className="has-tooltip mr-1">
-            <img
-              alt="verify-badge"
-              src={require("../../img/icon/buff/pet-buff.png")}
-              className=" object-contain rounded-xl w-9 pr-1 self-center"
-            ></img>
-            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 mb-10 text-sm">
-              Pet friendly
-            </span>
-          </div>
-          <div className="has-tooltip mr-1">
-            <img
-              alt="verify-badge"
-              src={require("../../img/icon/buff/bus-buff.png")}
-              className=" object-contain rounded-xl w-9 pr-1 self-center"
-            ></img>
-            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
-              Bus stop
-            </span>
-          </div>
-          <div className="has-tooltip mr-1">
-            <img
-              alt="verify-badge"
-              src={require("../../img/icon/buff/bts-buff.png")}
-              className=" object-contain rounded-xl w-9 pr-1 self-center"
-            ></img>
-            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
-              Sky train
-            </span>
-          </div>
-          <div className="has-tooltip mr-1">
-            <img
-              alt="verify-badge"
-              src={require("../../img/icon/buff/shop-buff.png")}
-              className=" object-contain rounded-xl w-9 pr-1 self-center"
-            ></img>
-            <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mb-10 text-sm">
-              Shoping mall
-            </span>
-          </div> */}
         </div>
       </div>
     </div>

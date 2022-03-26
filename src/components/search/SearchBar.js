@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { getPlaceDetails } from "../../utils/GoogleMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAllResidence } from "../../api/Get";
 
 const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
@@ -66,6 +67,8 @@ const SearchBar = (props) => {
   };
 
   const onInputChange = (event) => {
+    const res = getAllResidence();
+    console.log(res);
     setValue(event.target.value);
     if (select) {
       setSelect(event.target.value);
@@ -75,6 +78,8 @@ const SearchBar = (props) => {
   const clearInput = () => {
     setSelect("");
     setValue("");
+    setPlaceDetails({});
+    setShowWidget(false);
   };
 
   const dropdownEvent = () => {
@@ -90,7 +95,7 @@ const SearchBar = (props) => {
       <div className="">
         <div className="h-[6vh]">
           <div className="w-[30vw] h-[6vh] flex">
-            <button
+            {/* <button
               type="button"
               className="hover-input-home inline-flex justify-center font-medium outline-0 w-[8vw] rounded-xl px-4 py-2 bg-white text-lg text-gray-700 focus:outline-0"
               onClick={() => {
@@ -98,7 +103,7 @@ const SearchBar = (props) => {
               }}
             >
               <h2 className="self-center">{searchTitle}</h2>
-            </button>
+            </button> */}
 
             <div className="hover-input-home relative flex">
               <input
@@ -107,11 +112,6 @@ const SearchBar = (props) => {
                 placeholder="Search"
                 onChange={(e) => {
                   onInputChange(e);
-                }}
-                onKeyUp={(e) => {
-                  // search by area
-                  if (e.keyCode === 13) {
-                  }
                 }}
                 disabled={!ready}
                 value={select ? select : value}

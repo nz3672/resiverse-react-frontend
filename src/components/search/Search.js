@@ -46,13 +46,26 @@ const Search = () => {
         <div className="mt-4 flex">
           <div className="ml-5 grid-cols-1 desktop:ml-20 grid grid-cols-2 tablet:grid-cols-2 laptop:grid-cols-3 gap-4 place-content-center">
             {/* show searching widgets */}
-            {/* {showWidget && <Widget placeDetails={placeDetails} />} */}
-            {showWidget && console.log(placeDetails)}
+            {/* {showWidget && placeDetails && console.log(placeDetails)} */}
+            {showWidget && placeDetails && (
+              <Widget
+                placeDetails={{
+                  name: placeDetails.name,
+                  residenceType: "APT",
+                  facilities: [],
+                  room: [],
+                  description: placeDetails.formatted_address,
+                  website: "",
+                  line: "",
+                  imagesURL: [],
+                  address: placeDetails.formatted_address,
+                }}
+              />
+            )}
 
             {/* show fetching widgets */}
             {!showWidget &&
               widgets.map((widget, i) => {
-                // console.log(widget);
                 return <Widget key={i} placeDetails={widget} />;
               })}
           </div>
