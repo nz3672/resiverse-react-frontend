@@ -1,20 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
-import SearchBar from "./SearchBar";
+import Navbar from "../search/Navbar";
 import Widget from "../search/Widget";
-import { getDetails } from "use-places-autocomplete";
+import axios from "axios";
 
 const Search = () => {
   const [libraries] = useState(["places"]);
-
+  const API_URL = "residence/api/residence/all"; // In package.json, set proxy
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-
   const [placeId, setPlaceId] = useState();
   const [placeDetails, setPlaceDetails] = useState();
   const [showWidget, setShowWidget] = useState(false);
+  const [widgets, setWidgets] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+
+    return () => {};
+  }, []);
+
+  // fetch all residence from database
+  const fetchData = async () => {
+    const response = await axios.get(API_URL);
+    if (response.data) {
+      setWidgets(response.data);
+    }
+  };
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";

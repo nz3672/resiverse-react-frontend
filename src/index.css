@@ -28,9 +28,71 @@
 }
 
 .hover-input-home {
-  @apply transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300;
+  @apply transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300;
 }
 
-.focus-input-home {
-  /* @apply focus:shadow-lg focus:shadow-indigo-500/50; */
+.dropdow-menu-anim-show {
+  @apply transition ease-in-out delay-150 duration-300 group-focus:scale-100;
+}
+
+.dropdow-menu-anim-hidden {
+  @apply transition ease-in-out delay-150 duration-300 scale-0 origin-top-left;
+}
+
+.curve {
+  /* position: absolute; */
+  height: 100px;
+  width: 100%;
+  bottom: 0;
+}
+
+.curve::before {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100% 50%;
+  width: 55%;
+  height: 100%;
+  background-color: #00c3ff;
+  transform: translate(85%, 60%);
+}
+.curve::after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-radius: 100% 50%;
+  width: 55%;
+  height: 100%;
+  background-color: #6a1fcc;
+  transform: translate(-4%, 40%);
+  z-index: -1;
+}
+
+input[type="file"] {
+  display: none;
+
+.fade-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms, transform 1000ms 0.5s;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms, transform 1000ms;
+
 }
