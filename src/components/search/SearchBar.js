@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { getPlaceDetails } from "../../utils/GoogleMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAllResidence } from "../../api/Get";
 import { useDispatch, useSelector } from "react-redux";
 import { setLatLng } from "../features/gMapSlice";
 
@@ -74,6 +75,8 @@ const SearchBar = (props) => {
   };
 
   const onInputChange = (event) => {
+    const res = getAllResidence();
+    console.log(res);
     setValue(event.target.value);
     if (select) {
       setSelect(event.target.value);
@@ -83,6 +86,8 @@ const SearchBar = (props) => {
   const clearInput = () => {
     setSelect("");
     setValue("");
+    setPlaceDetails({});
+    setShowWidget(false);
   };
 
   const dropdownEvent = () => {
@@ -115,11 +120,6 @@ const SearchBar = (props) => {
                 placeholder="Search"
                 onChange={(e) => {
                   onInputChange(e);
-                }}
-                onKeyUp={(e) => {
-                  // search by area
-                  if (e.keyCode === 13) {
-                  }
                 }}
                 disabled={!ready}
                 value={select ? select : value}
