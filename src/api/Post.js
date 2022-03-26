@@ -39,6 +39,7 @@ export const createResidence = async (residenceData, token) => {
     },
   };
   const formData = jsonToFormData({
+    bd_location: residenceData.placePosition,
     bd_facilities: residenceData.facilities,
     bd_room: residenceData.rooms,
     bd_address: {

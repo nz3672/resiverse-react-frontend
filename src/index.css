@@ -70,6 +70,7 @@
 
 input[type="file"] {
   display: none;
+}
 
 .fade-enter {
   opacity: 0;
@@ -94,5 +95,8 @@ input[type="file"] {
 .fade-exit-active {
   opacity: 0;
   transition: opacity 1000ms, transform 1000ms;
+}
 
+.indigo-pink {
+  @apply from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500;
 }
