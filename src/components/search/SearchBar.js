@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
 import { getPlaceDetails } from "../../utils/GoogleMap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
+import { setLatLng } from "../features/gMapSlice";
 
 const SearchBar = (props) => {
   const [currentCoord, setCurrentCoord] = useState({ lat: null, long: null });
@@ -9,13 +11,19 @@ const SearchBar = (props) => {
   const [dropdown, setDropdown] = useState(false);
   const [searchTitle, setSearchTitle] = useState("Search By");
   const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isLoaded) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setCurrentCoord(position);
-          // console.log(position, "tong");
+          dispatch(
+            setLatLng({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            })
+          );
         },
         () => null
       );
@@ -90,7 +98,7 @@ const SearchBar = (props) => {
       <div className="">
         <div className="h-[6vh]">
           <div className="w-[30vw] h-[6vh] flex">
-            <button
+            {/* <button
               type="button"
               className="hover-input-home inline-flex justify-center font-medium outline-0 w-[8vw] rounded-xl px-4 py-2 bg-white text-lg text-gray-700 focus:outline-0"
               onClick={() => {
@@ -98,11 +106,11 @@ const SearchBar = (props) => {
               }}
             >
               <h2 className="self-center">{searchTitle}</h2>
-            </button>
+            </button> */}
 
             <div className="hover-input-home relative flex">
               <input
-                className="rounded-xl w-[22vw] p-4 ml-2 outline-0 text-black"
+                className="rounded-xl w-[22vw] p-4 ml-2 focus:border-0 focus:ring-pink-500 border-pink-500 outline-0 text-black"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => {
@@ -160,7 +168,7 @@ const SearchBar = (props) => {
           <ul
             className={`${
               status === "OK"
-                ? "bg-white fixed rounded-xl text-black mt-2 divide-y "
+                ? "bg-white fixed rounded-xl text-black mt-2 divide-y z-10 "
                 : "hidden"
             }`}
           >
@@ -175,7 +183,7 @@ const SearchBar = (props) => {
                         onClickChoice(description);
                       }}
                       key={key}
-                      className="p-2 rounded-xl hover:bg-purple-200 relative cursor-pointer"
+                      className="p-2 z-10 rounded-xl hover:bg-purple-200 relative cursor-pointer"
                     >
                       {description.description}
                     </li>

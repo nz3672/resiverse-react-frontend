@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Input from "./Input";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RoomForm from "./RoomForm";
 import AddRoomCircleBadge from "./AddRoomCircleBadge";
 import AddRoomCircleDetails from "./AddRoomCircleDetails";
+import PreviewGMap from "./PreviewGMap";
 
 const RoomsBox = (props) => {
   const {
@@ -16,11 +15,14 @@ const RoomsBox = (props) => {
     setFileImg,
     fileCert,
     setFileCert,
+    gmap,
+    setGmap,
   } = props;
   const [addRoomForm, setAddRoomForm] = useState(false);
   // const [fileImg, setFileImg] = useState("");
   // const [fileCert, setFileCert] = useState();
   // const [rooms, setRooms] = useState([]);
+  const [openGmap, setOpenGmap] = useState(false);
 
   useEffect(() => {
     setForm((prev) => ({
@@ -30,6 +32,28 @@ const RoomsBox = (props) => {
 
     return () => {};
   }, [rooms]);
+
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      placePosition: {
+        lat: gmap.lat,
+        lng: gmap.lng,
+        createdAt: gmap.time,
+        placeId: gmap.placeId,
+      },
+    }));
+
+    return () => {};
+  }, [gmap]);
+
+  const onClickGmap = () => {
+    if (openGmap) {
+      setOpenGmap(false);
+    } else {
+      setOpenGmap(true);
+    }
+  };
 
   const roomForm = () => {
     if (addRoomForm) {
@@ -45,9 +69,15 @@ const RoomsBox = (props) => {
         <div className="grid grid-cols-1 gap-y-4 justify-items-center ">
           <div className="h-[100%]">
             <h1 className="ml-2">Image</h1>
-            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-4 px-6 rounded-xl ">
+            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
               <div className="flex justify-start w-[60%] mr-4 ">
-                <label className="w-fit h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2 from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500 justify-between text-white font-medium cursor-pointer">
+                <label
+                  className={`${
+                    fileCert
+                      ? "indigo-pink"
+                      : "bg-zinc-500 shadow-md hover:from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500"
+                  } w-fit h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2  justify-between text-white font-medium cursor-pointer`}
+                >
                   <input
                     type="file"
                     name="imageCover"
@@ -62,16 +92,22 @@ const RoomsBox = (props) => {
                   {fileImg ? fileImg.name : "No file chosen"}
                 </h2>
               </div>
-              {/* <img src={imgLoaded}></img> */}
             </div>
           </div>
 
           <div className="h-[100%]">
             <h1 className="ml-2">Cert</h1>
-            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-4 px-6 rounded-xl ">
+            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
               <div className="flex justify-start w-[40%] mr-4">
-                <label className="w-[45%] h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2 from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500 justify-between text-white font-medium cursor-pointer">
+                <label
+                  className={`${
+                    fileCert
+                      ? "indigo-pink"
+                      : "bg-zinc-500 shadow-md hover:from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500"
+                  } w-[45%] h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2  justify-between text-white font-medium cursor-pointer`}
+                >
                   <input
+                    className=""
                     type="file"
                     name="imageCert"
                     onChange={(e) => {
@@ -85,7 +121,24 @@ const RoomsBox = (props) => {
                   {fileCert ? fileCert.name : "No file chosen"}
                 </h2>
               </div>
-              {/* <h1>tong</h1> */}
+            </div>
+          </div>
+
+          <div className="h-[100%]">
+            <h1 className="ml-2">Google map</h1>
+            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
+              <button
+                className={`${
+                  gmap.lat && gmap.lng
+                    ? "indigo-pink"
+                    : "bg-zinc-500 shadow-md hover:from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500"
+                } w-full h-fit self-center font-medium outline-0 rounded-lg p-2 justify-between text-white font-medium cursor-pointer`}
+                onClick={() => {
+                  onClickGmap();
+                }}
+              >
+                Choose residence's location
+              </button>
             </div>
           </div>
 
@@ -105,6 +158,15 @@ const RoomsBox = (props) => {
           </div>
           {addRoomForm && (
             <RoomForm roomForm={roomForm} setRooms={setRooms} form={form} />
+          )}
+          {openGmap && (
+            <PreviewGMap
+              onClickGmap={onClickGmap}
+              form={form}
+              gmap={gmap}
+              setGmap={setGmap}
+              setForm={setForm}
+            />
           )}
         </div>
       </div>
