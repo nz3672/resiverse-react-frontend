@@ -29,9 +29,17 @@ const SearchBar = (props) => {
         () => null
       );
     }
+
     // return currentPos.coords.latitude;
     return () => {};
   }, []);
+
+  // fetch all residence from database
+  const fetchData = async () => {
+    const res = await getAllResidence();
+    // return res;
+    return res;
+  };
 
   const {
     ready,
@@ -60,23 +68,74 @@ const SearchBar = (props) => {
   // get Latitude Longitude of the selected place
   const onClickChoice = async (description) => {
     setSelect(description.structured_formatting.main_text);
-    setShowWidget(true);
 
     // get lat lng uses place_id
     let parameter = {
       placeId: description.place_id,
     };
 
+    // console.log(description);
+
     //Get selected place details
     const results = await getPlaceDetails(parameter);
     // console.log(results);
-    setPlaceDetails(results);
-    setPlaceId(description.place_id);
+
+    let fetResult;
+    getAllResidence()
+      .then((res) => {
+        res.map((item) => {
+          if (item.bd_location.placeId === results.place_id) {
+            fetResult = item;
+          }
+        });
+        console.log(fetResult);
+        if (fetResult) {
+          const result = {
+            name: fetResult.bd_name,
+            residenceType: fetResult.bd_type,
+            facilities: fetResult.bd_facilities,
+            room: fetResult.bd_room,
+            description: fetResult.bd_desc,
+            website: fetResult.bd_website,
+            line: fetResult.bd_lineid,
+            imagesURL: [],
+            address: {
+              addrSubDistrict: fetResult.bd_address.bd_subDist,
+              addrProvince: fetResult.bd_address.bd_province,
+            },
+            imageURL: fetResult.bd_img,
+            geometry: { lat: fetResult.lat, lng: fetResult.lng },
+          };
+          // console.log(result);
+          setPlaceDetails(result);
+          setShowWidget(true);
+          setPlaceId(description.place_id);
+        } else {
+          setShowWidget(true);
+          setPlaceId(description.place_id);
+          console.log(results);
+          setPlaceDetails({
+            name: results.name,
+            residenceType: "APT",
+            facilities: [],
+            room: [],
+            description: results.formatted_address,
+            website: "",
+            line: "",
+            imagesURL: [],
+            address: results.formatted_address,
+            geometry: {
+              lat: results.geometry.location.lat(),
+              lng: results.geometry.location.lng(),
+            },
+            placeId: results.place_id,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   const onInputChange = (event) => {
-    const res = getAllResidence();
-    console.log(res);
     setValue(event.target.value);
     if (select) {
       setSelect(event.target.value);

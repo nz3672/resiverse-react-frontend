@@ -6,7 +6,7 @@ const FacilitiesBox = (props) => {
 
   useEffect(() => {
     setForm((prev) => ({ ...prev, facilities: facilities }));
-
+    // setFacilities([]);
     return () => {};
   }, [facilities]);
 
@@ -18,42 +18,49 @@ const FacilitiesBox = (props) => {
       <div className="text-xl grid grid-cols-2 gap-2 font-['SarabunBold']  ">
         <CheckboxFacility
           label="Pet Friendly"
+          desc="ที่พักที่อนุญาตให้เลี้ยงสัตว์ได้อย่างเปิดเผย"
           setFacilities={setFacilities}
           checkbox={checkbox.PetFriendly}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
-          label="WIFI Available"
+          label="WIFI available"
+          desc="มี WIFI ให้บริการ"
           setFacilities={setFacilities}
           checkbox={checkbox.WIFIAvailable}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
           label="Parking"
+          desc="มีที่จอดรถให้บริการ"
           setFacilities={setFacilities}
           checkbox={checkbox.Parking}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
           label="Laundry Available"
+          desc="มีร้านสำหรับบริการซัก-รีดให้บริการ"
           setFacilities={setFacilities}
           checkbox={checkbox.LaundryAvailable}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
           label="Fitness"
+          desc="โรงยิม / ฟิตเนส"
           setFacilities={setFacilities}
           checkbox={checkbox.Fitness}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
-          label="Public Transportation"
+          label="BTS or MRT"
+          desc="อยู่ใกล้กับรถไฟฟ้า"
           setFacilities={setFacilities}
           checkbox={checkbox.PublicTransportation}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
           label="Near Department"
+          desc="อยู่ใกล้กับร้านสะดวกซื้อหรือห้างสรรพสินค้า"
           setFacilities={setFacilities}
           checkbox={checkbox.NearDepartment}
           setCheckbox={setCheckbox}

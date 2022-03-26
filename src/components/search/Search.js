@@ -48,19 +48,7 @@ const Search = () => {
             {/* show searching widgets */}
             {/* {showWidget && placeDetails && console.log(placeDetails)} */}
             {showWidget && placeDetails && (
-              <Widget
-                placeDetails={{
-                  name: placeDetails.name,
-                  residenceType: "APT",
-                  facilities: [],
-                  room: [],
-                  description: placeDetails.formatted_address,
-                  website: "",
-                  line: "",
-                  imagesURL: [],
-                  address: placeDetails.formatted_address,
-                }}
-              />
+              <Widget placeDetails={placeDetails} />
             )}
 
             {/* show fetching widgets */}
