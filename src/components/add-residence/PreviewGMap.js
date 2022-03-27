@@ -40,8 +40,8 @@ const PreviewGMap = (props) => {
 
   useEffect(() => {
     if (placeDetails) {
-      const lat = placeDetails.geometry.location.lat();
-      const lng = placeDetails.geometry.location.lng();
+      const lat = placeDetails.geometry.lat;
+      const lng = placeDetails.geometry.lng;
       setGmap({
         lat: lat,
         lng: lng,
@@ -70,8 +70,8 @@ const PreviewGMap = (props) => {
 
   const showMarker = () => {
     if (placeDetails) {
-      const lat = placeDetails.geometry.location.lat();
-      const lng = placeDetails.geometry.location.lng();
+      const lat = placeDetails.geometry.lat;
+      const lng = placeDetails.geometry.lng;
       panMap(lat, lng);
       return (
         <Marker

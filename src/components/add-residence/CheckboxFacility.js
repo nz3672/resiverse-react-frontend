@@ -1,9 +1,9 @@
 const CheckboxFacility = (props) => {
-  const { label, setFacilities, checkbox, setCheckbox } = props;
+  const { label, setFacilities, checkbox, setCheckbox, desc } = props;
   const onClickCheckbox = (e) => {
     // checkbox
     setCheckbox((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
-    setFacilities((prev) => [...prev, label.replace(/\s/g, "-")]);
+    setFacilities((prev) => [...prev, { faName: label, faDescription: desc }]);
   };
 
   return (
