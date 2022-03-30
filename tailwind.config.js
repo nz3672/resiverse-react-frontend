@@ -3,6 +3,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        righteous: ["Righteous"],
+      },
+      fontFamily: {
         sarabun: ["SarabunMed", "SarabunLight", "SarabunBold"],
       },
       height: {

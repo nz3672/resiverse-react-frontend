@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLoadScript } from "@react-google-maps/api";
+import { useDispatch } from "react-redux";
+import { focusWidget, setWidgetInfo } from "../features/sidebarSlice";
 import Navbar from "../search/Navbar";
 import Widget from "../search/Widget";
 import axios from "axios";
 
 const Search = () => {
+  const dispatch = useDispatch();
   const [libraries] = useState(["places"]);
   const API_URL = "residence/api/residence/all"; // In package.json, set proxy
   const { isLoaded, loadError } = useLoadScript({
@@ -28,6 +31,11 @@ const Search = () => {
     if (response.data) {
       setWidgets(response.data);
     }
+  };
+
+  const handlewidgetOnClick = (page, widget) => {
+    dispatch(focusWidget(page));
+    dispatch(setWidgetInfo(widget));
   };
 
   if (loadError) return "Error";
@@ -54,7 +62,16 @@ const Search = () => {
             {/* show fetching widgets */}
             {!showWidget &&
               widgets.map((widget, i) => {
-                return <Widget key={i} placeDetails={widget} />;
+                return (
+                  <div
+                    key={i}
+                    onClick={() => {
+                      handlewidgetOnClick(true, widget);
+                    }}
+                  >
+                    <Widget key={i} placeDetails={widget} />
+                  </div>
+                );
               })}
           </div>
           <div className="w-0 h-0 desktop:w-96 desktop:h-96 phone:w-0 phone:h-0"></div>
