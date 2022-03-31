@@ -8,7 +8,7 @@ const AccountLeftBox = (props) => {
     (state) => state.authStore
   );
   return (
-    <div className="mx-4 my-4 ">
+    <div className="mx-4 my-4 text-gray-600">
       <div className="flex items-center">
         <FontAwesomeIcon
           className="h-14 mr-4 "
@@ -22,7 +22,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("Account");
           }}
-          className="hover:bg-pink-500/25 focus:bg-pink-500/25 rounded-lg py-1"
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
         >
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
@@ -36,7 +36,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("Nofitifation");
           }}
-          className="hover:bg-pink-500/25 focus:bg-pink-500/25 rounded-lg py-1"
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
         >
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
@@ -50,7 +50,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("MyResidence");
           }}
-          className="hover:bg-pink-500/25 focus:bg-pink-500/25 rounded-lg py-1"
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
         >
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
@@ -64,7 +64,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("TransactionList");
           }}
-          className="hover:bg-pink-500/25 focus:bg-pink-500/25 rounded-lg py-1"
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
         >
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
