@@ -22,21 +22,19 @@ const SideBar = () => {
         }
         onClick={() => {
           sidebarPage();
-        }}
-      >
+        }}>
         <FontAwesomeIcon
           icon="fa-solid fa-angle-left"
           className="py-4 px-6 text-3xl"
         />
       </button>
       <div
-        className={`absolute z-52 bg-white text-blue-800 w-2/3 sm:w-1/3 space-y-6 py-7 px-2 inset-y-0 right-0 ${
+        className={`absolute z-52 bg-white text-blue-800 w-2/3 sm:w-1/3 space-y-6 inset-y-0 right-0 ${
           sidebarstatus ? "translate-x-0 delay-1000" : "translate-x-full"
-        } transition duration-300 ease-in-out`}
-      >
-        {showsidestatus == "AddResidence" ? (
+        } transition duration-300 ease-in-out`}>
+        {showsidestatus === "AddResidence" ? (
           <AddResidence />
-        ) : showsidestatus == "ShowResidence" ? (
+        ) : showsidestatus === "ShowResidence" ? (
           <ShowResidence />
         ) : null}
       </div>

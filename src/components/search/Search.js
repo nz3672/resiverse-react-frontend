@@ -56,7 +56,12 @@ const Search = () => {
             {/* show searching widgets */}
             {/* {showWidget && placeDetails && console.log(placeDetails)} */}
             {showWidget && placeDetails && (
-              <Widget placeDetails={placeDetails} />
+              <div
+                onClick={() => {
+                  handlewidgetOnClick(true, placeDetails);
+                }}>
+                <Widget placeDetails={placeDetails} />
+              </div>
             )}
 
             {/* show fetching widgets */}
@@ -67,8 +72,7 @@ const Search = () => {
                     key={i}
                     onClick={() => {
                       handlewidgetOnClick(true, widget);
-                    }}
-                  >
+                    }}>
                     <Widget key={i} placeDetails={widget} />
                   </div>
                 );

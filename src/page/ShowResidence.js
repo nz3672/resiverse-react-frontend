@@ -2,6 +2,8 @@ import React from "react";
 import mapboxGl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import RentForm from "../components/show-residence/RentForm.js";
+import Description from "../components/show-residence/Description.js";
 
 const ShowResidence = () => {
   const mapContainer = useRef(null);
@@ -10,6 +12,7 @@ const ShowResidence = () => {
   const [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showRentForm, setRentForm] = useState(null);
   const slideRef = useRef();
   const { widgetinfo } = useSelector((state) => state.sidebarHome);
 
@@ -28,67 +31,117 @@ const ShowResidence = () => {
     });
   }, []);
 
+  const handleShowRentForm = (input) => {
+    setRentForm(input);
+  };
+
   return (
-    <div className="grid grid-rows-2 h-[100vh]">
-      <div className="grid grid-cols-2">
-        <div>
-          <h1>Icons</h1>
-          <h1>Name: </h1>
-          <p>{widgetinfo ? widgetinfo.name : "Place Name"}</p>
-          <h1>Description :</h1>
-          <p>{widgetinfo ? widgetinfo.description : "Description"}</p>
-          <h1>Address :</h1>
-          <p>{widgetinfo ? widgetinfo.address.addrHouseNo : "Address"}</p>
-          <h1>Website : {widgetinfo ? widgetinfo.website : "-"}</h1>
-          <h1>Line : {widgetinfo ? widgetinfo.line : "-"}</h1>
-          <h1>Phone : {widgetinfo ? widgetinfo.phone : "-"}</h1>
-        </div>
-        <div>
-          <h1>Photos</h1>
-          <div className="flex flex-col justify-center">
-            <img
-              className="bg-pink-500 w-72 h-40 rounded-lg m-2"
-              src={widgetinfo ? widgetinfo.imageURL : ""}
-            />
-            <div className="flex justify-center gap-x-2">
-              <div className="bg-pink-500 w-28 h-20 rounded-lg">h</div>
-              <div className="bg-pink-500 w-28 h-20 rounded-lg">h</div>
-              <div className="bg-pink-500 w-28 h-20 rounded-lg">h</div>
-            </div>
+    <>
+      <div className="grid grid-cols-2 h-[100vh] font-bold text-zinc-700 text-base font-['SarabunBold']">
+        {/* <div className="grid grid-cols-2 "> */}
+        <div
+          className="flex flex-col justify-evenly p-4 "
+          style={{
+            backgroundImage:
+              "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
+          }}>
+          <div className="shadow-lg bg-white rounded-xl p-3">
+            <h1 className=" text-3xl">
+              {widgetinfo ? widgetinfo.name : "Place Name"}
+            </h1>
+            <p className=" mt-2">
+              {widgetinfo ? widgetinfo.description : "Description"}
+            </p>
+          </div>
+
+          <div className="shadow-lg bg-white rounded-xl p-3">
+            <h1 className=" text-xl">Address</h1>
+            <p className=" mt-2">
+              {widgetinfo ? widgetinfo.address.addrHouseNo : "Address"}
+            </p>
+          </div>
+          <div className="text-xl shadow-lg bg-white rounded-xl p-3">
+            <h1>Website : {widgetinfo ? widgetinfo.website : "-"}</h1>
+            <h1>Line : {widgetinfo ? widgetinfo.line : "-"}</h1>
+            <h1>Phone : {widgetinfo ? widgetinfo.phone : "-"}</h1>
           </div>
           <div>
-            <h1>Rooms: </h1>
-            <div className="overflow-auto h-20">
-              <h1>Rooms1: </h1>
-              <p>
-                Irure laborum duis nulla quis ad occaecat ea ullamco aliquip
-                proident deserunt do. Ipsum elit eu et nulla est. Commodo enim
-                ex do commodo sit consequat reprehenderit id id nostrud ullamco
-                sunt. Labore est consequat ex incididunt pariatur sit ex amet et
-                magna pariatur. Aute eiusmod est esse adipisicing amet.
-              </p>
-              <h1>Rooms2: </h1>
-              <p>
-                Irure laborum duis nulla quis ad occaecat ea ullamco aliquip
-                proident deserunt do. Ipsum elit eu et nulla est. Commodo enim
-                ex do commodo sit consequat reprehenderit id id nostrud ullamco
-                sunt. Labore est consequat ex incididunt pariatur sit ex amet et
-                magna pariatur. Aute eiusmod est esse adipisicing amet.
-              </p>
-              <h1>Rooms3: </h1>
-              <p>
-                Irure laborum duis nulla quis ad occaecat ea ullamco aliquip
-                proident deserunt do. Ipsum elit eu et nulla est. Commodo enim
-                ex do commodo sit consequat reprehenderit id id nostrud ullamco
-                sunt. Labore est consequat ex incididunt pariatur sit ex amet et
-                magna pariatur. Aute eiusmod est esse adipisicing amet.
-              </p>
+            <div className="h-auto bg-white px-4 py-2 mt-3 rounded-xl space-y-2 shadow-lg grid grid-cols-1">
+              <h1 class="text-2xl">Rooms </h1>
+              {widgetinfo &&
+                widgetinfo.room.map((roomdetail, i) => {
+                  return (
+                    <div key={i}>
+                      <h1>{roomdetail.roomName}</h1>
+                      <p>
+                        ขนาด: {roomdetail.roomSize} ราคา: {roomdetail.roomPrice}
+                      </p>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div className="flex flex-row bg-white p-2 rounded-xl shadow-lg justify-center">
+            {widgetinfo &&
+              widgetinfo.hasOwnProperty("facilities") &&
+              widgetinfo.facilities.length !== 0 &&
+              widgetinfo.facilities.map((facility, i) => {
+                return (
+                  <div key={i} className="has-tooltip mr-1">
+                    <img
+                      alt="verify-badge"
+                      src={require(`../img/icon/buff/${facility.faName.replace(
+                        /\s/g,
+                        ""
+                      )}.png`)}
+                      className="object-contain rounded-xl w-12 pr-1 self-center transition ease-in-out duration-450 hover:-translate-y-2"></img>
+                    <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 mb-10 text-sm ">
+                      {facility.faName}
+                    </span>
+                  </div>
+                );
+              })}
+          </div>
+          <div className="flex flex-row justify-center">
+            <button
+              className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
+              onClick={() => handleShowRentForm(true)}>
+              <span className="gradient-text-btn">Rent</span>
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-rows-2 h-[100vh] ">
+          <div className="text-white flex flex-row justify-center ">
+            <div
+              className="p-3 rounded-xl w-11/12 mb-2 mt-2 h-auto"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
+              }}>
+              <div ref={mapContainer} className="map-container w-full h-96" />
+            </div>
+          </div>
+          <div className="">
+            <div className="flex flex-col">
+              <div className="flex justify-center">
+                <img
+                  className="w-11/12 max-h-96 rounded-lg mt-5 p-4"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
+                  }}
+                  src={widgetinfo ? widgetinfo.imageURL : ""}
+                />
+              </div>
             </div>
           </div>
         </div>
+        {/* </div> */}
       </div>
-      <div ref={mapContainer} className="map-container" />
-    </div>
+      {showRentForm && (
+        <RentForm setRentForm={handleShowRentForm} widgetinfo={widgetinfo} />
+      )}
+    </>
   );
 };
 

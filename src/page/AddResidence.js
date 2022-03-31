@@ -90,7 +90,7 @@ const AddResidence = () => {
 
   return (
     <div
-      className="flex justify-center h-full w-full text-gray-500"
+      className="flex justify-center h-full w-full text-gray-500 py-7 px-2"
       // style={{
       //   backgroundImage: `url(/wave3.svg)`,
       //   backgroundSize: "cover",
@@ -134,8 +134,7 @@ const AddResidence = () => {
         </div>
         <button
           className="mr-10 bg-lime-300 rounded-xl px-4 py-2 shadow-xl"
-          onClick={() => onSubmit()}
-        >
+          onClick={() => onSubmit()}>
           <h2 className="text-black font-['SarabunBold']">SUBMIT</h2>
         </button>
       </div>
