@@ -32,7 +32,7 @@ const PasswordInput = (props) => {
       <div className="basis-1/4  flex mr-2">
         <input
           type="password"
-          className="w-full bg-[#1c2128] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
+          className="w-full bg-[#bcc2c0] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
           placeholder="old password"
           onChange={onChangeOld}
         />
@@ -45,7 +45,7 @@ const PasswordInput = (props) => {
       <div className="basis-2/4 flex">
         <input
           type="password"
-          className="w-full bg-[#1c2128] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
+          className="w-full bg-[#bcc2c0] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
           placeholder="new password"
           onChange={(e) => {
             setNewPwd1(e.target.value);
@@ -60,7 +60,7 @@ const PasswordInput = (props) => {
         />
         <input
           type="password"
-          className="w-full bg-[#1c2128] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
+          className="w-full bg-[#bcc2c0] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 pl-2 mr-1 focus:ring-0"
           placeholder="new password"
           onChange={(e) => {
             setNewPwd2(e.target.value);
