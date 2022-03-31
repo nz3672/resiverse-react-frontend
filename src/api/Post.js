@@ -67,3 +67,20 @@ export const createResidence = async (residenceData, token) => {
 
   return response.data;
 };
+
+export const createTranslist = async (translistData) => {
+  const user = await store.getState().authStore.user;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+
+  const response = await axios.post(
+    "http://localhost:8080/account/api/translists/",
+    translistData,
+    config
+  );
+
+  return response.data;
+};

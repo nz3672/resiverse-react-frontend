@@ -112,6 +112,14 @@ input[type="file"] {
   @apply from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500;
 }
 
+.gradient-text-btn {
+  background: linear-gradient(
+    to bottom right,
+    rgb(36, 138, 238),
+    rgb(114, 91, 226)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 /* width */
 .scrollbar-style-w::-webkit-scrollbar {
   width: 8px;
