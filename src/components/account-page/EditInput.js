@@ -29,7 +29,7 @@ const EditInput = (props) => {
       {edit ? (
         <div className="basis-2/4 flex">
           <input
-            className=" bg-[#1c2128] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 px-2"
+            className=" bg-[#bcc2c0] text-lg rounded-lg border-[1px] border-[#cdd9e5]/50 focus:outline-0 focus:border-pink-500/75 focus:border-[1px] py-1 px-2"
             placeholder={label}
             onChange={onChange}
           />
