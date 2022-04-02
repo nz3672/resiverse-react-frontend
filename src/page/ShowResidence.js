@@ -7,34 +7,30 @@ import RentForm from "../components/show-residence/RentForm.js";
 const ShowResidence = () => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [showRentForm, setRentForm] = useState(null);
-  const slideRef = useRef();
   const { widgetinfo } = useSelector((state) => state.sidebarHome);
+  const { user } = useSelector((state) => state.authStore);
 
   mapboxGl.accessToken =
     "pk.eyJ1IjoibnozNjcyIiwiYSI6ImNreTlscGdiOTA1bjIycG1nbW95amdlMzYifQ.wPQ_fd-VPbpTazLhzbL4tA";
 
   useEffect(() => {
-    if (map.current) {
-      // map.current.on("load", () => {
-      //   map.current.jumpTo({
-      //     center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
-      //   });
-      // });
+    if (map.current && widgetinfo) {
+      map.current.jumpTo({
+        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
+      });
       return; // initialize map only once
     }
-    map.current = new mapboxGl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/nz3672/cky9lr7o02ol816n2edvtnccj",
-      center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
-      zoom: 16,
-      pitch: 60,
-      antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
-    });
+    if (widgetinfo) {
+      map.current = new mapboxGl.Map({
+        container: mapContainer.current,
+        style: "mapbox://styles/nz3672/cky9lr7o02ol816n2edvtnccj",
+        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
+        zoom: 16,
+        pitch: 60,
+        antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
+      });
+    }
   }, [widgetinfo]);
 
   const handleShowRentForm = (input) => {
@@ -124,11 +120,16 @@ const ShowResidence = () => {
               })}
           </div>
           <div className="flex flex-row justify-center">
-            <button
-              className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
-              onClick={() => handleShowRentForm(true)}>
-              <span className="gradient-text-btn">Rent</span>
-            </button>
+            {widgetinfo &&
+              user &&
+              typeof widgetinfo.ownerId !== "undefined" &&
+              widgetinfo.ownerId !== user._id && (
+                <button
+                  className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
+                  onClick={() => handleShowRentForm(true)}>
+                  <span className="gradient-text-btn">Rent</span>
+                </button>
+              )}
           </div>
         </div>
         <div className="grid grid-rows-2 h-[100vh] ">
