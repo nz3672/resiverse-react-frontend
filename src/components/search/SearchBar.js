@@ -91,14 +91,21 @@ const SearchBar = (props) => {
                 room: fetResult.bd_room,
                 description: fetResult.bd_desc,
                 website: fetResult.bd_website,
+                phone: fetResult.bd_phone,
                 line: fetResult.bd_lineid,
                 imagesURL: [],
                 address: {
+                  addrHouseNo: fetResult.bd_address.bd_houseNo,
                   addrSubDistrict: fetResult.bd_address.bd_subDist,
+                  addrDistrict: fetResult.bd_address.bd_dist,
                   addrProvince: fetResult.bd_address.bd_province,
+                  addrPostNum: fetResult.bd_address.bd_postNum,
                 },
                 imageURL: fetResult.bd_img,
-                geometry: { lat: fetResult.lat, lng: fetResult.lng },
+                geometry: {
+                  lat: fetResult.bd_location.lat,
+                  lng: fetResult.bd_location.lng,
+                },
                 ownerId: fetResult.u_id,
                 buildingId: fetResult._id,
               };
@@ -140,6 +147,7 @@ const SearchBar = (props) => {
             description: results.formatted_address,
             website: "",
             line: "",
+            phone: "",
             imagesURL: [],
             address: results.formatted_address,
             geometry: {
@@ -219,15 +227,13 @@ const SearchBar = (props) => {
               dropdown
                 ? "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-show"
                 : "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-hidden"
-            }`}
-          >
+            }`}>
             <li
               className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
               onClick={() => {
                 setSearchTitle("Name");
                 setDropdown(false);
-              }}
-            >
+              }}>
               Name
             </li>
             <li
@@ -235,8 +241,7 @@ const SearchBar = (props) => {
               onClick={() => {
                 setSearchTitle("City");
                 setDropdown(false);
-              }}
-            >
+              }}>
               City
             </li>
           </ul>
@@ -247,8 +252,7 @@ const SearchBar = (props) => {
               status === "OK"
                 ? "bg-white fixed rounded-xl text-black mt-2 divide-y z-10 "
                 : "hidden"
-            }`}
-          >
+            }`}>
             {status === "OK" &&
               data.map((description, key) => {
                 return (
@@ -260,8 +264,7 @@ const SearchBar = (props) => {
                         onClickChoice(description);
                       }}
                       key={key}
-                      className="p-2 z-10 rounded-xl hover:bg-purple-200 relative cursor-pointer"
-                    >
+                      className="p-2 z-10 rounded-xl hover:bg-purple-200 relative cursor-pointer">
                       {description.description}
                     </li>
                   )

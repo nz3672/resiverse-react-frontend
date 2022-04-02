@@ -20,15 +20,15 @@ const Navbar = (props) => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.authStore
   );
-  const notificationDocRef = doc(notificationDB, "translist-noti", user._id);
+  // const notificationDocRef = doc(notificationDB, "translist-noti", user._id);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(notificationDocRef, (snapshot) => {
-      setNotification(snapshot.data().notif);
-    });
+    // const unsubscribe = onSnapshot(notificationDocRef, (snapshot) => {
+    //   setNotification(snapshot.data().notif);
+    // });
 
     return () => {
-      unsubscribe();
+      // unsubscribe();
     };
   }, []);
 

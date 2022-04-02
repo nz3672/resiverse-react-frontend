@@ -79,13 +79,17 @@ export const createTranslist = async (translistData) => {
     },
   };
 
-  // const response = await axios.post(
-  //   "http://localhost:8080/account/api/translists/",
-  //   translistData,
-  //   config
-  // );
+  const response = await axios.post(
+    "http://localhost:8080/account/api/translists/",
+    translistData,
+    config
+  );
 
-  const notifDoc = doc(notificationDB, "translist-noti", translistData.u_id2);
+  const notifDoc = doc(
+    notificationDB,
+    "translist-noti",
+    translistData.landlord_id
+  );
   const notificationSnap = await getDoc(notifDoc);
   const id = nanoid(10);
 
@@ -97,23 +101,29 @@ export const createTranslist = async (translistData) => {
       translist_id: "",
       status: "unread",
     });
-    updateDoc(doc(notificationDB, "translist-noti", translistData.u_id2), {
-      notif: notifArray,
-    })
+    updateDoc(
+      doc(notificationDB, "translist-noti", translistData.landlord_id),
+      {
+        notif: notifArray,
+      }
+    )
       .then((respond) => console.log(respond))
       .catch((error) => console.log(error.message));
   } else {
-    await setDoc(doc(notificationDB, "translist-noti", translistData.u_id2), {
-      notif: [
-        {
-          id: id,
-          message: "มีแจ้งเตือนเข้า",
-          translist_id: "",
-          status: "unread",
-        },
-      ],
-    });
+    await setDoc(
+      doc(notificationDB, "translist-noti", translistData.landlord_id),
+      {
+        notif: [
+          {
+            id: id,
+            message: "มีแจ้งเตือนเข้า",
+            translist_id: "",
+            status: "unread",
+          },
+        ],
+      }
+    );
   }
 
-  // return response.data;
+  return response.data;
 };
