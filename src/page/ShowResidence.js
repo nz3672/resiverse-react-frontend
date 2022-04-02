@@ -3,7 +3,6 @@ import mapboxGl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import RentForm from "../components/show-residence/RentForm.js";
-import Description from "../components/show-residence/Description.js";
 
 const ShowResidence = () => {
   const mapContainer = useRef(null);
@@ -20,16 +19,23 @@ const ShowResidence = () => {
     "pk.eyJ1IjoibnozNjcyIiwiYSI6ImNreTlscGdiOTA1bjIycG1nbW95amdlMzYifQ.wPQ_fd-VPbpTazLhzbL4tA";
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
+    if (map.current) {
+      // map.current.on("load", () => {
+      //   map.current.jumpTo({
+      //     center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
+      //   });
+      // });
+      return; // initialize map only once
+    }
     map.current = new mapboxGl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/nz3672/cky9lr7o02ol816n2edvtnccj",
-      center: [100.53040709750229, 13.736295511335356],
+      center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
       zoom: 16,
       pitch: 60,
       antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
     });
-  }, []);
+  }, [widgetinfo]);
 
   const handleShowRentForm = (input) => {
     setRentForm(input);
@@ -44,8 +50,7 @@ const ShowResidence = () => {
           style={{
             backgroundImage:
               "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
-          }}
-        >
+          }}>
           <div className="shadow-lg bg-white rounded-xl p-3">
             <h1 className=" text-3xl">
               {widgetinfo ? widgetinfo.name : "Place Name"}
@@ -58,7 +63,17 @@ const ShowResidence = () => {
           <div className="shadow-lg bg-white rounded-xl p-3">
             <h1 className=" text-xl">Address</h1>
             <p className=" mt-2">
-              {widgetinfo ? widgetinfo.address.addrHouseNo : "Address"}
+              {widgetinfo
+                ? widgetinfo.address.addrHouseNo +
+                  " " +
+                  widgetinfo.address.addrSubDistrict +
+                  " " +
+                  widgetinfo.address.addrDistrict +
+                  " " +
+                  widgetinfo.address.addrProvince +
+                  " " +
+                  widgetinfo.address.addrPostNum
+                : "Address"}
             </p>
           </div>
           <div className="text-xl shadow-lg bg-white rounded-xl p-3">
@@ -75,7 +90,12 @@ const ShowResidence = () => {
                     <div key={i}>
                       <h1>{roomdetail.roomName}</h1>
                       <p>
-                        ขนาด: {roomdetail.roomSize} ราคา: {roomdetail.roomPrice}
+                        ขนาด: {roomdetail.roomSize} บาท ราคา:{" "}
+                        {roomdetail.roomPrice} บาท ค่าประกันห้อง:{" "}
+                        {roomdetail.roomInsurance
+                          ? roomdetail.roomInsurance
+                          : "-"}{" "}
+                        บาท
                       </p>
                     </div>
                   );
@@ -95,8 +115,7 @@ const ShowResidence = () => {
                         /\s/g,
                         ""
                       )}.png`)}
-                      className="object-contain rounded-xl w-12 pr-1 self-center transition ease-in-out duration-450 hover:-translate-y-2"
-                    ></img>
+                      className="object-contain rounded-xl w-12 pr-1 self-center transition ease-in-out duration-450 hover:-translate-y-2"></img>
                     <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 mb-10 text-sm ">
                       {facility.faName}
                     </span>
@@ -107,8 +126,7 @@ const ShowResidence = () => {
           <div className="flex flex-row justify-center">
             <button
               className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
-              onClick={() => handleShowRentForm(true)}
-            >
+              onClick={() => handleShowRentForm(true)}>
               <span className="gradient-text-btn">Rent</span>
             </button>
           </div>
@@ -120,8 +138,7 @@ const ShowResidence = () => {
               style={{
                 backgroundImage:
                   "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
-              }}
-            >
+              }}>
               <div ref={mapContainer} className="map-container w-full h-96" />
             </div>
           </div>

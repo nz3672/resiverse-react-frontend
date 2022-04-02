@@ -50,8 +50,8 @@ const TransactionList = () => {
             }
 
             if (!item.hasOwnProperty("u_obj")) {
-              if (user._id == item.u_id1) {
-                getOtherUserById(item.u_id2)
+              if (user._id == item.tenant_id) {
+                getOtherUserById(item.landlord_id)
                   .then((res) => {
                     setTranslist(
                       translists.map((obj) => {
@@ -67,8 +67,8 @@ const TransactionList = () => {
                     );
                   })
                   .catch((err) => console.log(err));
-              } else if (user._id == item.u_id2) {
-                getOtherUserById(item.u_id1)
+              } else if (user._id == item.landlord_id) {
+                getOtherUserById(item.tenant_id)
                   .then((res) => {
                     setTranslist(
                       translists.map((obj) => {

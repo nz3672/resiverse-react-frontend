@@ -18,7 +18,6 @@
     "aws-sdk": "^2.1096.0",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
-    "crypto": "^1.0.1",
     "dotenv": "^12.0.3",
     "firebase": "^9.6.10",
     "gsap": "^3.9.1",
@@ -36,7 +35,6 @@
     "three": "^0.136.0",
     "use-places-autocomplete": "^1.11.0",
     "util": "^0.12.4",
-    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.3"
   },
   "scripts": {
