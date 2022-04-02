@@ -67,7 +67,7 @@ const ShowResidence = () => {
           </div>
           <div>
             <div className="h-auto bg-white px-4 py-2 mt-3 rounded-xl space-y-2 shadow-lg grid grid-cols-1">
-              <h1 class="text-2xl">Rooms </h1>
+              <h1 className="text-2xl">Rooms </h1>
               {widgetinfo &&
                 widgetinfo.room.map((roomdetail, i) => {
                   return (

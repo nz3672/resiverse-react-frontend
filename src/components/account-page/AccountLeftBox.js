@@ -22,8 +22,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("Account");
           }}
-          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
-        >
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1">
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
               className="ml-2 mr-4 self-center"
@@ -34,24 +33,22 @@ const AccountLeftBox = (props) => {
         </button>
         <button
           onClick={() => {
-            setRightBox("Nofitifation");
+            setRightBox("Notification");
           }}
-          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
-        >
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1">
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
               className="ml-2 mr-4 self-center"
               icon="fa-solid fa-bell"
             />
-            Nofitifation
+            Notification
           </label>
         </button>
         <button
           onClick={() => {
             setRightBox("MyResidence");
           }}
-          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
-        >
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1">
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
               className="ml-2 mr-4 self-center"
@@ -64,8 +61,7 @@ const AccountLeftBox = (props) => {
           onClick={() => {
             setRightBox("TransactionList");
           }}
-          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1"
-        >
+          className="hover:-translate-y-1 transition ease-in-out hover:bg-pink-500 hover:text-white focus:bg-pink-500 focus:text-white rounded-lg py-1">
           <label className="text-xl flex justify-start cursor-pointer">
             <FontAwesomeIcon
               className="ml-2 mr-4 self-center"

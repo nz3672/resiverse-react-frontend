@@ -120,6 +120,7 @@ input[type="file"] {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
 /* width */
 .scrollbar-style-w::-webkit-scrollbar {
   width: 8px;
