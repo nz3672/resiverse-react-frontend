@@ -6,6 +6,7 @@ import MyResidence from "./MyResidence";
 import { initMyRest } from "../features/myResidenceSlice";
 import { getMyResidence } from "../../api/Get";
 import TransactionList from "./TransactionList";
+import { store } from "../app/store";
 import NotificationRightBox from "./NotificationRightBox";
 
 const AccountSetting = () => {

@@ -8,6 +8,7 @@ const RoomForm = (props) => {
     roomName: "",
     roomSize: "",
     roomPrice: "",
+    roomInsurance: "",
   });
 
   const onChange = (e) => {
@@ -45,7 +46,7 @@ const RoomForm = (props) => {
             />
             <Input
               name="roomSize"
-              placeholder="Size"
+              placeholder="Size (ตร.ม.)"
               type="text"
               onChange={onChange}
               form={form.roomSize}
@@ -56,6 +57,13 @@ const RoomForm = (props) => {
               type="text"
               onChange={onChange}
               form={form.roomPrice}
+            />
+            <Input
+              name="roomInsurance"
+              placeholder="Insurance"
+              type="text"
+              onChange={onChange}
+              form={form.roomInsurance}
             />
             <button
               className="bg-gradient-to-r from-pink-500 to-yellow-300 text-white py-1 mt-4 rounded-xl"

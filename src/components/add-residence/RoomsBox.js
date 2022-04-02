@@ -67,10 +67,11 @@ const RoomsBox = (props) => {
     <div className="font-['SarabunBold']">
       <div className="h-[80%]">
         <div className="grid grid-cols-1 gap-y-4 justify-items-center ">
-          <div className="h-[100%]">
+          <div className="h-[100%] grid grid-cols-2 gap-x-4 mt-2">
             <h1 className="ml-2">Image</h1>
-            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
-              <div className="flex justify-start w-[60%] mr-4 ">
+            <h1 className="ml-2">Cert</h1>
+            <div className="flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
+              <div className="flex justify-start mr-4 ">
                 <label
                   className={`${
                     fileCert
@@ -93,18 +94,15 @@ const RoomsBox = (props) => {
                 </h2>
               </div>
             </div>
-          </div>
 
-          <div className="h-[100%]">
-            <h1 className="ml-2">Cert</h1>
-            <div className="w-[600px] flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
-              <div className="flex justify-start w-[40%] mr-4">
+            <div className=" flex shadow-lg divide-x divide-pink-500 divide-x-[2px] bg-gray-200/75 py-3 px-6 rounded-xl ">
+              <div className="flex justify-start mr-4">
                 <label
                   className={`${
                     fileCert
                       ? "indigo-pink"
                       : "bg-zinc-500 shadow-md hover:from-indigo-500 bg-gradient-to-r via-purple-500 to-pink-500"
-                  } w-[45%] h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2  justify-between text-white font-medium cursor-pointer`}
+                  } h-fit self-center font-medium outline-0 mr-4 rounded-lg p-2  justify-between text-white font-medium cursor-pointer`}
                 >
                   <input
                     className=""
@@ -141,20 +139,27 @@ const RoomsBox = (props) => {
               </button>
             </div>
           </div>
-
-          <div className="flex mt-4">
-            {rooms.length <= 2 && <AddRoomCircleBadge roomForm={roomForm} />}
-            {rooms.length !== 0 &&
-              rooms.map((r, index) => {
-                return (
-                  <AddRoomCircleDetails
-                    onChange={onChange}
-                    rooms={r}
-                    index={index}
-                    key={index}
-                  />
-                );
-              })}
+          <div className="min-h-[230px]">
+            {form.resType !== "House" && (
+              <div className="flex mt-4">
+                {rooms.length <= 2 && (
+                  <AddRoomCircleBadge roomForm={roomForm} />
+                )}
+                {rooms.length !== 0 &&
+                  rooms.map((r, index) => {
+                    return (
+                      <AddRoomCircleDetails
+                        onChange={onChange}
+                        room={r}
+                        index={index}
+                        key={index}
+                        setRooms={setRooms}
+                        rooms={rooms}
+                      />
+                    );
+                  })}
+              </div>
+            )}
           </div>
           {addRoomForm && (
             <RoomForm roomForm={roomForm} setRooms={setRooms} form={form} />

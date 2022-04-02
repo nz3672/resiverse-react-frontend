@@ -30,7 +30,7 @@ const isCheckArr = {
   Parking: false,
   LaundryAvailable: false,
   Fitness: false,
-  PublicTransportation: false,
+  BTSorMRT: false,
   NearDepartment: false,
 };
 
@@ -132,11 +132,14 @@ const AddResidence = () => {
             setGmap={setGmap}
           />
         </div>
-        <button
-          className="mr-10 bg-lime-300 rounded-xl px-4 py-2 shadow-xl"
-          onClick={() => onSubmit()}>
-          <h2 className="text-black font-['SarabunBold']">SUBMIT</h2>
-        </button>
+        <div className="flex justify-end h-fit">
+          <button
+            className="mr-10 bg-[#3f9d45] rounded-xl px-4 py-2 shadow-md "
+            onClick={() => onSubmit()}
+          >
+            <h2 className="text-white font-['SarabunBold']">SUBMIT</h2>
+          </button>
+        </div>
       </div>
     </div>
   );

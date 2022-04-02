@@ -78,44 +78,60 @@ const SearchBar = (props) => {
 
     //Get selected place details
     const results = await getPlaceDetails(parameter);
-    // console.log(results);
 
-    let fetResult;
     getAllResidence()
       .then((res) => {
-        res.map((item) => {
-          if (item.bd_location.placeId === results.place_id) {
-            fetResult = item;
+        res.map((fetResult) => {
+          if (fetResult.bd_location.placeId === results.place_id) {
+            if (fetResult) {
+              const result = {
+                name: fetResult.bd_name,
+                residenceType: fetResult.bd_type,
+                facilities: fetResult.bd_facilities,
+                room: fetResult.bd_room,
+                description: fetResult.bd_desc,
+                website: fetResult.bd_website,
+                line: fetResult.bd_lineid,
+                imagesURL: [],
+                address: {
+                  addrSubDistrict: fetResult.bd_address.bd_subDist,
+                  addrProvince: fetResult.bd_address.bd_province,
+                },
+                imageURL: fetResult.bd_img,
+                geometry: { lat: fetResult.lat, lng: fetResult.lng },
+                ownerId: fetResult.u_id,
+                buildingId: fetResult._id,
+              };
+
+              setPlaceDetails(result);
+              setShowWidget(true);
+              setPlaceId(description.place_id);
+            } else {
+              setShowWidget(true);
+              setPlaceId(description.place_id);
+
+              setPlaceDetails({
+                name: results.name,
+                residenceType: "APT",
+                facilities: [],
+                room: [],
+                description: results.formatted_address,
+                website: "",
+                line: "",
+                imagesURL: [],
+                address: results.formatted_address,
+                geometry: {
+                  lat: results.geometry.location.lat(),
+                  lng: results.geometry.location.lng(),
+                },
+                placeId: results.place_id,
+              });
+            }
           }
         });
-        // console.log(fetResult);
-        if (fetResult) {
-          const result = {
-            name: fetResult.bd_name,
-            residenceType: fetResult.bd_type,
-            facilities: fetResult.bd_facilities,
-            room: fetResult.bd_room,
-            description: fetResult.bd_desc,
-            website: fetResult.bd_website,
-            line: fetResult.bd_lineid,
-            imagesURL: [],
-            address: {
-              addrSubDistrict: fetResult.bd_address.bd_subDist,
-              addrProvince: fetResult.bd_address.bd_province,
-            },
-            imageURL: fetResult.bd_img,
-            geometry: { lat: fetResult.lat, lng: fetResult.lng },
-            ownerId: fetResult.u_id,
-            buildingId: fetResult._id,
-          };
-          // console.log(result);
-          setPlaceDetails(result);
+        if (res.length === 0) {
           setShowWidget(true);
           setPlaceId(description.place_id);
-        } else {
-          setShowWidget(true);
-          setPlaceId(description.place_id);
-          // console.log(results);
           setPlaceDetails({
             name: results.name,
             residenceType: "APT",
@@ -203,13 +219,15 @@ const SearchBar = (props) => {
               dropdown
                 ? "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-show"
                 : "origin-top-left absolute py-1 mt-2 min-w-fit w-48 rounded-md bg-white divide-y dropdow-menu-anim-hidden"
-            }`}>
+            }`}
+          >
             <li
               className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
               onClick={() => {
                 setSearchTitle("Name");
                 setDropdown(false);
-              }}>
+              }}
+            >
               Name
             </li>
             <li
@@ -217,7 +235,8 @@ const SearchBar = (props) => {
               onClick={() => {
                 setSearchTitle("City");
                 setDropdown(false);
-              }}>
+              }}
+            >
               City
             </li>
           </ul>
@@ -228,7 +247,8 @@ const SearchBar = (props) => {
               status === "OK"
                 ? "bg-white fixed rounded-xl text-black mt-2 divide-y z-10 "
                 : "hidden"
-            }`}>
+            }`}
+          >
             {status === "OK" &&
               data.map((description, key) => {
                 return (
@@ -240,7 +260,8 @@ const SearchBar = (props) => {
                         onClickChoice(description);
                       }}
                       key={key}
-                      className="p-2 z-10 rounded-xl hover:bg-purple-200 relative cursor-pointer">
+                      className="p-2 z-10 rounded-xl hover:bg-purple-200 relative cursor-pointer"
+                    >
                       {description.description}
                     </li>
                   )
