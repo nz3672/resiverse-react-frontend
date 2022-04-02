@@ -39,14 +39,15 @@ const PreviewGMap = (props) => {
   }, []);
 
   useEffect(() => {
+    const date = new Date();
     if (placeDetails) {
       const lat = placeDetails.geometry.lat;
       const lng = placeDetails.geometry.lng;
       setGmap({
         lat: lat,
         lng: lng,
-        createdAt: new Date(),
-        placeId: placeDetails.place_id,
+        createdAt: date.toISOString(),
+        placeId: placeDetails.placeId,
       });
     }
 
@@ -64,7 +65,6 @@ const PreviewGMap = (props) => {
   }, []);
 
   const panMap = (lat, lng) => {
-    console.log(lat, lng);
     mapRef.current.setCenter({ lat, lng });
     mapRef.current.setZoom(17);
   };
@@ -127,11 +127,11 @@ const PreviewGMap = (props) => {
                 center={myLatLng}
                 options={options}
                 onClick={(e) => {
-                  console.log("jj", e);
+                  const date = new Date();
                   setGmap({
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng(),
-                    createdAt: new Date(),
+                    createdAt: date.toISOString(),
                     placeId: "",
                   });
                 }}

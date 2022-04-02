@@ -6,7 +6,6 @@ const FacilitiesBox = (props) => {
 
   useEffect(() => {
     setForm((prev) => ({ ...prev, facilities: facilities }));
-    console.log(facilities);
     return () => {};
   }, [facilities]);
 

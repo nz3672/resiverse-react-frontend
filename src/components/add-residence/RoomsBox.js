@@ -34,7 +34,6 @@ const RoomsBox = (props) => {
   }, [rooms]);
 
   useEffect(() => {
-    console.log(gmap);
     setForm((prev) => ({
       ...prev,
       placePosition: {

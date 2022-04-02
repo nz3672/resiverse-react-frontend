@@ -77,7 +77,7 @@ const AddResidence = () => {
 
   const onSubmit = async () => {
     console.log(form);
-    // const response = await createResidence(form);
+    const response = await createResidence(form);
     setGmap({ lat: "", lng: "", createdAt: "", placeId: "" });
     setRooms([]);
     setForm(allParams);
