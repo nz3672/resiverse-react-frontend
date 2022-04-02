@@ -134,8 +134,7 @@ const PreviewGMap = (props) => {
                     createdAt: date.toISOString(),
                     placeId: "",
                   });
-                }}
-              >
+                }}>
                 {showMarker()}
               </GoogleMap>
             )}

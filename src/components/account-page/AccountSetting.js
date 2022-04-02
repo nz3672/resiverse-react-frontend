@@ -7,6 +7,7 @@ import { initMyRest } from "../features/myResidenceSlice";
 import { getMyResidence } from "../../api/Get";
 import TransactionList from "./TransactionList";
 import { store } from "../app/store";
+import NotificationRightBox from "./NotificationRightBox";
 
 const AccountSetting = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const AccountSetting = () => {
     switch (rightBox) {
       case "Account":
         return <AccountRightBox />;
+      case "Notification":
+        return <NotificationRightBox />;
       case "MyResidence":
         return <MyResidence />;
       case "TransactionList":

@@ -1,5 +1,8 @@
 import axios from "axios";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { notificationDB } from "../firebase";
 import { store } from "../components/app/store";
+import { nanoid } from "nanoid";
 const API_URL_ACCOUNT_SERVICES = "account/api/";
 
 function buildFormData(formData, data, parentKey) {
@@ -76,11 +79,41 @@ export const createTranslist = async (translistData) => {
     },
   };
 
-  const response = await axios.post(
-    "http://localhost:8080/account/api/translists/",
-    translistData,
-    config
-  );
+  // const response = await axios.post(
+  //   "http://localhost:8080/account/api/translists/",
+  //   translistData,
+  //   config
+  // );
 
-  return response.data;
+  const notifDoc = doc(notificationDB, "translist-noti", translistData.u_id2);
+  const notificationSnap = await getDoc(notifDoc);
+  const id = nanoid(10);
+
+  if (notificationSnap.exists()) {
+    const notifArray = notificationSnap.data().notif;
+    notifArray.push({
+      id: id,
+      message: "มีแจ้งเตือนเข้า",
+      translist_id: "",
+      status: "unread",
+    });
+    updateDoc(doc(notificationDB, "translist-noti", translistData.u_id2), {
+      notif: notifArray,
+    })
+      .then((respond) => console.log(respond))
+      .catch((error) => console.log(error.message));
+  } else {
+    await setDoc(doc(notificationDB, "translist-noti", translistData.u_id2), {
+      notif: [
+        {
+          id: id,
+          message: "มีแจ้งเตือนเข้า",
+          translist_id: "",
+          status: "unread",
+        },
+      ],
+    });
+  }
+
+  // return response.data;
 };

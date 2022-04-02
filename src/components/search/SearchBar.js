@@ -132,7 +132,6 @@ const SearchBar = (props) => {
         if (res.length === 0) {
           setShowWidget(true);
           setPlaceId(description.place_id);
-
           setPlaceDetails({
             name: results.name,
             residenceType: "APT",
