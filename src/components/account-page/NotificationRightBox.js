@@ -18,9 +18,11 @@ const NotificationRightBox = () => {
     };
   }, []);
   return (
-    <div>
+    <div className="grid grid-cols-1 divide-y justify-items-center">
       {notifs &&
-        notifs.map(({ id, message }) => <div>{id + " " + message}</div>)}
+        notifs.map(({ id, message }) => (
+          <div className="w-full">{id + " " + message}</div>
+        ))}
     </div>
   );
 };

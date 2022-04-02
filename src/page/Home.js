@@ -4,11 +4,7 @@ import { PointsMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
 import { gsap, Power3 } from "gsap";
-import {
-  CSSTransition,
-  TransitionGroup,
-  SwitchTransition,
-} from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import star from "./../img/three-asset/star1.png";
 import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
@@ -16,8 +12,6 @@ import SignUp from "../components/SignInUp/SignUp";
 import Search from "../components/search/Search";
 import SideBar from "../components/sidebars/SideBar";
 import GlobeWidget from "../components/globe/GlobeWidget";
-import { messaging } from "../firebase";
-import { onMessage, getToken } from "firebase/messaging";
 import { useMousePosition } from "../utils/MouseEvent";
 import {
   useElapsedTimeByRenderer,
@@ -64,31 +58,6 @@ const Home = () => {
   let vCheck = false;
 
   useEffect(() => {
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
-    });
-    getToken(messaging, {
-      vapidKey:
-        "BD-JIcaheTESF2B5ZWzSRN-CYB6duLuQNfdw3zRzk9L7UT-rKu-5vmlz5DZGR9CU0NZcfA-f919dliLJtNvSCYA",
-    })
-      .then((currentToken) => {
-        if (currentToken) {
-          // Send the token to your server and update the UI if necessary
-          console.log(currentToken);
-          // ...
-        } else {
-          // Show permission request UI
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-          // ...
-        }
-      })
-      .catch((err) => {
-        console.log("An error occurred while retrieving token. ", err);
-        // ...
-      });
-
     // loader texture
     const loader = new THREE.TextureLoader();
     const circleParticle = loader.load(
