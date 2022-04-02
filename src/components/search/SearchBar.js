@@ -88,7 +88,7 @@ const SearchBar = (props) => {
             fetResult = item;
           }
         });
-        console.log(fetResult);
+        // console.log(fetResult);
         if (fetResult) {
           const result = {
             name: fetResult.bd_name,
@@ -115,7 +115,7 @@ const SearchBar = (props) => {
         } else {
           setShowWidget(true);
           setPlaceId(description.place_id);
-          console.log(results);
+          // console.log(results);
           setPlaceDetails({
             name: results.name,
             residenceType: "APT",

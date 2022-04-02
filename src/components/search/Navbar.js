@@ -6,15 +6,31 @@ import { closePopup, clickPopup } from "../features/popUpSlice";
 import { logout, reset } from "../features/auth/authSlice";
 import { openSidebar } from "../features/sidebarSlice";
 import { chooseSidebar } from "../features/sidebarShowSlice";
+import { useEffect, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { notificationDB } from "../../firebase";
 
 const Navbar = (props) => {
   const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
+  const [notifications, setNotification] = useState([]);
+  const [showNoti, setNoti] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.popupSignInOut);
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.authStore
   );
+  const notificationDocRef = doc(notificationDB, "translist-noti", user._id);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(notificationDocRef, (snapshot) => {
+      setNotification(snapshot.data().notif);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const popupPage = (page) => {
     dispatch(clickPopup(page));
@@ -51,20 +67,26 @@ const Navbar = (props) => {
             onClick={() => {
               chooseSidebarPage("AddResidence");
               sidebarPage(true);
-            }}
-          >
+            }}>
             Add Resident
           </button>
 
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
-            onClick={onLogout}
-          >
+            onClick={onLogout}>
             Sign Out
           </button>
-          <button className="mx-2">
-            <FontAwesomeIcon className="h-8" icon="fa-solid fa-bell" />
-          </button>
+          <span className="relative">
+            <button className="mx-2">
+              <FontAwesomeIcon className="h-8" icon="fa-solid fa-bell" />
+            </button>
+            {showNoti && (
+              <span className="flex absolute mr-1 h-4 w-4 top-0 right-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+              </span>
+            )}
+          </span>
         </div>
       ) : (
         <div>
@@ -72,8 +94,7 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignIn");
-            }}
-          >
+            }}>
             SignIn
           </button>
 
@@ -81,8 +102,7 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignUp");
-            }}
-          >
+            }}>
             SignUp
           </button>
         </div>

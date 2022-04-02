@@ -4,11 +4,7 @@ import { PointsMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment";
 import { gsap, Power3 } from "gsap";
-import {
-  CSSTransition,
-  TransitionGroup,
-  SwitchTransition,
-} from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import star from "./../img/three-asset/star1.png";
 import globe from "./../gltf-models/globe.gltf";
 import SignIn from "../components/SignInUp/SignIn";
