@@ -18,3 +18,33 @@ export const getMyResidence = async () => {
 
   return response.data;
 };
+
+export const getMyResidenceById = async (id) => {
+  const user = await store.getState().authStore.user;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+  const response = await axios.get(`account/api/buildings/get/${id}`, config);
+
+  return response.data;
+};
+
+export const getMyTransList = async () => {
+  const user = await store.getState().authStore.user;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+  const response = await axios.get("account/api/translists", config);
+
+  return response.data;
+};
+
+export const getOtherUserById = async (id) => {
+  const response = await axios.get(`account/api/users/otherUser/${id}`);
+
+  return response.data;
+};

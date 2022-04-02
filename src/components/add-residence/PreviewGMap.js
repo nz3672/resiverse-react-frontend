@@ -64,6 +64,7 @@ const PreviewGMap = (props) => {
   }, []);
 
   const panMap = (lat, lng) => {
+    console.log(lat, lng);
     mapRef.current.setCenter({ lat, lng });
     mapRef.current.setZoom(17);
   };
@@ -126,6 +127,7 @@ const PreviewGMap = (props) => {
                 center={myLatLng}
                 options={options}
                 onClick={(e) => {
+                  console.log("jj", e);
                   setGmap({
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng(),

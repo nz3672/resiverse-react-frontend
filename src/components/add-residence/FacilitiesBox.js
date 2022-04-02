@@ -6,7 +6,7 @@ const FacilitiesBox = (props) => {
 
   useEffect(() => {
     setForm((prev) => ({ ...prev, facilities: facilities }));
-    // setFacilities([]);
+    console.log(facilities);
     return () => {};
   }, [facilities]);
 
@@ -24,7 +24,7 @@ const FacilitiesBox = (props) => {
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
-          label="WIFI available"
+          label="WIFI Available"
           desc="มี WIFI ให้บริการ"
           setFacilities={setFacilities}
           checkbox={checkbox.WIFIAvailable}
@@ -55,7 +55,7 @@ const FacilitiesBox = (props) => {
           label="BTS or MRT"
           desc="อยู่ใกล้กับรถไฟฟ้า"
           setFacilities={setFacilities}
-          checkbox={checkbox.PublicTransportation}
+          checkbox={checkbox.BTSorMRT}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
