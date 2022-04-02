@@ -37,10 +37,10 @@ const FacilitiesBox = (props) => {
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility
-          label="Laundry Available"
+          label="Laundry available"
           desc="มีร้านสำหรับบริการซัก-รีดให้บริการ"
           setFacilities={setFacilities}
-          checkbox={checkbox.LaundryAvailable}
+          checkbox={checkbox.Laundryavailable}
           setCheckbox={setCheckbox}
         />
         <CheckboxFacility

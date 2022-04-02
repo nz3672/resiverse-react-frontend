@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FormWaitForContract = (props) => {
-  const { setSelect } = props;
+  const { setSelect, itemContract } = props;
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -16,7 +16,11 @@ const FormWaitForContract = (props) => {
               }}
             />
           </div>
-          <div className="mx-4"></div>
+          <div className="mx-4">
+            <div>
+              <p>คุณ xxx ต้องการ</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>

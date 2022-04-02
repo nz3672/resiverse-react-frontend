@@ -4,7 +4,7 @@ const Widget = (props) => {
   return (
     <div
       key={i}
-      className="cursor-pointer hover-widget hover:bg-pink-500 rounded-3xl shadow-xl w-[190px] h-[270px] desktop:w-[280px] desktop:h-[370px] bg-white hover:z-50 bg-opacity-50 laptop:pb-4 laptop:px-4 laptop:pt-5 pb-2 px-2 pt-2"
+      className="cursor-pointer hover-widget hover:bg-pink-500 rounded-3xl shadow-xl w-[190px] h-[270px] desktop:w-[280px] desktop:h-[370px] bg-white hover:z-100 bg-opacity-50 laptop:pb-4 laptop:px-4 laptop:pt-5 pb-2 px-2 pt-2"
     >
       <div className="w-full min-h-[50%] h-[55%] max-h-[60%]">
         <img
