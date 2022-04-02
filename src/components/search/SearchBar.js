@@ -74,11 +74,11 @@ const SearchBar = (props) => {
       placeId: description.place_id,
     };
 
-    // console.log(description);
+    console.log(description);
 
     //Get selected place details
     const results = await getPlaceDetails(parameter);
-
+    console.log(results);
     getAllResidence()
       .then((res) => {
         res.map((fetResult) => {

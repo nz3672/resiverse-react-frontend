@@ -28,7 +28,7 @@ const isCheckArr = {
   PetFriendly: false,
   WIFIAvailable: false,
   Parking: false,
-  LaundryAvailable: false,
+  Laundryavailable: false,
   Fitness: false,
   BTSorMRT: false,
   NearDepartment: false,

@@ -40,6 +40,7 @@ const PreviewGMap = (props) => {
 
   useEffect(() => {
     const date = new Date();
+    console.log(placeDetails);
     if (placeDetails) {
       const lat = placeDetails.geometry.lat;
       const lng = placeDetails.geometry.lng;
@@ -134,7 +135,8 @@ const PreviewGMap = (props) => {
                     createdAt: date.toISOString(),
                     placeId: "",
                   });
-                }}>
+                }}
+              >
                 {showMarker()}
               </GoogleMap>
             )}

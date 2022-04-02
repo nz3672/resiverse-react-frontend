@@ -8,11 +8,13 @@ import FormWaitForContract from "./FormWaitForContract";
 import Transaction from "./Transaction";
 import { useSelector } from "react-redux";
 
+const showContract = {};
+
 const TransactionList = () => {
   const [select, setSelect] = useState(false);
   const [translists, setTranslist] = useState([]);
   const { user } = useSelector((state) => state.authStore);
-  // const [myRes, setMyRes] = useState();
+  const [itemContract, setItemContract] = useState(showContract);
 
   useEffect(() => {
     getMyTransList()
@@ -88,12 +90,30 @@ const TransactionList = () => {
             }
 
             return (
-              <Transaction key={i} setSelect={setSelect} translist={item} />
+              <Transaction
+                key={i}
+                setSelect={setSelect}
+                translist={item}
+                setItemContract={setItemContract}
+              />
             );
           })}
       </div>
+      <button
+        className="bg-pink-300"
+        onClick={() => {
+          setSelect(true);
+        }}
+      >
+        click
+      </button>
       <div className="">
-        {select && <FormWaitForContract setSelect={setSelect} />}
+        {select && (
+          <FormWaitForContract
+            setSelect={setSelect}
+            itemContract={itemContract}
+          />
+        )}
       </div>
     </>
   );
