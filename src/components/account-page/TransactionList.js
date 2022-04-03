@@ -31,64 +31,6 @@ const TransactionList = () => {
       <div className="h-full overflow-auto scrollbar-style-w scrollbar-style-tr scrollbar-style-th mr-4">
         {translists.length !== 0 &&
           translists.map((item, i) => {
-            if (!item.hasOwnProperty("bd_obj")) {
-              getMyResidenceById(item.bd_id)
-                .then((res) => {
-                  // Set into Translist for no request again
-                  setTranslist(
-                    translists.map((obj) => {
-                      if (obj._id === item._id) {
-                        return {
-                          ...obj,
-                          bd_obj: res,
-                        };
-                      } else {
-                        return obj;
-                      }
-                    })
-                  );
-                })
-                .catch((err) => console.log(err));
-            }
-
-            if (!item.hasOwnProperty("u_obj")) {
-              if (user._id == item.tenant_id) {
-                getOtherUserById(item.landlord_id)
-                  .then((res) => {
-                    setTranslist(
-                      translists.map((obj) => {
-                        if (obj._id === item._id) {
-                          return {
-                            ...obj,
-                            u_obj: res,
-                          };
-                        } else {
-                          return obj;
-                        }
-                      })
-                    );
-                  })
-                  .catch((err) => console.log(err));
-              } else if (user._id == item.landlord_id) {
-                getOtherUserById(item.tenant_id)
-                  .then((res) => {
-                    setTranslist(
-                      translists.map((obj) => {
-                        if (obj._id === item._id) {
-                          return {
-                            ...obj,
-                            u_obj: res,
-                          };
-                        } else {
-                          return obj;
-                        }
-                      })
-                    );
-                  })
-                  .catch((err) => console.log(err));
-              }
-            }
-
             return (
               <Transaction
                 key={i}
@@ -99,19 +41,20 @@ const TransactionList = () => {
             );
           })}
       </div>
-      <button
+      {/* <button
         className="bg-pink-300"
         onClick={() => {
           setSelect(true);
         }}
       >
         click
-      </button>
+      </button> */}
       <div className="">
         {select && (
           <FormWaitForContract
             setSelect={setSelect}
             itemContract={itemContract}
+            landlord={user}
           />
         )}
       </div>
