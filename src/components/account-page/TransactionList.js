@@ -37,24 +37,18 @@ const TransactionList = () => {
                 setSelect={setSelect}
                 translist={item}
                 setItemContract={setItemContract}
+                myUser={user}
               />
             );
           })}
       </div>
-      {/* <button
-        className="bg-pink-300"
-        onClick={() => {
-          setSelect(true);
-        }}
-      >
-        click
-      </button> */}
       <div className="">
         {select && (
           <FormWaitForContract
             setSelect={setSelect}
             itemContract={itemContract}
-            landlord={user}
+            myUser={user}
+            setTranslist={setTranslist}
           />
         )}
       </div>

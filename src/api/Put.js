@@ -18,7 +18,7 @@ export const updateUser = async (form) => {
   return response.data;
 };
 
-export const updateTranslist = async (form) => {
+export const updateTranslist = async (form, id) => {
   const user = await store.getState().authStore.user;
   const config = {
     headers: {
@@ -27,7 +27,7 @@ export const updateTranslist = async (form) => {
   };
 
   const response = await axios.put(
-    `account/api/users/${user._id}`,
+    `account/api/translists/${id}`,
     form,
     config
   );
