@@ -17,3 +17,20 @@ export const updateUser = async (form) => {
 
   return response.data;
 };
+
+export const updateTranslist = async (form, id) => {
+  const user = await store.getState().authStore.user;
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+
+  const response = await axios.put(
+    `account/api/translists/${id}`,
+    form,
+    config
+  );
+
+  return response.data;
+};
