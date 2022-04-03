@@ -4,7 +4,7 @@ import { dateFormate } from "../../utils/DateFormate";
 import { store } from "../app/store";
 
 const Transaction = (props) => {
-  const { setSelect, translist, setItemContract } = props;
+  const { setSelect, translist, setItemContract, myUser } = props;
   // const [myRes, setMyRes] = useState();
 
   // useEffect(() => {
@@ -33,6 +33,26 @@ const Transaction = (props) => {
 
   //   return () => {};
   // }, []);
+
+  const stateEvent = () => {
+    if (translist.tr_state === "waitLandlordConfirm") {
+      return "รอผู้ให้เช่ายืนยันที่พัก"; // add room image , wallpaper etc.
+    } else if (translist.tr_state === "waitTenantConfirm") {
+      return "รอผู้เช่ายืนยันการชำระเงิน"; // show bank id for pay
+    } else if (translist.tr_state === "waitTenantMoveIn") {
+      return "รอผู้เช่าย้ายเข้าที่พัก"; // change expense state
+    } else if (translist.tr_state === "waitTenantMoveOut") {
+      return "ผู้เช่าอยู่ระหว่างพักอาศัย รอผู้เช่าย้ายออก";
+    } else if (translist.tr_state === "waitLandlordCheckInsur") {
+      return "รอผู้ให้เช่ากรอกค่าความเสียหาย";
+    } else if (translist.tr_state === "waitForConfirmInsur") {
+      return "รอผู้เช่าดำเนินการยินยอมรับเงินค่าประกัน"; // show insurance that calculate by landlord's insurance
+    } else if (translist.tr_state === "success") {
+      return "ยืนยันรับเงินค่าประกันเรียบร้อย";
+    } else {
+      return "";
+    }
+  };
 
   return (
     <button
@@ -65,6 +85,9 @@ const Transaction = (props) => {
                 </h1>
                 <h1 className="ml-4 flex justify-start text-lg">
                   ราคา : {translist.room_price} บาท
+                </h1>
+                <h1 className="ml-4 flex justify-start text-lg">
+                  สถานะ : {stateEvent()}
                 </h1>
               </>
             )}

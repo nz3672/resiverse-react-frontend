@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { waitForLandlordEvent } from "../SubmitEvent";
 
 const WaitForLandlord = (props) => {
-  const { itemContract } = props;
+  const { itemContract, setTranslist, setSelect } = props;
   const [isCheck, setIsCheck] = useState(false);
   return (
     <>
@@ -55,8 +56,17 @@ const WaitForLandlord = (props) => {
           <button
             disabled={!isCheck}
             onClick={() => {
-              console.log("dd");
               //   update mongo
+              if (itemContract.tr_state === "waitLandlordConfirm") {
+                // console.log("dd");
+                // waitForLandlordEvent(
+                //   { tr_state: "waitTenantConfirm" },
+                //   itemContract._id
+                // )
+                //   .then((res) => console.log(res))
+                //   .catch((err) => console.log(err));
+              }
+              setSelect(false);
             }}
             className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300"
           >

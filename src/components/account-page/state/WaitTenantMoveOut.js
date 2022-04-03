@@ -1,0 +1,52 @@
+import { useState } from "react";
+import { waitLandlordCheckInsur } from "../SubmitEvent";
+
+const WaitTenantMoveOut = (props) => {
+  const { itemContract, setTranslist, setSelect } = props;
+  const [isCheck, setIsCheck] = useState(false);
+  return (
+    <>
+      <div className="mx-6">
+        <div className="grid divide-y">
+          <div className="">
+            <h1 className="font-bold text-2xl flex justify-center mb-2">
+              อยู่ระหว่างการพักอาศัย
+            </h1>
+
+            <h1 className="text-xl leading-10 flex justify-center text-pink-500 font-bold">
+              กรุณากดย้ายออกเมื่อผู้เช่าทำการย้ายออก
+            </h1>
+          </div>
+        </div>
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={() => {
+              //   update mongo
+              if (itemContract.tr_state === "waitTenantMoveOut") {
+                // console.log("dd");
+                waitLandlordCheckInsur(
+                  { tr_state: "waitLandlordCheckInsur" },
+                  itemContract._id
+                )
+                  .then((res) => console.log(res))
+                  .catch((err) => console.log(err));
+              }
+              setSelect(false);
+            }}
+            className=" text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 hover:from-pink-600 hover:to-yellow-400 py-1 rounded-lg border-[1px] border-grey-300"
+          >
+            ยืนยันการย้ายออก
+          </button>
+          <button
+            className="ml-4 text-white text-lg font-[SarabunBold] bg-stone-600/75 hover:bg-stone-600 px-2 py-1 rounded-lg border-[1px] border-grey-300"
+            onClick={() => setSelect(false)}
+          >
+            ยกเลิก
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default WaitTenantMoveOut;

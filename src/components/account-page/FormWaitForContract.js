@@ -1,10 +1,142 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import WaitForLandlord from "./state1/WaitForLandlord";
-import WaitForResponse from "./state1/WaitForResponse";
+import WaitForLandlord from "./state/WaitForLandlord";
+import WaitForResponse from "./state/WaitForResponse";
+import WaitForTenant from "./state/WaitForTenant";
+import WaitTenantMoveIn from "./state/WaitTenantMoveIn";
+import WaitTenantMoveOut from "./state/WaitTenantMoveOut";
+import WaitLandlordCheckInsur from "./state/WaitLandlordCheckInsur";
+import WaitForConfirmInsur from "./state/waitForConfirmInsur";
 
 const FormWaitForContract = (props) => {
-  const { setSelect, itemContract, landlord } = props;
+  const { setSelect, itemContract, myUser, setTranslist } = props;
+
+  const componentEvent = () => {
+    if (itemContract.tr_state === "waitLandlordConfirm") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForLandlord
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="กรุณารอ 2-3 วัน"
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "waitTenantConfirm") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForResponse setSelect={setSelect} itemContract={itemContract} />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForTenant
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+            descript="กรุณารอการชำระเงิน 2-3 วัน"
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "waitTenantMoveIn") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="อยู่ระหว่างรอผู้เช่าย้ายเข้าที่พัก วันที่ย้ายเข้าสามารถแจ้งให้ผู้เช่ายืนยันเข้าที่พักได้ก่อนเข้าพัก"
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitTenantMoveIn
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "waitTenantMoveOut") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="ผู้เช่าอยู่ระหว่างการพักอาศัยตามสัญญา"
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitTenantMoveOut
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "waitLandlordCheckInsur") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitLandlordCheckInsur
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="กรุณารอผู้ให้เช่าบันทึกค่าเสียหายของห้องพัก"
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "waitForConfirmInsur") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="กรุณารอผู้เช่ายืนยันค่าความเสียหาย"
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForConfirmInsur
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "success") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="ยืนยันรับเงินคืนเรียบร้อย"
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="ยืนยันรับเงินคืนเรียบร้อย"
+          />
+        );
+      }
+    }
+  };
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -18,15 +150,7 @@ const FormWaitForContract = (props) => {
               }}
             />
           </div>
-          {itemContract.tr_state === "waitLandlordConfirm" &&
-          itemContract.landlord_id === landlord._id ? (
-            <WaitForLandlord itemContract={itemContract} />
-          ) : (
-            <WaitForResponse
-              setSelect={setSelect}
-              itemContract={itemContract}
-            />
-          )}
+          {componentEvent()}
         </div>
       </div>
       <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
