@@ -2,7 +2,7 @@ import { useState } from "react";
 import { waitForConfirmInsur } from "../SubmitEvent";
 
 const WaitForConfirmInsur = (props) => {
-  const { itemContract, setTranslist, setSelect } = props;
+  const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
   const [formDebate, setFormDebate] = useState("");
   const [isDebate, setIsDebate] = useState(false);
@@ -30,29 +30,38 @@ const WaitForConfirmInsur = (props) => {
           <div className="bg-stone-300/75 rounded-lg mt-3 py-3 px-4 text-lg">
             <div className="mb-3">
               <p>
-                <b>ค่าความเสียหายของห้อง:</b> xxx บาท
+                <b>ค่าความเสียหายของห้อง:</b>{" "}
+                {itemContract.tr_insur_after_left.insuranceAfLeft} บาท
               </p>
             </div>
             <div className="flex mb-3">
               <p>
-                <b>ค่าน้ำ:</b> xx หน่วย
+                <b>ค่าน้ำ:</b>{" "}
+                {itemContract.tr_insur_after_left.waterUnitAfLeft}&nbsp;หน่วย
                 <br />
-                <b>ยอดค่าใช้จ่าย:</b> xx บาท
+                <b>ยอดค่าใช้จ่าย:</b>{" "}
+                {itemContract.tr_insur_after_left.waterAfLeft} บาท
               </p>
             </div>
             <div className="flex ">
               <p>
-                <b>ค่าไฟ:</b> xx หน่วย
+                <b>ค่าไฟ:</b> {itemContract.tr_insur_after_left.electUnitAfLeft}
+                &nbsp;หน่วย
                 <br />
-                <b>ยอดค่าใช้จ่าย:</b> xx บาท
+                <b>ยอดค่าใช้จ่าย:</b>{" "}
+                {itemContract.tr_insur_after_left.electAfLeft} บาท
               </p>
             </div>
             <div className="text-xl mt-2  font-bold">
               <p className="text-pink-500 flex justify-center">
-                เงินค่าประกัน {itemContract.insurance_price} - xxx = xxxx บาท
+                เงินค่าประกัน {itemContract.insurance_price} -{" "}
+                {parseInt(itemContract.tr_insur_after_left.electAfLeft) +
+                  parseInt(itemContract.tr_insur_after_left.insuranceAfLeft) +
+                  parseInt(itemContract.tr_insur_after_left.waterAfLeft)}{" "}
+                = {itemContract.tr_getBackInsurForTenant} บาท
               </p>
               <p className="flex justify-center leading-10">
-                คุณจะได้รับเงินคืน xxx บาท
+                คุณจะได้รับเงินคืน {itemContract.tr_getBackInsurForTenant} บาท
               </p>
             </div>
           </div>
@@ -74,13 +83,27 @@ const WaitForConfirmInsur = (props) => {
             disabled={!isCheck}
             onClick={() => {
               //   update mongo
-              if (
-                itemContract.tr_state === "waitForConfirmInsur" &&
-                !formDebate
-              ) {
+              if (itemContract.tr_state === "waitForConfirmInsur") {
                 // console.log("dd");
-                waitForConfirmInsur({ tr_state: "success" }, itemContract._id)
-                  .then((res) => console.log(res))
+                waitForConfirmInsur(
+                  {
+                    tr_state: "success",
+                    tr_debate_reason: formDebate,
+                    tr_isDebate: isDebate,
+                  },
+                  itemContract._id
+                )
+                  .then((res) => {
+                    let arr = [];
+                    translists.map((item) => {
+                      if (res._id === item._id) {
+                        arr.push(res);
+                      } else {
+                        arr.push(item);
+                      }
+                    });
+                    setTranslist(arr);
+                  })
                   .catch((err) => console.log(err));
               }
               setSelect(false);
@@ -93,7 +116,7 @@ const WaitForConfirmInsur = (props) => {
             className="ml-4 text-white text-lg font-[SarabunBold] bg-stone-600/75 hover:bg-stone-600 px-2 py-1 rounded-lg border-[1px] border-grey-300"
             onClick={() => debateBtn()}
           >
-            โต้แย้งเงินค่าประกันหรือค่าอื่นๆ
+            {isDebate ? "ยกเลิกการโต้แย้ง" : "โต้แย้งเงินค่าประกันหรือค่าอื่นๆ"}
           </button>
         </div>
         {isDebate && (

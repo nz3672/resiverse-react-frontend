@@ -2,8 +2,13 @@ import { useState } from "react";
 import { waitForLandlordEvent } from "../SubmitEvent";
 
 const WaitForLandlord = (props) => {
-  const { itemContract, setTranslist, setSelect } = props;
+  const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
+  const [imgs, setImgs] = useState([]);
+
+  const onChange = (e) => {
+    setImgs(e.target.files);
+  };
   return (
     <>
       <div className="mx-6">
@@ -37,7 +42,13 @@ const WaitForLandlord = (props) => {
               </i>
             </h1>
           </div>
-          <div className="bg-stone-300/75 rounded-lg mt-3 pt-3">dsda</div>
+          <div className="bg-stone-300/75 rounded-lg mt-3 py-6 h-fit flex justify-center">
+            <label className="bg-pink-500 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between text-white font-medium cursor-pointer font-bold">
+              <input type="file" onChange={onChange} multiple />
+              Choose file
+            </label>
+          </div>
+
           <div className="flex flex-rows mt-3 pt-3">
             <input
               type="checkbox"
@@ -56,17 +67,28 @@ const WaitForLandlord = (props) => {
           <button
             disabled={!isCheck}
             onClick={() => {
+              console.log(itemContract);
               //   update mongo
               if (itemContract.tr_state === "waitLandlordConfirm") {
-                // console.log("dd");
-                // waitForLandlordEvent(
-                //   { tr_state: "waitTenantConfirm" },
-                //   itemContract._id
-                // )
-                //   .then((res) => console.log(res))
-                //   .catch((err) => console.log(err));
+                waitForLandlordEvent(
+                  { tr_state: "waitTenantConfirm", room_state_pic: imgs },
+                  itemContract._id
+                )
+                  .then((res) => {
+                    let arr = [];
+                    translists.map((item) => {
+                      if (res._id === item._id) {
+                        arr.push(res);
+                      } else {
+                        arr.push(item);
+                      }
+                    });
+                    setTranslist(arr);
+                  })
+                  .catch((err) => console.log(err));
               }
               setSelect(false);
+              setImgs([]);
             }}
             className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300"
           >
