@@ -49,6 +49,7 @@ const TransactionList = () => {
             itemContract={itemContract}
             myUser={user}
             setTranslist={setTranslist}
+            translists={translists}
           />
         )}
       </div>

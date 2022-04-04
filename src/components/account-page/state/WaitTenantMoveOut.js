@@ -2,7 +2,7 @@ import { useState } from "react";
 import { waitLandlordCheckInsur } from "../SubmitEvent";
 
 const WaitTenantMoveOut = (props) => {
-  const { itemContract, setTranslist, setSelect } = props;
+  const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
   return (
     <>
@@ -28,7 +28,17 @@ const WaitTenantMoveOut = (props) => {
                   { tr_state: "waitLandlordCheckInsur" },
                   itemContract._id
                 )
-                  .then((res) => console.log(res))
+                  .then((res) => {
+                    let arr = [];
+                    translists.map((item) => {
+                      if (res._id === item._id) {
+                        arr.push(res);
+                      } else {
+                        arr.push(item);
+                      }
+                    });
+                    setTranslist(arr);
+                  })
                   .catch((err) => console.log(err));
               }
               setSelect(false);

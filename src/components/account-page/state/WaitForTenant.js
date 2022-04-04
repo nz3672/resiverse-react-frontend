@@ -2,8 +2,13 @@ import { useState } from "react";
 import { waitForTenantdEvent } from "../SubmitEvent";
 // show bank and input slip
 const WaitForTenant = (props) => {
-  const { itemContract, setTranslist, setSelect } = props;
+  const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
+  const [slipImg, setSlipImg] = useState();
+
+  const onChange = (e) => {
+    setSlipImg(e.target.files);
+  };
   return (
     <>
       <div className="mx-6">
@@ -45,10 +50,10 @@ const WaitForTenant = (props) => {
           </div>
           <div className="bg-pink-400/75 rounded-lg my-3 py-3 px-4">
             <p className="text-lg leading-7 mb-3 font-bold">
-              ยืนยันการชำระเงินของคุณ
+              ยืนยันการชำระเงินของคุณที่นี่
             </p>
-            <label className="font-medium outline-0 mr-4 rounded-lg p-2  justify-between text-white font-medium cursor-pointer">
-              <input type="file" />
+            <label className="bg-pink-500 hover:bg-pink-400 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between  text-white font-medium cursor-pointer font-bold">
+              <input type="file" onChange={onChange} />
               Choose file
             </label>
           </div>
@@ -72,13 +77,22 @@ const WaitForTenant = (props) => {
             onClick={() => {
               //   update mongo
               if (itemContract.tr_state === "waitTenantConfirm") {
-                // console.log("dd");
-                // waitForTenantdEvent(
-                //   { tr_state: "waitTenantMoveIn" },
-                //   itemContract._id
-                // )
-                //   .then((res) => console.log(res))
-                //   .catch((err) => console.log(err));
+                waitForTenantdEvent(
+                  { tr_state: "waitTenantMoveIn", tr_slip_img: slipImg },
+                  itemContract._id
+                )
+                  .then((res) => {
+                    let arr = [];
+                    translists.map((item) => {
+                      if (res._id === item._id) {
+                        arr.push(res);
+                      } else {
+                        arr.push(item);
+                      }
+                    });
+                    setTranslist(arr);
+                  })
+                  .catch((err) => console.log(err));
               }
               setSelect(false);
             }}

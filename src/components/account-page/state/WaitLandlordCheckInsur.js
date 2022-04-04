@@ -2,13 +2,23 @@ import { useState } from "react";
 import { waitLandlordCheckInsur } from "../SubmitEvent";
 
 const WaitLandlordCheckInsur = (props) => {
-  const { itemContract, setTranslist, setSelect } = props;
+  const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
   const [formInsur, setFormInsur] = useState({});
+  const [numberOfPay, setNumberOfPay] = useState();
 
   const onChange = (e) => {
     setFormInsur((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const calculate = () => {
+    setNumberOfPay(
+      parseInt(formInsur.electAfLeft) +
+        parseInt(formInsur.insuranceAfLeft) +
+        parseInt(formInsur.waterAfLeft)
+    );
+  };
+
   return (
     <>
       <div className="mx-6">
@@ -66,6 +76,22 @@ const WaitLandlordCheckInsur = (props) => {
                 />
               </label>
             </div>
+            <div className="flex justify-center">
+              <button
+                className="mt-4 text-pink-500 text-lg font-[SarabunBold] hover:bg-pink-100 bg-white px-2 py-1 rounded-lg border-[1px] border-grey-500"
+                onClick={() => {
+                  calculate();
+                }}
+              >
+                calculate
+              </button>
+            </div>
+            {numberOfPay && (
+              <h1 className="text-pink-500 text-lg flex justify-center mt-2 font-bold">
+                ค่าความเสียหายและค่าอุปโภคบริโภครวม:&nbsp;<i>{numberOfPay}</i>
+                &nbsp;บาท
+              </h1>
+            )}
           </div>
           <div className="flex flex-rows mt-3 pt-3">
             <input
@@ -88,10 +114,27 @@ const WaitLandlordCheckInsur = (props) => {
               if (itemContract.tr_state === "waitLandlordCheckInsur") {
                 // console.log("dd");
                 waitLandlordCheckInsur(
-                  { tr_state: "waitForConfirmInsur" },
+                  {
+                    tr_state: "waitForConfirmInsur",
+                    tr_insur_after_left: formInsur,
+                    tr_getBackInsurForTenant:
+                      itemContract.insurance_price - numberOfPay <= 0
+                        ? 0
+                        : itemContract.insurance_price - numberOfPay,
+                  },
                   itemContract._id
                 )
-                  .then((res) => console.log(res))
+                  .then((res) => {
+                    let arr = [];
+                    translists.map((item) => {
+                      if (res._id === item._id) {
+                        arr.push(res);
+                      } else {
+                        arr.push(item);
+                      }
+                    });
+                    setTranslist(arr);
+                  })
                   .catch((err) => console.log(err));
               }
               setSelect(false);
