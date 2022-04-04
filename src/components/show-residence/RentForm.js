@@ -90,7 +90,7 @@ const RentForm = (props) => {
                   room_price: dropdownSelect.roomPrice,
                   insurance_price: dropdownSelect.roomInsurance,
                 };
-                createTranslist(formTrans)
+                createTranslist(formTrans, widgetinfo.name)
                   .then((res) => {
                     toast.success("Successfully rented!");
                   })

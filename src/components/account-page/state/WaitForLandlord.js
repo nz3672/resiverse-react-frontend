@@ -59,17 +59,16 @@ const WaitForLandlord = (props) => {
               //   update mongo
               if (itemContract.tr_state === "waitLandlordConfirm") {
                 // console.log("dd");
-                // waitForLandlordEvent(
-                //   { tr_state: "waitTenantConfirm" },
-                //   itemContract._id
-                // )
+                waitForLandlordEvent(
+                  { tr_state: "waitTenantConfirm" },
+                  itemContract._id
+                );
                 //   .then((res) => console.log(res))
                 //   .catch((err) => console.log(err));
               }
               setSelect(false);
             }}
-            className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300"
-          >
+            className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300">
             Submit
           </button>
         </div>
