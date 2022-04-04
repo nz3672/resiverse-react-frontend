@@ -9,7 +9,7 @@ import WaitLandlordCheckInsur from "./state/WaitLandlordCheckInsur";
 import WaitForConfirmInsur from "./state/waitForConfirmInsur";
 
 const FormWaitForContract = (props) => {
-  const { setSelect, itemContract, myUser, setTranslist } = props;
+  const { setSelect, itemContract, myUser, setTranslist, translists } = props;
 
   const componentEvent = () => {
     if (itemContract.tr_state === "waitLandlordConfirm") {
@@ -19,6 +19,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
+            translists={translists}
           />
         );
       } else if (itemContract.tenant_id._id === myUser._id) {
@@ -33,7 +34,11 @@ const FormWaitForContract = (props) => {
     } else if (itemContract.tr_state === "waitTenantConfirm") {
       if (itemContract.landlord_id === myUser._id) {
         return (
-          <WaitForResponse setSelect={setSelect} itemContract={itemContract} />
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="กรุณารอการชำระเงิน 2-3 วัน"
+          />
         );
       } else if (itemContract.tenant_id._id === myUser._id) {
         return (
@@ -41,7 +46,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
-            descript="กรุณารอการชำระเงิน 2-3 วัน"
+            translists={translists}
           />
         );
       }
@@ -60,6 +65,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
+            translists={translists}
           />
         );
       }
@@ -78,6 +84,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
+            translists={translists}
           />
         );
       }
@@ -88,6 +95,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
+            translists={translists}
           />
         );
       } else if (itemContract.tenant_id._id === myUser._id) {
@@ -114,6 +122,7 @@ const FormWaitForContract = (props) => {
             itemContract={itemContract}
             setTranslist={setTranslist}
             setSelect={setSelect}
+            translists={translists}
           />
         );
       }

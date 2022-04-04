@@ -2,6 +2,7 @@ import { updateTranslist } from "../../api/Put";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { notificationDB } from "../../firebase";
 import { nanoid } from "nanoid";
+import { jsonToFormData } from "../../api/Post";
 
 const sendNotification = async (translistId, userId, message) => {
   const notifDoc = doc(notificationDB, "translist-noti", userId);
@@ -52,24 +53,26 @@ const sendNotification = async (translistId, userId, message) => {
 };
 
 export const waitForLandlordEvent = async (form, id) => {
-  const response = await updateTranslist(form, id);
+  const formData = jsonToFormData(form);
+  const response = await updateTranslist(formData, id);
   console.log(response);
   await sendNotification(
     id,
     response.tenant_id,
     `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${response.bd_id.bd_name} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`
   );
-
   return response;
 };
 
 export const waitForTenantdEvent = async (form, id) => {
-  const response = await updateTranslist(form, id);
+  const formData = jsonToFormData(form);
+  const response = await updateTranslist(formData, id);
   await sendNotification(
     id,
     response.tenant_id,
     `${response.bd_id.bd_name} ผู้เช่าทำการยืนยันสัญญาเสร็จสิ้น กรุณารอการยืนยันเข้าที่พักอาศัยจากผู้เช่า`
   );
+
   return response;
 };
 

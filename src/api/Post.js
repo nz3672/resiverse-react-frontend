@@ -26,7 +26,7 @@ function buildFormData(formData, data, parentKey) {
   }
 }
 
-function jsonToFormData(data) {
+export function jsonToFormData(data) {
   const formData = new FormData();
 
   buildFormData(formData, data);
