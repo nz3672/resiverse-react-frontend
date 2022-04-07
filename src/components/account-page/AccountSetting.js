@@ -30,7 +30,7 @@ const AccountSetting = () => {
       case "Account":
         return <AccountRightBox />;
       case "Notification":
-        return <NotificationRightBox />;
+        return <NotificationRightBox setRightBox={setRightBox} />;
       case "MyResidence":
         return <MyResidence />;
       case "TransactionList":

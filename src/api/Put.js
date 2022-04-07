@@ -1,5 +1,7 @@
 import axios from "axios";
 import { store } from "../components/app/store";
+import { notificationDB } from "../firebase";
+import { updateDoc, doc } from "firebase/firestore";
 
 function buildFormData(formData, data, parentKey) {
   if (
@@ -64,4 +66,16 @@ export const updateTranslist = async (form, id) => {
   );
 
   return response.data;
+};
+
+export const updateNotification = async (notificationArr, userID) => {
+  const updatedArray = notificationArr;
+  updatedArray.map((item) => {
+    item.status = "read";
+  });
+  updateDoc(doc(notificationDB, "translist-noti", userID), {
+    notif: updatedArray,
+  })
+    .then((respond) => console.log(respond))
+    .catch((error) => console.log(error.message));
 };
