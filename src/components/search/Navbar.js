@@ -59,15 +59,26 @@ const Navbar = (props) => {
       />
       {user ? (
         <div className="flex items-center">
-          <Link to={`/account`} target="_blank" rel="noopener noreferrer">
-            {user.user.u_username}
+          <Link to={`/account`}>
+            {user.user.u_profileImg ? (
+              <img
+                className=" mr-2 h-10 w-10 object-cover rounded-full overflow-hidden ring-4 ring-pink-500"
+                src={user.user.u_profileImg}
+              />
+            ) : (
+              <FontAwesomeIcon
+                className="h-10 mr-2"
+                icon="fa-solid fa-circle-user"
+              />
+            )}
           </Link>
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               chooseSidebarPage("AddResidence");
               sidebarPage(true);
-            }}>
+            }}
+          >
             Add Resident
           </button>
 
@@ -95,7 +106,8 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignIn");
-            }}>
+            }}
+          >
             SignIn
           </button>
 
@@ -103,7 +115,8 @@ const Navbar = (props) => {
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               popupPage("SignUp");
-            }}>
+            }}
+          >
             SignUp
           </button>
         </div>

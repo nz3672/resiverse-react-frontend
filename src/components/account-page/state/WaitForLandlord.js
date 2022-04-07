@@ -67,7 +67,7 @@ const WaitForLandlord = (props) => {
           <button
             disabled={!isCheck}
             onClick={() => {
-              console.log(itemContract);
+              // console.log(itemContract);
               //   update mongo
               if (itemContract.tr_state === "waitLandlordConfirm") {
                 waitForLandlordEvent(

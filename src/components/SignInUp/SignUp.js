@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { closePopup } from "../features/popUpSlice";
+import { closePopup, clickPopup } from "../features/popUpSlice";
 import { register, reset } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,6 +9,8 @@ import spinner1 from "./../../img/placeholder/Spinner1.svg";
 
 const SignUp = () => {
   const [msgErrToast, setMsgErrToast] = useState("");
+  const [uploadProfile, setUploadProfile] = useState();
+  const [fileProfile, setFileProfile] = useState("");
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -41,7 +43,6 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("dsds");
     if (isError) {
       toast.error(message);
     }
@@ -93,10 +94,22 @@ const SignUp = () => {
         u_surname: lastname,
         u_phonenum: phone,
         u_idcard: idcard,
+        u_profileImg: fileProfile,
       };
 
       dispatch(register(userData));
     }
+  };
+
+  const uploadHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setUploadProfile(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    setFileProfile(e.target.files[0]);
   };
 
   // if (isLoading) {
@@ -123,11 +136,27 @@ const SignUp = () => {
           </div>
 
           {/* content */}
-          <div className="grid grid-cols-1 gap-2 place-content-center my-4">
+          <div className="grid grid-cols-1 gap-2 place-content-center mb-4">
+            <div className="flex justify-center">
+              <label className="cursor-pointer">
+                <input type="file" onChange={uploadHandler} />
+                {uploadProfile ? (
+                  <img
+                    className="h-16 w-16 object-cover rounded-full overflow-hidden ring-4 ring-pink-500"
+                    src={uploadProfile}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon="fa-solid fa-camera"
+                    className="h-8 bg-pink-200 p-4 rounded-full text-pink-500 hover:text-pink-500/50 hover:bg-pink-300/75"
+                  />
+                )}
+              </label>
+            </div>
             <form onSubmit={onSubmit}>
-              <div className="grid grid-cols-1 gap-2 mb-2 mt-4 border-2 rounded-lg p-2">
+              <div className="grid grid-cols-1 gap-2 mb-2 border-2 rounded-lg p-2">
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="username"
                   value={username}
                   type="text"
@@ -135,7 +164,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="email"
                   value={email}
                   type="email"
@@ -143,7 +172,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="password"
                   value={password}
                   type="password"
@@ -151,7 +180,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="password2"
                   value={password2}
                   type="password"
@@ -161,7 +190,7 @@ const SignUp = () => {
               </div>
               <div className="grid grid-cols-1 gap-2 mb-2 border-2 rounded-lg p-2">
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="firstname"
                   value={firstname}
                   type="text"
@@ -169,7 +198,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="lastname"
                   value={lastname}
                   type="text"
@@ -177,7 +206,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="idcard"
                   value={idcard}
                   type="text"
@@ -185,7 +214,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="phone"
                   value={phone}
                   type="text"
@@ -195,7 +224,7 @@ const SignUp = () => {
               </div>
               <div className="grid grid-cols-1 gap-2 mb-4 border-2 rounded-lg p-2">
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="bankName"
                   value={bankName}
                   type="text"
@@ -203,7 +232,7 @@ const SignUp = () => {
                   onChange={onChange}
                 />
                 <input
-                  className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                  className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                   name="bankId"
                   value={bankId}
                   type="text"
@@ -232,7 +261,15 @@ const SignUp = () => {
 
             <div className="flex font-['SarabunBold']">
               <h1>You have an account </h1>
-              <button className="ml-1 text-pink-500">Sign In</button>
+              <button
+                className="ml-1 text-pink-500"
+                onClick={() => {
+                  dispatch(closePopup());
+                  dispatch(clickPopup("SignIn"));
+                }}
+              >
+                Sign In
+              </button>
               <h1>&nbsp;here</h1>
             </div>
           </div>

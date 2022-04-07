@@ -20,6 +20,7 @@ import {
   faHouse,
   faBell,
   faCircleCheck,
+  faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,6 +37,7 @@ library.add(faFileLines);
 library.add(faHouse);
 library.add(faPenToSquare);
 library.add(faCircleCheck);
+library.add(faCamera);
 
 function App() {
   return (
