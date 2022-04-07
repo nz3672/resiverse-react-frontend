@@ -39,10 +39,10 @@ const RentForm = (props) => {
               setStartDate(e.target.value);
             }}
           />
-          <div className="w-fit">
+          <div className="w-2/3 relative">
             <button
               type="button"
-              className="flex mt-2 font-medium outline-0 rounded-lg p-2 bg-gradient-to-r from-blue-500 to-purple-500 justify-between text-white font-medium"
+              className="flex w-full mt-2 font-medium outline-0 rounded-lg p-2 bg-gradient-to-r from-blue-500 to-purple-500 justify-between text-white font-medium"
               onClick={() => dropdownEvent()}>
               <h2 className="mr-2">
                 {dropdownSelect
@@ -57,8 +57,8 @@ const RentForm = (props) => {
             <ul
               className={`${
                 dropdown
-                  ? "origin-top-left absolute shadow-lg mt-1 divide-blue-200 rounded-md bg-white ring-2 ring-blue-300 text-gray-600 divide-y dropdow-menu-anim-show "
-                  : "origin-top-left absolute shadow-lg mt-1 divide-blue-200 rounded-md bg-white ring-2 ring-blue-300 text-gray-600 divide-y dropdow-menu-anim-hidden "
+                  ? "origin-top-left absolute shadow-lg mt-1 divide-blue-200 rounded-md bg-white ring-2 ring-blue-300 text-gray-600 divide-y dropdow-menu-anim-show w-full"
+                  : "origin-top-left absolute shadow-lg mt-1 divide-blue-200 rounded-md bg-white ring-2 ring-blue-300 text-gray-600 divide-y dropdow-menu-anim-hidden w-full"
               } font-['SarabunBold']`}>
               {widgetinfo &&
                 widgetinfo.room.map((room, i) => (
@@ -90,7 +90,7 @@ const RentForm = (props) => {
                   room_price: dropdownSelect.roomPrice,
                   insurance_price: dropdownSelect.roomInsurance,
                 };
-                createTranslist(formTrans)
+                createTranslist(formTrans, widgetinfo.name)
                   .then((res) => {
                     toast.success("Successfully rented!");
                   })

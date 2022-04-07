@@ -9,28 +9,18 @@ import { chooseSidebar } from "../features/sidebarShowSlice";
 import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { notificationDB } from "../../firebase";
+import NotificationPane from "./NotificationPane";
+import BellButton from "./BellButton";
 
 const Navbar = (props) => {
   const { setPlaceId, setPlaceDetails, setShowWidget, isLoaded } = props;
   const [notifications, setNotification] = useState([]);
   const [showNoti, setNoti] = useState(false);
+  const [showPane, setShowPane] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.popupSignInOut);
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.authStore
-  );
-  // const notificationDocRef = doc(notificationDB, "translist-noti", user._id);
-
-  useEffect(() => {
-    // const unsubscribe = onSnapshot(notificationDocRef, (snapshot) => {
-    //   setNotification(snapshot.data().notif);
-    // });
-
-    return () => {
-      // unsubscribe();
-    };
-  }, []);
+  const { user } = useSelector((state) => state.authStore);
 
   const popupPage = (page) => {
     dispatch(clickPopup(page));
@@ -51,6 +41,14 @@ const Navbar = (props) => {
     navigate("/");
   };
 
+  const handleShowPane = () => {
+    if (showPane) {
+      setShowPane(false);
+    } else {
+      setShowPane(true);
+    }
+  };
+
   return (
     <nav className="relative flex flex-wrap items-center justify-around px-2 py-8">
       <SearchBar
@@ -61,7 +59,9 @@ const Navbar = (props) => {
       />
       {user ? (
         <div className="flex items-center">
-          <Link to={`/account`}>{user.user.u_username}</Link>
+          <Link to={`/account`} target="_blank" rel="noopener noreferrer">
+            {user.user.u_username}
+          </Link>
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
@@ -73,20 +73,21 @@ const Navbar = (props) => {
 
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
-            onClick={onLogout}>
+            onClick={() => onLogout()}>
             Sign Out
           </button>
-          <span className="relative">
-            <button className="mx-2">
-              <FontAwesomeIcon className="h-8" icon="fa-solid fa-bell" />
-            </button>
-            {showNoti && (
-              <span className="flex absolute mr-1 h-4 w-4 top-0 right-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
-              </span>
-            )}
-          </span>
+          <div className="relative h-8 w-8">
+            <BellButton
+              handleShowPane={handleShowPane}
+              showNoti={showNoti}
+              user={user}
+              setNoti={setNoti}
+              setNotification={setNotification}
+              notifications={notifications}
+              showPane={showPane}
+            />
+          </div>
+          {showPane && <NotificationPane notifications={notifications} />}
         </div>
       ) : (
         <div>
