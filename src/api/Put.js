@@ -1,7 +1,38 @@
 import axios from "axios";
 import { store } from "../components/app/store";
 
+function buildFormData(formData, data, parentKey) {
+  if (
+    data &&
+    typeof data === "object" &&
+    !(data instanceof Date) &&
+    !(data instanceof File)
+  ) {
+    Object.keys(data).forEach((key) => {
+      buildFormData(
+        formData,
+        data[key],
+        parentKey ? `${parentKey}[${key}]` : key
+      );
+    });
+  } else {
+    const value = data == null ? "" : data;
+
+    formData.append(parentKey, value);
+  }
+}
+
+export function jsonToFormData(data) {
+  const formData = new FormData();
+
+  buildFormData(formData, data);
+
+  return formData;
+}
+
 export const updateUser = async (form) => {
+  console.log(form);
+  const formData = jsonToFormData(form);
   const user = await store.getState().authStore.user;
   const config = {
     headers: {
@@ -11,7 +42,7 @@ export const updateUser = async (form) => {
 
   const response = await axios.put(
     `account/api/users/${user._id}`,
-    form,
+    formData,
     config
   );
 

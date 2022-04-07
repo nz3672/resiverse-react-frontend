@@ -142,3 +142,10 @@ input[type="file"] {
     clip-path: polygon(0 0, 75% 0, 85% 100%, 0 100%);
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

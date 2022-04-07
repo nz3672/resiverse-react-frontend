@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closePopup } from "../features/popUpSlice";
+import { closePopup, clickPopup } from "../features/popUpSlice";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../features/auth/authSlice";
 const SignIn = () => {
@@ -52,7 +52,8 @@ const SignIn = () => {
             <button
               onClick={() => {
                 dispatch(closePopup());
-              }}>
+              }}
+            >
               <FontAwesomeIcon
                 icon="fa-regular fa-circle-xmark"
                 className="text-black"
@@ -64,7 +65,7 @@ const SignIn = () => {
           <div className="grid grid-cols-1 gap-2 place-content-center my-4">
             <div className="grid grid-cols-1 gap-2 my-4 border-2 rounded-lg p-2">
               <input
-                className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                 name="email"
                 type="email"
                 value={email}
@@ -72,7 +73,7 @@ const SignIn = () => {
                 onChange={onChange}
               />
               <input
-                className="p-1 outline-0 focus:bg-pink-100  rounded-lg"
+                className="p-1 outline-0 focus:ring-0 border-0 focus:bg-pink-100  rounded-lg"
                 name="password"
                 type="password"
                 value={password}
@@ -87,13 +88,15 @@ const SignIn = () => {
                 isError && message
                   ? "font-['SarabunBold'] text-red-500 mb-2 justify-self-center"
                   : "hidden"
-              }`}>
+              }`}
+            >
               Your email or password wrong.
             </h1>
 
             <button
               className="bg-fuchsia-600 text-white rounded-lg py-1 font-['SarabunBold'] mb-2"
-              onClick={onSubmit}>
+              onClick={onSubmit}
+            >
               Sign In
             </button>
 
@@ -102,7 +105,15 @@ const SignIn = () => {
             </button>
             <div className="flex font-['SarabunBold']">
               <h1>Don't have an account </h1>
-              <button className="ml-1 text-pink-500">Sign Up</button>
+              <button
+                className="ml-1 text-pink-500"
+                onClick={() => {
+                  dispatch(closePopup());
+                  dispatch(clickPopup("SignUp"));
+                }}
+              >
+                Sign Up
+              </button>
             </div>
           </div>
         </div>
