@@ -90,8 +90,8 @@ export const waitLandlordCheckInsur = async (form, id) => {
   const response = await updateTranslist(form, id);
   await sendNotification(
     id,
-    response.tenant_id,
-    `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${response.bd_id.bd_name} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`
+    response.landlord_id,
+    `ผู้เช่าทำการย้ายออกจากที่พัก ${response.bd_id.bd_name} แล้ว กรุณาตรวจสอบที่พักอาศัยเพื่อคำนวนค่าประกัน`
   );
   return response;
 };
@@ -101,7 +101,7 @@ export const waitForConfirmInsur = async (form, id) => {
   await sendNotification(
     id,
     response.tenant_id,
-    `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${response.bd_id.bd_name} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`
+    `${response.bd_id.bd_name} ผู้ให้เช่าทำการตรวจสอบที่พักและคำนวนค่าประกันเรียบร้อยแล้ว กรุณาเข้าไปตรวจสอบและยืนยันเพื่อรับเงินค่าประกันคืน`
   );
   return response;
 };
