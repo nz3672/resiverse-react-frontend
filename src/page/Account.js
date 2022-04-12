@@ -13,7 +13,7 @@ const Account = () => {
         </Link>
       </div>
 
-      <div className="shadow-2xl bg-white shadow-[#12121280]  mx-10 mb-6 rounded-xl flex flex-auto">
+      <div className="shadow-2xl bg-white shadow-[#12121280] overflow-y-auto mx-10 mb-6 rounded-xl flex flex-auto">
         <AccountSetting />
       </div>
     </div>

@@ -5,6 +5,7 @@ import sidebarSlice from "../features/sidebarSlice";
 import sidebarShowSlice from "../features/sidebarShowSlice";
 import gMapSlice from "../features/gMapSlice";
 import myResidenceSlice from "../features/myResidenceSlice";
+import chatSlice from "../features/chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     authStore: authReducer,
     gMapLatLng: gMapSlice,
     myResStore: myResidenceSlice,
+    chatBubble: chatSlice,
   },
 });

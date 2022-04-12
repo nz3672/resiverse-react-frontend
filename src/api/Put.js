@@ -79,3 +79,21 @@ export const updateNotification = async (notificationArr, userID) => {
     .then((respond) => console.log(respond))
     .catch((error) => console.log(error.message));
 };
+
+export const updateResidence = async (form, id) => {
+  const user = await store.getState().authStore.user;
+  const formData = jsonToFormData(form);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+
+  const response = await axios.put(
+    `account/api/buildings/${id}`,
+    formData,
+    config
+  );
+
+  return response.data;
+};
