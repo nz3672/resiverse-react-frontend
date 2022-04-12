@@ -149,3 +149,57 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
+.rainbow-text {
+  background: red;
+  background: -webkit-linear-gradient(
+    left,
+    #e97afa,
+    #7a7efa,
+    #7ad1fa,
+    #98f569,
+    #fbff8a,
+    #ff9c8a
+  );
+  background: -o-linear-gradient(
+    right,
+    #e97afa,
+    #7a7efa,
+    #7ad1fa,
+    #98f569,
+    #fbff8a,
+    #ff9c8a
+  );
+  background: -moz-linear-gradient(
+    right,
+    #e97afa,
+    #7a7efa,
+    #7ad1fa,
+    #98f569,
+    #fbff8a,
+    #ff9c8a
+  );
+  background: linear-gradient(
+    to right,
+    #e97afa,
+    #7a7efa,
+    #7ad1fa,
+    #98f569,
+    #fbff8a,
+    #ff9c8a
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fade-anim div {
+  animation: fadeAnim 0.5s ease-out;
+}
+@keyframes fadeAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

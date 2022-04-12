@@ -7,7 +7,7 @@ const WaitTenantMoveOut = (props) => {
   return (
     <>
       <div className="mx-6">
-        <div className="grid divide-y">
+        <div className="grid">
           <div className="">
             <h1 className="font-bold text-2xl flex justify-center mb-2">
               อยู่ระหว่างการพักอาศัย
@@ -17,6 +17,9 @@ const WaitTenantMoveOut = (props) => {
               กรุณากดย้ายออกเมื่อผู้เช่าทำการย้ายออก
             </h1>
           </div>
+          <p>
+            ผู้เช่าสามารถถ่ายภาพสภาพห้องเก็บไว้เพื่อโต้แย้งความเสียหายที่อาจจะคำนวนผิดพลาดจากผู้ให้เช่าได้
+          </p>
         </div>
         <div className="flex justify-center mt-6">
           <button

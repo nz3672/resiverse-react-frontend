@@ -13,6 +13,8 @@ export const stateEvent = (translist) => {
     return "รอผู้เช่าดำเนินการยินยอมรับเงินค่าประกัน"; // show insurance that calculate by landlord's insurance
   } else if (translist.tr_state === "success") {
     return "ยืนยันรับเงินค่าประกันเรียบร้อย";
+  } else if (translist.tr_state === "debateInsur") {
+    return "รอผู้ให้เช่าดำเนินการยินยอมรับเงินค่าประกัน";
   } else {
     return "";
   }
