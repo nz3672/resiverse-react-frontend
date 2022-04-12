@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { focusWidget, setWidgetInfo } from "../features/sidebarSlice";
 import Navbar from "../search/Navbar";
 import Widget from "../search/Widget";
+import ChatWindow from "../chat/ChatWindow";
 import axios from "axios";
 
 const Search = () => {
@@ -80,6 +81,7 @@ const Search = () => {
           </div>
           <div className="w-0 h-0 desktop:w-96 desktop:h-96 phone:w-0 phone:h-0"></div>
         </div>
+        {/* <ChatWindow /> */}
       </div>
     </>
   );

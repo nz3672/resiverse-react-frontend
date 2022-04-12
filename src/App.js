@@ -22,6 +22,7 @@ import {
   faCircleCheck,
   faCamera,
   faComputerMouse,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Agreement from "./page/Agreement";
@@ -41,6 +42,8 @@ library.add(faPenToSquare);
 library.add(faCircleCheck);
 library.add(faCamera);
 library.add(faComputerMouse);
+library.add(faPaperPlane);
+
 
 function App() {
   return (

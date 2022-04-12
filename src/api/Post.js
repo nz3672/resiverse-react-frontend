@@ -1,8 +1,21 @@
 import axios from "axios";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  limit,
+} from "firebase/firestore";
 import { notificationDB } from "../firebase";
 import { store } from "../components/app/store";
 import { nanoid } from "nanoid";
+import { getOtherUserById } from "./Get";
+import { Firestore } from "firebase/firestore";
 const API_URL_ACCOUNT_SERVICES = "account/api/";
 
 function buildFormData(formData, data, parentKey) {
@@ -79,11 +92,11 @@ export const createTranslist = async (translistData, buildingName) => {
     },
   };
 
-  // const response = await axios.post(
-  //   "http://localhost:8080/account/api/translists/",
-  //   translistData,
-  //   config
-  // );
+  const response = await axios.post(
+    "http://localhost:8080/account/api/translists/",
+    translistData,
+    config
+  );
 
   const notifDoc = doc(
     notificationDB,
@@ -95,24 +108,24 @@ export const createTranslist = async (translistData, buildingName) => {
 
   if (notificationSnap.exists()) {
     const notifArray = notificationSnap.data().notif;
-    // const checkExist = notifArray.filter(
-    //   (item) => item.translist_id === response.data._id
-    // ).length;
-    // if (checkExist >= 1) {
-    //   const objIndex = notifArray.findIndex(
-    //     (item) => item.translist_id === response.data._id
-    //   );
-    //   notifArray[objIndex].message = `มีการจองใหม่เกิดขึ้นที่ ${buildingName}`;
-    //   notifArray[objIndex].timestamp = new Date().toUTCString();
-    // } else {
-    notifArray.push({
-      id: id,
-      message: `มีการจองใหม่เกิดขึ้นที่ ${buildingName}`,
-      translist_id: "",
-      status: "unread",
-      timestamp: new Date().toISOString(),
-    });
-    // }
+    const checkExist = notifArray.filter(
+      (item) => item.translist_id === response.data._id
+    ).length;
+    if (checkExist >= 1) {
+      const objIndex = notifArray.findIndex(
+        (item) => item.translist_id === response.data._id
+      );
+      notifArray[objIndex].message = `มีการจองใหม่เกิดขึ้นที่ ${buildingName}`;
+      notifArray[objIndex].timestamp = new Date().toUTCString();
+    } else {
+      notifArray.push({
+        id: id,
+        message: `มีการจองใหม่เกิดขึ้นที่ ${buildingName}`,
+        translist_id: "",
+        status: "unread",
+        timestamp: new Date().toISOString(),
+      });
+    }
 
     updateDoc(
       doc(notificationDB, "translist-noti", translistData.landlord_id),
@@ -141,125 +154,87 @@ export const createTranslist = async (translistData, buildingName) => {
       .catch((error) => console.log(error.message));
   }
 
-  // return response.data;
+  return response.data;
 };
 
-// dummy state 2
-// const notifDoc = doc(
-//   notificationDB,
-//   "translist-noti",
-//   translistData.tenant_id
-// );
-// const notificationSnap = await getDoc(notifDoc);
-// const id = nanoid(10);
-
-// if (notificationSnap.exists()) {
-//   const notifArray = notificationSnap.data().notif;
-//   const checkExist = notifArray.filter(
-//     (item) => item.translist_id === response.data._id
-//   ).length;
-//   if (checkExist >= 1) {
-//     const objIndex = notifArray.findIndex(
-//       (item) => item.translist_id === response.data._id
-//     );
-//     notifArray[objIndex].message = `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${buildingName} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`;
-//     notifArray[objIndex].timestamp = new Date().toUTCString();
-//   } else {
-//     notifArray.push({
-//       id: id,
-//       message: `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${buildingName} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`,
-//       translist_id: response.data._id,
-//       status: "unread",
-//       timestamp: new Date().toUTCString(),
+// export const createChatroom = async (user, landlordId) => {
+//   const landlordUser = await getOtherUserById(landlordId);
+//   const chatroomCheckRef = collection(notificationDB, "chatroom");
+//   const chatroomCheckQuery = query(
+//     chatroomCheckRef,
+//     where("tenant_id", "==", user._id),
+//     where("landlord_id", "==", landlordId),
+//     limit(1)
+//   );
+//   const chatroomCheckSnap = await getDocs(chatroomCheckQuery);
+//   if (chatroomCheckSnap.docs.length > 0) {
+//     let chatroomid;
+//     chatroomCheckSnap.forEach((doc) => {
+//       chatroomid = doc.id;
 //     });
+//     return {
+//       chatid: chatroomid,
+//       receiver: landlordId,
+//       receivername: landlordUser.u_name,
+//     };
 //   }
 
-// dummy state 3
-// const notifDoc = doc(
-//   notificationDB,
-//   "translist-noti",
-//   translistData.landlord_id
-// );
-// const notificationSnap = await getDoc(notifDoc);
-// const id = nanoid(10);
-
-// if (notificationSnap.exists()) {
-//   const notifArray = notificationSnap.data().notif;
-//   const checkExist = notifArray.filter(
-//     (item) => item.translist_id === response.data._id
-//   ).length;
-//   if (checkExist >= 1) {
-//     const objIndex = notifArray.findIndex(
-//       (item) => item.translist_id === response.data._id
-//     );
-//     notifArray[objIndex].message = `${buildingName} ผู้เช่าทำการยืนยันสัญญาเสร็จสิ้น กรุณารอการยืนยันเข้าที่พักอาศัยจากผู้เช่า`;
-//     notifArray[objIndex].timestamp = new Date().toUTCString();
+//   const chatroomRef = await addDoc(collection(notificationDB, "chatroom"), {
+//     tenant_id: user._id,
+//     landlord_id: landlordId,
+//     messages: [
+//       {
+//         sender: user._id,
+//         message: "สนใจรายละเอียดเพิ่มเติม",
+//         status: "unread",
+//         createdAt: new Date().toISOString(),
+//       },
+//     ],
+//   });
+//   const chatroomTenantDoc = doc(notificationDB, "chatroom", user._id);
+//   const chatroomTenantSnap = await getDoc(chatroomTenantDoc);
+//   const chatroomlandlordDoc = doc(notificationDB, "chatroom", landlordId);
+//   const chatroomlandlordSnap = await getDoc(chatroomlandlordDoc);
+//   if (chatroomTenantSnap.exists()) {
+//     const chatroomArr = chatroomTenantSnap.data().chatrooms;
+//     chatroomArr.push({ chatid: chatroomRef.id, receiver: landlordId });
+//     await updateDoc(doc(notificationDB, "userChat", user._id), {
+//       chatrooms: chatroomArr,
+//     })
+//       .then((respond) => console.log(respond))
+//       .catch((error) => console.log(error.message));
 //   } else {
-//     notifArray.push({
-//       id: id,
-//       message: `${buildingName} ผู้เช่าทำการยืนยันสัญญาเสร็จสิ้น กรุณารอการยืนยันเข้าที่พักอาศัยจากผู้เช่า`,
-//       translist_id: response.data._id,
-//       status: "unread",
-//       timestamp: new Date().toUTCString(),
-//     });
+//     await setDoc(doc(notificationDB, "userChat", user._id), {
+//       chatrooms: [{ chatid: chatroomRef.id, receiver: landlordId }],
+//     })
+//       .then((respond) => console.log(respond))
+//       .catch((error) => console.log(error.message));
+//   }
+//   if (chatroomlandlordSnap.exists()) {
+//     const chatroomArr = chatroomlandlordSnap.data().chatrooms;
+//     chatroomArr.push({ chatid: chatroomRef.id, receiver: user._id });
+//     await updateDoc(doc(notificationDB, "userChat", landlordId), {
+//       chatrooms: chatroomArr,
+//     })
+//       .then((respond) => console.log(respond))
+//       .catch((error) => console.log(error.message));
+//   } else {
+//     await setDoc(doc(notificationDB, "userChat", landlordId), {
+//       chatrooms: [
+//         {
+//           chatid: chatroomRef.id,
+//           receiver: user._id,
+//           receivername: landlordUser.u_name,
+//         },
+//       ],
+//     })
+//       .then((respond) => console.log(respond))
+//       .catch((error) => console.log(error.message));
 //   }
 
-// dummy state 4
-// const notifDoc = doc(
-//   notificationDB,
-//   "translist-noti",
-//   translistData.landlord_id
-// );
-// const notificationSnap = await getDoc(notifDoc);
-// const id = nanoid(10);
-
-// if (notificationSnap.exists()) {
-//   const notifArray = notificationSnap.data().notif;
-//   const checkExist = notifArray.filter(
-//     (item) => item.translist_id === response.data._id
-//   ).length;
-//   if (checkExist >= 1) {
-//     const objIndex = notifArray.findIndex(
-//       (item) => item.translist_id === response.data._id
-//     );
-//     notifArray[objIndex].message = `${buildingName} ผู้เช่าย้ายเข้าที่พักอาศัยเสร็จสิ้น`;
-//     notifArray[objIndex].timestamp = new Date().toUTCString();
-//   } else {
-//     notifArray.push({
-//       id: id,
-//       message: `${buildingName} ผู้เช่าย้ายเข้าที่พักอาศัยเสร็จสิ้น`,
-//       translist_id: response.data._id,
-//       status: "unread",
-//       timestamp: new Date().toUTCString(),
-//     });
-//   }
-
-// dummy state 5
-// const notifDoc = doc(
-//   notificationDB,
-//   "translist-noti",
-//   translistData.landlord_id
-// );
-// const notificationSnap = await getDoc(notifDoc);
-// const id = nanoid(10);
-
-// if (notificationSnap.exists()) {
-//   const notifArray = notificationSnap.data().notif;
-//   const checkExist = notifArray.filter(
-//     (item) => item.translist_id === response.data._id
-//   ).length;
-//   if (checkExist >= 1) {
-//     const objIndex = notifArray.findIndex(
-//       (item) => item.translist_id === response.data._id
-//     );
-//     notifArray[objIndex].message = `${buildingName} ผู้เช่าย้ายออกจากที่พักอาศัยเสร็จสิ้น`;
-//     notifArray[objIndex].timestamp = new Date().toUTCString();
-//   } else {
-//     notifArray.push({
-//       id: id,
-//       message: `${buildingName} ผู้เช่าย้ายออกจากที่พักอาศัยเสร็จสิ้น`,
-//       translist_id: response.data._id,
-//       status: "unread",
-//       timestamp: new Date().toUTCString(),
-//     });
-//   }
+//   return {
+//     chatid: chatroomRef.id,
+//     receiver: landlordId,
+//     receivername: landlordUser.u_name,
+//   };
+// };
