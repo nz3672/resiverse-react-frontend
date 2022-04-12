@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Loading } from "../../../img/Svg";
 import { waitForLandlordEvent } from "../SubmitEvent";
-
+import { Link } from "react-router-dom";
 const WaitForLandlord = (props) => {
   const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
@@ -9,6 +10,7 @@ const WaitForLandlord = (props) => {
   const onChange = (e) => {
     setImgs(e.target.files);
   };
+
   return (
     <>
       <div className="mx-6">
@@ -42,11 +44,30 @@ const WaitForLandlord = (props) => {
               </i>
             </h1>
           </div>
-          <div className="bg-stone-300/75 rounded-lg mt-3 py-6 h-fit flex justify-center">
-            <label className="bg-pink-500 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between text-white font-medium cursor-pointer font-bold">
-              <input type="file" onChange={onChange} multiple />
-              Choose file
-            </label>
+          <div className="bg-stone-300/75 rounded-lg mt-3 py-6 h-fit">
+            <div className="flex justify-center  ">
+              <div className="w-full mx-2 overflow-auto scrollbar-style-w scrollbar-style-tr scrollbar-style-th max-h-[150px]">
+                {imgs.length !== 0 &&
+                  Array.from(imgs).map((file, i) => {
+                    return (
+                      <p
+                        key={i}
+                        className="bg-pink-400 text-white  p-1 h-fit flex justify-center rounded-lg mb-2"
+                      >
+                        {file.name}
+                      </p>
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="flex justify-center mt-4">
+              <div className="">
+                <label className="bg-pink-500 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between text-white font-medium cursor-pointer font-bold">
+                  <input type="file" onChange={onChange} multiple />
+                  Choose file
+                </label>
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-rows mt-3 pt-3">
@@ -59,7 +80,10 @@ const WaitForLandlord = (props) => {
             />
             <span className="text-lg pl-4 leading-7">
               ยินยอมให้เว็บไซต์ดำเนินการคืนเงินค่าประกันให้ผู้เช่า
-              หรือผู้ให้เช่าเมื่อครบกำหนดวันสิ้นสุดสัญญา อ่านต่อ
+              หรือผู้ให้เช่าเมื่อครบกำหนดวันสิ้นสุดสัญญา
+              <Link to="/agreement" target="_blank" rel="noopener noreferrer">
+                <span className="text-pink-500">&nbsp;อ่านต่อ</span>
+              </Link>
             </span>
           </div>
         </div>
@@ -90,7 +114,8 @@ const WaitForLandlord = (props) => {
               setSelect(false);
               setImgs([]);
             }}
-            className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300">
+            className="disabled:opacity-50 text-white text-lg font-[SarabunBold] bg-gradient-to-r from-pink-500 to-yellow-300 px-2 py-1 rounded-lg border-[1px] border-grey-300"
+          >
             Submit
           </button>
         </div>

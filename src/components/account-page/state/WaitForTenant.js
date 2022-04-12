@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { waitForTenantdEvent } from "../SubmitEvent";
+import { Link } from "react-router-dom";
 // show bank and input slip
 const WaitForTenant = (props) => {
   const { itemContract, setTranslist, setSelect, translists } = props;
   const [isCheck, setIsCheck] = useState(false);
-  const [slipImg, setSlipImg] = useState();
+  const [slipImg, setSlipImg] = useState([]);
 
   const onChange = (e) => {
     setSlipImg(e.target.files);
@@ -52,10 +53,15 @@ const WaitForTenant = (props) => {
             <p className="text-lg leading-7 mb-3 font-bold">
               ยืนยันการชำระเงินของคุณที่นี่
             </p>
-            <label className="bg-pink-500 hover:bg-pink-400 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between  text-white font-medium cursor-pointer font-bold">
-              <input type="file" onChange={onChange} />
-              Choose file
-            </label>
+            <div className="flex">
+              <label className="bg-pink-500 hover:bg-pink-400 font-medium outline-0 mr-4 rounded-lg p-2 shadow-md shadow-pink-300 justify-between  text-white font-medium cursor-pointer font-bold">
+                <input type="file" onChange={onChange} />
+                Choose file
+              </label>
+              <h1 className="self-center">
+                {slipImg.length > 0 ? slipImg[0].name : "Choose file"}
+              </h1>
+            </div>
           </div>
           <div className="flex flex-rows mt-3 pt-3">
             <input
@@ -65,10 +71,15 @@ const WaitForTenant = (props) => {
                 setIsCheck(e.target.checked);
               }}
             />
-            <span className="text-lg pl-4 leading-7">
-              ยินยอมให้เว็บไซต์ดำเนินการคืนเงินค่าประกันให้ผู้เช่า
-              หรือผู้ให้เช่าเมื่อครบกำหนดวันสิ้นสุดสัญญา อ่านต่อ
-            </span>
+            <div className="flex">
+              <span className="text-lg pl-4 leading-7">
+                ยินยอมให้เว็บไซต์ดำเนินการคืนเงินค่าประกันให้ผู้เช่า
+                หรือผู้ให้เช่าเมื่อครบกำหนดวันสิ้นสุดสัญญา
+                <Link to="/agreement" target="_blank" rel="noopener noreferrer">
+                  <span className="text-pink-500">&nbsp;อ่านต่อ</span>
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
         <div className="flex justify-center mt-6">

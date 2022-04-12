@@ -55,10 +55,10 @@ const sendNotification = async (translistId, userId, message) => {
 export const waitForLandlordEvent = async (form, id) => {
   const formData = jsonToFormData(form);
   const response = await updateTranslist(formData, id);
-  console.log(response);
+  // console.log(response);
   await sendNotification(
     id,
-    response.tenant_id,
+    response.tenant_id._id,
     `ผู้ให้เช่ายินยอมให้เช่าที่พัก ${response.bd_id.bd_name} เรียบร้อยแล้ว โปรดทำการยืนยันสัญญาเพื่อดำเนินการจองต่อ`
   );
   return response;
@@ -69,7 +69,7 @@ export const waitForTenantdEvent = async (form, id) => {
   const response = await updateTranslist(formData, id);
   await sendNotification(
     id,
-    response.tenant_id,
+    response.landlord_id,
     `${response.bd_id.bd_name} ผู้เช่าทำการยืนยันสัญญาเสร็จสิ้น กรุณารอการยืนยันเข้าที่พักอาศัยจากผู้เช่า`
   );
 
@@ -80,17 +80,18 @@ export const waitMoveInEvent = async (form, id) => {
   const response = await updateTranslist(form, id);
   await sendNotification(
     id,
-    response.tenant_id,
+    response.landlord_id,
     `${response.bd_id.bd_name} ผู้เช่าย้ายเข้าที่พักอาศัยเสร็จสิ้น`
   );
   return response;
 };
 
 export const waitLandlordCheckInsur = async (form, id) => {
-  const response = await updateTranslist(form, id);
+  const formData = jsonToFormData(form);
+  const response = await updateTranslist(formData, id);
   await sendNotification(
     id,
-    response.landlord_id,
+    response.tenant_id._id,
     `ผู้เช่าทำการย้ายออกจากที่พัก ${response.bd_id.bd_name} แล้ว กรุณาตรวจสอบที่พักอาศัยเพื่อคำนวนค่าประกัน`
   );
   return response;
@@ -100,8 +101,19 @@ export const waitForConfirmInsur = async (form, id) => {
   const response = await updateTranslist(form, id);
   await sendNotification(
     id,
-    response.tenant_id,
+    response.landlord_id,
     `${response.bd_id.bd_name} ผู้ให้เช่าทำการตรวจสอบที่พักและคำนวนค่าประกันเรียบร้อยแล้ว กรุณาเข้าไปตรวจสอบและยืนยันเพื่อรับเงินค่าประกันคืน`
+  );
+  return response;
+};
+
+export const waitForLandlordConfirmInsur = async (form, id) => {
+  console.log(form);
+  const response = await updateTranslist(form, id);
+  await sendNotification(
+    id,
+    response.tenant_id._id,
+    `${response.bd_id.bd_name} ผู้ให้เช่าทำการตอบกลับข้อโต้แย้งแล้ว กรุณาตรวจสอบการคำนวนค่าประกันอีกครั้ง`
   );
   return response;
 };

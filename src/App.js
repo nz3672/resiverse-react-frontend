@@ -21,9 +21,11 @@ import {
   faBell,
   faCircleCheck,
   faCamera,
+  faComputerMouse,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Agreement from "./page/Agreement";
 
 library.add(faCircleXmark);
 library.add(faAngleLeft);
@@ -39,7 +41,9 @@ library.add(faHouse);
 library.add(faPenToSquare);
 library.add(faCircleCheck);
 library.add(faCamera);
+library.add(faComputerMouse);
 library.add(faPaperPlane);
+
 
 function App() {
   return (
@@ -48,7 +52,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/account" element={<Account />} />
-          {/* <Route path="/signin" element={<SignIn />} /> */}
+          <Route path="/agreement" element={<Agreement />} />
         </Routes>
         <ToastContainer />
       </Router>

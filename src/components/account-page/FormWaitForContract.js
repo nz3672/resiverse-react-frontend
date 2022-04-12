@@ -7,6 +7,7 @@ import WaitTenantMoveIn from "./state/WaitTenantMoveIn";
 import WaitTenantMoveOut from "./state/WaitTenantMoveOut";
 import WaitLandlordCheckInsur from "./state/WaitLandlordCheckInsur";
 import WaitForConfirmInsur from "./state/waitForConfirmInsur";
+import WaitLandlordConfirmInsur from "./state/WaitLandlordConfirmInsur";
 
 const FormWaitForContract = (props) => {
   const { setSelect, itemContract, myUser, setTranslist, translists } = props;
@@ -141,6 +142,25 @@ const FormWaitForContract = (props) => {
             setSelect={setSelect}
             itemContract={itemContract}
             descript="ยืนยันรับเงินคืนเรียบร้อย"
+          />
+        );
+      }
+    } else if (itemContract.tr_state === "debateInsur") {
+      if (itemContract.landlord_id === myUser._id) {
+        return (
+          <WaitLandlordConfirmInsur
+            itemContract={itemContract}
+            setTranslist={setTranslist}
+            setSelect={setSelect}
+            translists={translists}
+          />
+        );
+      } else if (itemContract.tenant_id._id === myUser._id) {
+        return (
+          <WaitForResponse
+            setSelect={setSelect}
+            itemContract={itemContract}
+            descript="รอผู้ให้เช่ายืนยันค่าประกัน"
           />
         );
       }

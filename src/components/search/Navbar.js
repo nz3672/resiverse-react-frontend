@@ -51,12 +51,20 @@ const Navbar = (props) => {
 
   return (
     <nav className="relative flex flex-wrap items-center justify-around px-2 py-8">
-      <SearchBar
-        setPlaceDetails={setPlaceDetails}
-        setPlaceId={setPlaceId}
-        setShowWidget={setShowWidget}
-        isLoaded={isLoaded}
-      />
+      <div className="flex">
+        <Link to={`/agreement`} target="_blank" rel="noopener noreferrer">
+          <h1 className="font-[righteous] text-[60px] mr-4 text-white leading-none rainbow-text">
+            Resiverse
+          </h1>
+        </Link>
+
+        <SearchBar
+          setPlaceDetails={setPlaceDetails}
+          setPlaceId={setPlaceId}
+          setShowWidget={setShowWidget}
+          isLoaded={isLoaded}
+        />
+      </div>
       {user ? (
         <div className="flex items-center">
           <Link to={`/account`} target="_blank" rel="noopener noreferrer">
@@ -83,7 +91,8 @@ const Navbar = (props) => {
 
           <button
             className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
-            onClick={() => onLogout()}>
+            onClick={() => onLogout()}
+          >
             Sign Out
           </button>
           <div className="relative h-8 w-8">

@@ -6,19 +6,74 @@ const WaitLandlordCheckInsur = (props) => {
   const [isCheck, setIsCheck] = useState(false);
   const [formInsur, setFormInsur] = useState({});
   const [numberOfPay, setNumberOfPay] = useState();
+  const [woodPay, setWoodPay] = useState(0);
+  const [wallPay, setWallPay] = useState(0);
+  const [nailPay, setNailPay] = useState(0);
+  const [picInsur, setPicInsur] = useState([]);
+  const [formInsurType, setFormInsurType] = useState({
+    wood: {},
+    wall: {},
+    nail: {},
+  });
 
   const onChange = (e) => {
     setFormInsur((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const onChangeType = (e) => {
+    if (e.target.name.substring(0, 4) === "wood") {
+      if (e.target.name === "woodCountDamage") {
+        setWoodPay(parseInt(e.target.value) * 100);
+      }
+      setFormInsurType((prev) => ({
+        ...prev,
+        wood: {
+          ...prev.wood,
+          [e.target.name]: e.target.value,
+          woodMoneyDamage: e.target.value * 100,
+        },
+      }));
+    } else if (e.target.name.substring(0, 4) === "wall") {
+      if (e.target.name === "wallCountDamage") {
+        setWallPay(parseInt(e.target.value) * 50);
+      }
+      setFormInsurType((prev) => ({
+        ...prev,
+        wall: {
+          ...prev.wall,
+          [e.target.name]: e.target.value,
+          wallMoneyDamage: e.target.value * 50,
+        },
+      }));
+    } else if (e.target.name.substring(0, 4) === "nail") {
+      if (e.target.name === "nailCountDamage") {
+        setNailPay(parseInt(e.target.value) * 200);
+      }
+      setFormInsurType((prev) => ({
+        ...prev,
+        nail: {
+          ...prev.nail,
+          [e.target.name]: e.target.value,
+          nailMoneyDamage: e.target.value * 200,
+        },
+      }));
+    }
+    // setFormInsurType((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const calculate = () => {
     setNumberOfPay(
       parseInt(formInsur.electAfLeft) +
-        parseInt(formInsur.insuranceAfLeft) +
+        parseInt(formInsurType.wall.wallMoneyDamage) +
+        parseInt(formInsurType.wood.woodMoneyDamage) +
+        parseInt(formInsurType.nail.nailMoneyDamage) +
         parseInt(formInsur.waterAfLeft)
     );
   };
 
+  const onChangePic = (e) => {
+    setPicInsur(e.target.files);
+  };
   return (
     <>
       <div className="mx-6">
@@ -29,18 +84,66 @@ const WaitLandlordCheckInsur = (props) => {
             </h1>
           </div>
           <div className="bg-pink-300/75 rounded-lg mt-3 py-3 px-4">
-            <div className="mb-3">
+            <div className="mb-3 grid gap-2 bg-pink-400 p-2 rounded-xl">
               <label>
-                ค่าความเสียหายของห้อง
+                วัสดุไม้
                 <input
-                  placeholder="ค่าความเสียหายของห้อง"
+                  placeholder="จำนวนรอย"
                   className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
-                  onChange={onChange}
-                  name="insuranceAfLeft"
+                  onChange={onChangeType}
+                  name="woodCountDamage"
+                />
+                <input
+                  placeholder="ค่าเสียหาย (บาท)"
+                  className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
+                  onChange={onChangeType}
+                  name="woodMoneyDamage"
+                  value={woodPay}
+                />
+              </label>
+              <label className="">
+                ผนัง
+                <input
+                  placeholder="จำนวนรอย"
+                  className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
+                  onChange={onChangeType}
+                  name="wallCountDamage"
+                />
+                <input
+                  placeholder="ค่าเสียหาย (บาท)"
+                  className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
+                  onChange={onChangeType}
+                  name="wallMoneyDamage"
+                  value={wallPay}
+                />
+              </label>
+              <label className="">
+                รอยตะปู
+                <input
+                  placeholder="จำนวนรอย"
+                  className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
+                  onChange={onChangeType}
+                  name="nailCountDamage"
+                />
+                <input
+                  placeholder="ค่าเสียหาย (บาท)"
+                  className="border-[1px] border-stone-500 p-1 rounded-lg mx-2 focus:outline-0 focus:border-pink-500"
+                  onChange={onChangeType}
+                  name="nailMoneyDamage"
+                  value={nailPay}
                 />
               </label>
             </div>
-            <div className="flex mb-3">
+            <div className="">
+              {/* {console.log(picInsur)} */}
+              <label className="bg-pink-500 font-medium outline-0 mr-4 rounded-lg px-2 py-1 shadow-md shadow-pink-300 justify-between text-white font-medium cursor-pointer font-bold">
+                <input type="file" onChange={onChangePic} />
+                Choose file
+              </label>
+              {picInsur.length > 0 ? picInsur[0].name : "Choose file"}
+            </div>
+
+            <div className="flex mb-3 mt-4">
               <label>
                 {" "}
                 ค่าน้ำ
@@ -110,11 +213,13 @@ const WaitLandlordCheckInsur = (props) => {
           <button
             disabled={!isCheck}
             onClick={() => {
+              // console.log(formInsurType);
               //   update mongo
               if (itemContract.tr_state === "waitLandlordCheckInsur") {
-                // console.log("dd");
                 waitLandlordCheckInsur(
                   {
+                    room_insur_pic: picInsur,
+                    tr_insur_left_type: formInsurType,
                     tr_state: "waitForConfirmInsur",
                     tr_insur_after_left: formInsur,
                     tr_getBackInsurForTenant:

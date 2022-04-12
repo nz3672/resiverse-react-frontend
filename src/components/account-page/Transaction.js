@@ -5,34 +5,6 @@ import { store } from "../app/store";
 
 const Transaction = (props) => {
   const { setSelect, translist, setItemContract, myUser } = props;
-  // const [myRes, setMyRes] = useState();
-
-  // useEffect(() => {
-  //   console.log(translist);
-  //   getMyResidenceById(translist.bd_id)
-  //     .then((res) => {
-  //       setMyRes(res);
-
-  //       // Set into Translist for no request again
-  //       setTranslist(
-  //         translists.map((obj) => {
-  //           if (obj._id === translist._id) {
-  //             return {
-  //               ...obj,
-  //               bd_obj: res,
-  //             };
-  //           } else {
-  //             return obj;
-  //           }
-  //         })
-  //       );
-  //     })
-  //     .catch((err) => console.log(err));
-
-  //   // const user = await store.getState().authStore.user;
-
-  //   return () => {};
-  // }, []);
 
   const stateEvent = () => {
     if (translist.tr_state === "waitLandlordConfirm") {
@@ -49,6 +21,8 @@ const Transaction = (props) => {
       return "รอผู้เช่าดำเนินการยินยอมรับเงินค่าประกัน"; // show insurance that calculate by landlord's insurance
     } else if (translist.tr_state === "success") {
       return "ยืนยันรับเงินค่าประกันเรียบร้อย";
+    } else if (translist.tr_state === "debateInsur") {
+      return "รอผู้ให้เช่าดำเนินการยินยอมรับเงินค่าประกัน";
     } else {
       return "";
     }
@@ -92,7 +66,7 @@ const Transaction = (props) => {
               </>
             )}
           </div>
-          <div>model</div>
+          <div></div>
         </div>
       </div>
     </button>
