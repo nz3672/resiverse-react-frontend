@@ -24,9 +24,7 @@ import {
   fragmentShader,
   vertexShader,
 } from "../utils/ThreeUtils";
-import { useDispatch, useSelector } from "react-redux";
-import { closePopup, clickPopup } from "../components/features/popUpSlice";
-import { Vector3 } from "three";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const backgroundGalaxy = useRef(null);
@@ -335,6 +333,7 @@ const Home = () => {
               <GlobeWidget housepos={getHousepos} />
             </CSSTransition>
             <Search />
+
             {status == "SignIn" ? (
               <SignIn />
             ) : status == "SignUp" ? (

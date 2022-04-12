@@ -29,7 +29,7 @@ const NotificationRightBox = (props) => {
     };
   }, []);
   return (
-    <div className="overflow-y-auto">
+    <div className="h-[100%] overflow-y-auto">
       <div className="grid grid-cols-1 divide-y">
         {notifs &&
           notifs.map(({ id, message, timestamp }, index) => (

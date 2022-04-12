@@ -1,41 +1,35 @@
 import React from "react";
-import mapboxGl from "mapbox-gl";
-import { useRef, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  closeSidebar,
+  resetWidgetInfo,
+} from "../components/features/sidebarSlice.js";
+import { selectedChatroom } from "../components/features/chatSlice.js";
+import { createChatroom } from "../api/Post.js";
+import { toast } from "react-toastify";
 import RentForm from "../components/show-residence/RentForm.js";
+import MapboxComp from "../components/show-residence/MapboxComp.js";
 
 const ShowResidence = () => {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
+  const dispatch = useDispatch();
   const [showRentForm, setRentForm] = useState(null);
   const { widgetinfo } = useSelector((state) => state.sidebarHome);
   const { user } = useSelector((state) => state.authStore);
 
-  mapboxGl.accessToken =
-    "pk.eyJ1IjoibnozNjcyIiwiYSI6ImNreTlscGdiOTA1bjIycG1nbW95amdlMzYifQ.wPQ_fd-VPbpTazLhzbL4tA";
-
-  useEffect(() => {
-    if (map.current && widgetinfo) {
-      map.current.jumpTo({
-        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
-      });
-      return; // initialize map only once
-    }
-    if (widgetinfo) {
-      map.current = new mapboxGl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/nz3672/cky9lr7o02ol816n2edvtnccj",
-        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
-        zoom: 16,
-        pitch: 60,
-        antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
-      });
-    }
-  }, [widgetinfo]);
-
   const handleShowRentForm = (input) => {
     setRentForm(input);
   };
+
+  // const handleChat = () => {
+  //   createChatroom(user, widgetinfo.ownerId)
+  //     .then((res) => {
+  //       dispatch(selectedChatroom(res));
+  //     })
+  //     .catch((err) => console.log("err", err));
+  //   dispatch(closeSidebar());
+  //   dispatch(resetWidgetInfo());
+  // };
 
   return (
     <>
@@ -124,11 +118,18 @@ const ShowResidence = () => {
               user &&
               typeof widgetinfo.ownerId !== "undefined" &&
               widgetinfo.ownerId !== user._id && (
-                <button
-                  className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
-                  onClick={() => handleShowRentForm(true)}>
-                  <span className="gradient-text-btn">Rent</span>
-                </button>
+                <>
+                  <button
+                    className="w-3/12 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
+                    onClick={() => handleShowRentForm(true)}>
+                    <span className="gradient-text-btn">Rent</span>
+                  </button>
+                  {/* <button
+                    className="w-2/12 ml-3 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
+                    onClick={() => handleChat()}>
+                    <span className="gradient-text-btn">Chat</span>
+                  </button> */}
+                </>
               )}
           </div>
         </div>
@@ -140,7 +141,7 @@ const ShowResidence = () => {
                 backgroundImage:
                   "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
               }}>
-              <div ref={mapContainer} className="map-container w-full h-96" />
+              <MapboxComp widgetinfo={widgetinfo} />
             </div>
           </div>
           <div className="">
