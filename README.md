@@ -21,3 +21,8 @@
 - demo : https://youtu.be/jeCPw7NeFaI
 
 ![image](https://user-images.githubusercontent.com/84609801/163596222-f7c7c572-c9eb-40ec-883d-8ddf13d66e93.png)
+
+
+### Author
+- Sarunya Siripirom (me :D)
+- Ananyaluck Chanmanivech (https://github.com/nz3672)
