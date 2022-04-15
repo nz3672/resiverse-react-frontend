@@ -8,14 +8,14 @@
 
 ### Install && start whole repositories.
 1. For Backend SpringBoots
-1.1 install maven dependencies and generate .jar file.
-1.2 `docker-compose -f docker-compose.yml up -d`
+&ensp; 1.1 install maven dependencies and generate .jar file.
+&ensp; 1.2 `docker-compose -f docker-compose.yml up -d`
 2. For Backend Nodejs
-2.1 `npm install` for installing project dependencies.
-2.2 `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d`
+&ensp; 2.1 `npm install` for installing project dependencies.
+&ensp; 2.2 `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d`
 3. For Frontend Reactjs
-3.1 `npm install` for installing project dependencies.
-3.2 `npm start` to start project.
+&ensp; 3.1 `npm install` for installing project dependencies.
+&ensp; 3.2 `npm start` to start project.
   
 ### Demo
 - demo : https://youtu.be/jeCPw7NeFaI
