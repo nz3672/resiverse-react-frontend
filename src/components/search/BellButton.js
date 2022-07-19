@@ -55,7 +55,7 @@ const BellButton = (props) => {
             setUpdateRead(1);
           }
         }}>
-        <FontAwesomeIcon className="h-8" icon="fa-solid fa-bell" />
+        <FontAwesomeIcon className="h-8 hover:h-10" icon="fa-solid fa-bell" />
 
         {showNoti && (
           <span className="flex absolute mr-1 h-4 w-4 top-0 right-0">

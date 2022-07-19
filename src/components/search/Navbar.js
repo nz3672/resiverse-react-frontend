@@ -81,7 +81,7 @@ const Navbar = (props) => {
             )}
           </Link>
           <button
-            className="px-3 py-2 mx-2 my-1 hover:bg-white/50 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
+            className="px-3 py-2 mx-2 my-1 hover:bg-white/75 hover:text-pink-500 bg-pink-600 rounded-lg font-['SarabunBold'] text-lg"
             onClick={() => {
               chooseSidebarPage("AddResidence");
               sidebarPage(true);
@@ -90,7 +90,7 @@ const Navbar = (props) => {
           </button>
 
           <button
-            className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 rounded-lg bg-white/50 text-white font-['SarabunBold'] text-lg"
+            className="px-3 py-2 mx-2 my-1 hover:bg-pink-600 hover:text-white text-pink-600 rounded-lg bg-white/75 text-white font-['SarabunBold'] text-lg"
             onClick={() => onLogout()}
           >
             Sign Out

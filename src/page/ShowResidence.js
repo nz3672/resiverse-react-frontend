@@ -43,10 +43,10 @@ const ShowResidence = () => {
           }}>
           <div className="shadow-lg bg-white rounded-xl p-3">
             <h1 className=" text-3xl">
-              {widgetinfo ? widgetinfo.name : "Place Name"}
+              {widgetinfo ? widgetinfo.bd_name : "Place Name"}
             </h1>
             <p className=" mt-2">
-              {widgetinfo ? widgetinfo.description : "Description"}
+              {widgetinfo ? widgetinfo.bd_desc : "Description"}
             </p>
           </div>
 
@@ -54,28 +54,28 @@ const ShowResidence = () => {
             <h1 className=" text-xl">Address</h1>
             <p className=" mt-2">
               {widgetinfo
-                ? widgetinfo.address.addrHouseNo +
+                ? widgetinfo.bd_address.bd_houseNo +
                   " " +
-                  widgetinfo.address.addrSubDistrict +
+                  widgetinfo.bd_address.bd_subDist +
                   " " +
-                  widgetinfo.address.addrDistrict +
+                  widgetinfo.bd_address.bd_dist +
                   " " +
-                  widgetinfo.address.addrProvince +
+                  widgetinfo.bd_address.bd_province +
                   " " +
-                  widgetinfo.address.addrPostNum
+                  widgetinfo.bd_address.bd_postNum
                 : "Address"}
             </p>
           </div>
           <div className="text-xl shadow-lg bg-white rounded-xl p-3">
-            <h1>Website : {widgetinfo ? widgetinfo.website : "-"}</h1>
-            <h1>Line : {widgetinfo ? widgetinfo.line : "-"}</h1>
-            <h1>Phone : {widgetinfo ? widgetinfo.phone : "-"}</h1>
+            <h1>Website : {widgetinfo ? widgetinfo.bd_website : "-"}</h1>
+            <h1>Line : {widgetinfo ? widgetinfo.bd_lineid : "-"}</h1>
+            <h1>Phone : {widgetinfo ? widgetinfo.bd_phone : "-"}</h1>
           </div>
           <div>
             <div className="h-auto bg-white px-4 py-2 mt-3 rounded-xl space-y-2 shadow-lg grid grid-cols-1">
               <h1 className="text-2xl">Rooms </h1>
               {widgetinfo &&
-                widgetinfo.room.map((roomdetail, i) => {
+                widgetinfo.bd_room.map((roomdetail, i) => {
                   return (
                     <div key={i}>
                       <h1>{roomdetail.roomName}</h1>
@@ -95,8 +95,8 @@ const ShowResidence = () => {
           <div className="flex flex-row bg-white p-2 rounded-xl shadow-lg justify-center">
             {widgetinfo &&
               widgetinfo.hasOwnProperty("facilities") &&
-              widgetinfo.facilities.length !== 0 &&
-              widgetinfo.facilities.map((facility, i) => {
+              widgetinfo.bd_facilities.length !== 0 &&
+              widgetinfo.bd_facilities.map((facility, i) => {
                 return (
                   <div key={i} className="has-tooltip mr-1">
                     <img
@@ -153,7 +153,7 @@ const ShowResidence = () => {
                     backgroundImage:
                       "linear-gradient(to bottom right, rgb(36, 138, 238), rgb(114, 91, 226))",
                   }}
-                  src={widgetinfo ? widgetinfo.imageURL : ""}
+                  src={widgetinfo ? widgetinfo.bd_img : ""}
                 />
               </div>
             </div>

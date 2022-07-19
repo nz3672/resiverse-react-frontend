@@ -10,7 +10,8 @@ import axios from "axios";
 const Search = () => {
   const dispatch = useDispatch();
   const [libraries] = useState(["places"]);
-  const API_URL = "residence/api/residence/all"; // In package.json, set proxy
+  // const API_URL = "residence/api/residence/all"; // In package.json, set proxy
+  const API_URL = "account/api/buildings"; 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -29,6 +30,7 @@ const Search = () => {
   // fetch all residence from database
   const fetchData = async () => {
     const response = await axios.get(API_URL);
+    console.log('response', response)
     if (response.data) {
       setWidgets(response.data);
     }
@@ -55,7 +57,7 @@ const Search = () => {
         <div className="mt-4 flex">
           <div className="ml-5 grid-cols-1 desktop:ml-20 grid grid-cols-2 tablet:grid-cols-2 laptop:grid-cols-3 gap-4 place-content-center">
             {/* show searching widgets */}
-            {/* {showWidget && placeDetails && console.log(placeDetails)} */}
+            {/* {showWidget && placeDetails && console.log(placeDetails)}
             {showWidget && placeDetails && (
               <div
                 onClick={() => {
@@ -63,7 +65,7 @@ const Search = () => {
                 }}>
                 <Widget placeDetails={placeDetails} />
               </div>
-            )}
+            )} */}
 
             {/* show fetching widgets */}
             {!showWidget &&

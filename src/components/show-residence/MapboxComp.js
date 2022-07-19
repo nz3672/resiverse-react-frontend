@@ -15,7 +15,7 @@ const MapboxComp = (props) => {
     if (map.current && widgetinfo) {
       loadModel(widgetinfo);
       map.current.jumpTo({
-        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
+        center: [widgetinfo.bd_location.lng, widgetinfo.bd_location.lat],
       });
 
       return () => {
@@ -26,7 +26,7 @@ const MapboxComp = (props) => {
       map.current = new mapboxGl.Map({
         container: mapContainer.current,
         style: "mapbox://styles/nz3672/cky9lr7o02ol816n2edvtnccj",
-        center: [widgetinfo.geometry.lng, widgetinfo.geometry.lat],
+        center: [widgetinfo.bd_location.lng, widgetinfo.bd_location.lat], //geometry
         zoom: 16,
         pitch: 60,
         antialias: true, // create the gl context with MSAA antialiasing, so custom layers are antialiased
@@ -42,7 +42,7 @@ const MapboxComp = (props) => {
   }, [widgetinfo]);
 
   const loadModel = (info) => {
-    const modelOrigin = [info.geometry.lng, info.geometry.lat];
+    const modelOrigin = [info.bd_location.lng, info.bd_location.lat];
     const modelAltitude = 0;
     const modelRotate = [Math.PI / 2, 0, 0];
 

@@ -10,6 +10,7 @@ const SubmitBtn = (props) => {
   const { setFormUpdateUser, formUpdateUser, setIsSubmit } = props;
   return (
     <button
+      disabled
       className="text-white font-[SarabunBold] bg-pink-600 py-2 px-4 rounded-lg border-1 border-[#44864a]"
       onClick={() => {
         setFormUpdateUser({});
