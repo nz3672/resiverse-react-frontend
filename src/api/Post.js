@@ -76,7 +76,7 @@ export const createResidence = async (residenceData, token) => {
     u_id: user._id,
   });
   const response = await axios.post(
-    "http://localhost:8080/account/api/buildings/post",
+    "https://resiverse-microservice.herokuapp.com/api/buildings/post",
     formData,
     config
   );
@@ -93,7 +93,7 @@ export const createTranslist = async (translistData, buildingName) => {
   };
 
   const response = await axios.post(
-    "http://localhost:8080/account/api/translists/",
+    "https://resiverse-microservice.herokuapp.com/api/translists/",
     translistData,
     config
   );
