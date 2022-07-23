@@ -42,6 +42,7 @@ export const updateUser = async (form) => {
     },
   };
 
+
   const response = await axios.put(
     `https://resiverse-microservice.herokuapp.com/api/users/${user._id}`,
     formData,
@@ -58,6 +59,7 @@ export const updateTranslist = async (form, id) => {
       Authorization: `Bearer ${user.token}`,
     },
   };
+
 
   const response = await axios.put(
     `https://resiverse-microservice.herokuapp.com/api/translists/${id}`,
@@ -88,6 +90,7 @@ export const updateResidence = async (form, id) => {
       Authorization: `Bearer ${user.token}`,
     },
   };
+
 
   const response = await axios.put(
     `https://resiverse-microservice.herokuapp.com/api/buildings/${id}`,
