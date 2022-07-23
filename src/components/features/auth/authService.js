@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // In package.json, set proxy
-const API_URL = "account/api/users/";
+const API_URL = "https://resiverse-microservice.herokuapp.com/api/users/";
 
 // Register user
 const register = async (userData) => {

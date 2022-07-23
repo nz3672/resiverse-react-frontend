@@ -11,7 +11,7 @@ const Search = () => {
   const dispatch = useDispatch();
   const [libraries] = useState(["places"]);
   // const API_URL = "residence/api/residence/all"; // In package.json, set proxy
-  const API_URL = "account/api/buildings"; 
+  const API_URL = "https://resiverse-microservice.herokuapp.com/api/buildings";
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -30,7 +30,7 @@ const Search = () => {
   // fetch all residence from database
   const fetchData = async () => {
     const response = await axios.get(API_URL);
-    console.log('response', response)
+    console.log("response", response);
     if (response.data) {
       setWidgets(response.data);
     }
