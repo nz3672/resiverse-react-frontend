@@ -94,7 +94,6 @@ const ShowResidence = () => {
           </div>
           <div className="flex flex-row bg-white p-2 rounded-xl shadow-lg justify-center">
             {widgetinfo &&
-              widgetinfo.hasOwnProperty("facilities") &&
               widgetinfo.bd_facilities.length !== 0 &&
               widgetinfo.bd_facilities.map((facility, i) => {
                 return (
@@ -113,7 +112,7 @@ const ShowResidence = () => {
                 );
               })}
           </div>
-          <div className="flex flex-row justify-center">
+          {/* <div className="flex flex-row justify-center">
             {widgetinfo &&
               user &&
               typeof widgetinfo.ownerId !== "undefined" &&
@@ -124,14 +123,9 @@ const ShowResidence = () => {
                     onClick={() => handleShowRentForm(true)}>
                     <span className="gradient-text-btn">Rent</span>
                   </button>
-                  {/* <button
-                    className="w-2/12 ml-3 mt-2 mr-3 bg-white font-medium outline-0 rounded-lg p-2 justify-center text-xl shadow-lg hover:shadow-none "
-                    onClick={() => handleChat()}>
-                    <span className="gradient-text-btn">Chat</span>
-                  </button> */}
                 </>
               )}
-          </div>
+          </div> */}
         </div>
         <div className="grid grid-rows-2 h-[100vh] ">
           <div className="text-white flex flex-row justify-center ">
@@ -161,9 +155,9 @@ const ShowResidence = () => {
         </div>
         {/* </div> */}
       </div>
-      {showRentForm && (
+      {/* {showRentForm && (
         <RentForm setRentForm={handleShowRentForm} widgetinfo={widgetinfo} />
-      )}
+      )} */}
     </>
   );
 };
