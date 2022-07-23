@@ -50,7 +50,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className="relative flex flex-wrap items-center justify-around px-2 py-8">
+    <nav className="relative flex flex-wrap items-center justify-around px-2 py-8 min-w-[1000px]">
       <div className="flex">
         <Link to={`/agreement`} target="_blank" rel="noopener noreferrer">
           <h1 className="font-[righteous] text-[60px] mr-4 text-white leading-none rainbow-text">
