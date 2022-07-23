@@ -16,7 +16,7 @@ import { store } from "../components/app/store";
 import { nanoid } from "nanoid";
 import { getOtherUserById } from "./Get";
 import { Firestore } from "firebase/firestore";
-const API_URL_ACCOUNT_SERVICES = "account/api/";
+const API_URL_ACCOUNT_SERVICES = "/api/";
 
 function buildFormData(formData, data, parentKey) {
   if (
