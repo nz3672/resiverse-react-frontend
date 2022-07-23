@@ -42,11 +42,7 @@ export const updateUser = async (form) => {
     },
   };
 
-  const response = await axios.put(
-    `account/api/users/${user._id}`,
-    formData,
-    config
-  );
+  const response = await axios.put(`/api/users/${user._id}`, formData, config);
 
   return response.data;
 };
@@ -59,11 +55,7 @@ export const updateTranslist = async (form, id) => {
     },
   };
 
-  const response = await axios.put(
-    `account/api/translists/${id}`,
-    form,
-    config
-  );
+  const response = await axios.put(`/api/translists/${id}`, form, config);
 
   return response.data;
 };
@@ -89,11 +81,7 @@ export const updateResidence = async (form, id) => {
     },
   };
 
-  const response = await axios.put(
-    `account/api/buildings/${id}`,
-    formData,
-    config
-  );
+  const response = await axios.put(`/api/buildings/${id}`, formData, config);
 
   return response.data;
 };

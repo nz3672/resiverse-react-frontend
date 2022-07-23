@@ -2,7 +2,9 @@ import axios from "axios";
 import { store } from "../components/app/store";
 
 export const getAllResidence = async () => {
-  const response = await axios.get("account/api/buildings/");
+  const response = await axios.get(
+    "https://resiverse-microservice.herokuapp.com/api/buildings/"
+  );
 
   return response.data;
 };
@@ -14,7 +16,10 @@ export const getMyResidence = async () => {
       Authorization: `Bearer ${user.token}`,
     },
   };
-  const response = await axios.get("account/api/buildings/me", config);
+  const response = await axios.get(
+    "https://resiverse-microservice.herokuapp.com/api/buildings/me",
+    config
+  );
 
   return response.data;
 };
@@ -26,7 +31,10 @@ export const getMyResidenceById = async (id) => {
       Authorization: `Bearer ${user.token}`,
     },
   };
-  const response = await axios.get(`account/api/buildings/get/${id}`, config);
+  const response = await axios.get(
+    `https://resiverse-microservice.herokuapp.com/api/buildings/get/${id}`,
+    config
+  );
 
   return response.data;
 };
@@ -38,13 +46,18 @@ export const getMyTransList = async () => {
       Authorization: `Bearer ${user.token}`,
     },
   };
-  const response = await axios.get("account/api/translists", config);
+  const response = await axios.get(
+    "https://resiverse-microservice.herokuapp.com/api/translists",
+    config
+  );
 
   return response.data;
 };
 
 export const getOtherUserById = async (id) => {
-  const response = await axios.get(`account/api/users/otherUser/${id}`);
+  const response = await axios.get(
+    `https://resiverse-microservice.herokuapp.com/api/users/otherUser/${id}`
+  );
 
   return response.data;
 };
